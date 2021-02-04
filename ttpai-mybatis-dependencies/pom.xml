@@ -19,6 +19,7 @@
         <dependency>
             <groupId>com.ttpai.framework</groupId>
             <artifactId>ttpai-mybatis-starter</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
