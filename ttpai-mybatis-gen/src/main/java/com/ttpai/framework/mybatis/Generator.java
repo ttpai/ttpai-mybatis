@@ -2,23 +2,21 @@ package com.ttpai.framework.mybatis;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import static com.ttpai.framework.mybatis.tool.InputTool.scanner;
 
 
-public class GenMain {
+public class Generator {
 
     /**
      * 全局配置
      */
-    private static GlobalConfig newGlobalConfig() {
+    public GlobalConfig newGlobalConfig() {
         GlobalConfig globalConfig = new GlobalConfig();
         // 默认在 target 目录下面
-        globalConfig.setOutputDir(GenMain.class.getResource("/").getPath() + "gen");
+        globalConfig.setOutputDir(Generator.class.getResource("/").getPath() + "gen");
         globalConfig.setAuthor("Kail");
         // 生成之后打开文件浏览器
         globalConfig.setOpen(true);
@@ -30,7 +28,7 @@ public class GenMain {
     /**
      * 数据源配置
      */
-    private static DataSourceConfig newDataSourceConfig() {
+    public DataSourceConfig newDataSourceConfig() {
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
 
         dataSourceConfig.setDbType(DbType.MYSQL);
@@ -45,7 +43,7 @@ public class GenMain {
     /**
      * 表转换配置
      */
-    private static StrategyConfig newTableConfig() {
+    public StrategyConfig newTableConfig() {
         StrategyConfig tableConfig = new StrategyConfig();
 
         // 下划线转驼峰
@@ -74,7 +72,7 @@ public class GenMain {
     /**
      * 包配置
      */
-    private static PackageConfig newPackageConfig() {
+    public PackageConfig newPackageConfig() {
         PackageConfig packageConfig = new PackageConfig();
         packageConfig.setModuleName(scanner("模块名"));
         packageConfig.setParent("com.ttpai.framework.mybatis.gen.dao");
@@ -91,37 +89,11 @@ public class GenMain {
      * 模板配置
      */
 
-    private static TemplateConfig newTemplateConfig() {
+    public TemplateConfig newTemplateConfig() {
         final TemplateConfig templateConfig = new TemplateConfig();
         templateConfig.disable(TemplateType.CONTROLLER);
         templateConfig.disable(TemplateType.SERVICE);
         return templateConfig;
-    }
-
-
-    public static void main(String[] args) {
-
-        AutoGenerator generator = new AutoGenerator();
-
-        // 设置模板引擎
-        generator.setTemplateEngine(new FreemarkerTemplateEngine());
-
-        // 全局配置
-        generator.setGlobalConfig(newGlobalConfig());
-
-        // 数据源
-        generator.setDataSource(newDataSourceConfig());
-        // 表配置
-        generator.setStrategy(newTableConfig());
-
-        // 包配置
-        generator.setPackageInfo(newPackageConfig());
-
-        // 项目结构配置
-        generator.setTemplate(newTemplateConfig());
-
-        // 执行
-        generator.execute();
     }
 
 }
