@@ -1,5 +1,4 @@
-package com.ttpai.framework.mybatis.tool;
-
+package com.ttpai.framework.mybatis.gen.tool;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;

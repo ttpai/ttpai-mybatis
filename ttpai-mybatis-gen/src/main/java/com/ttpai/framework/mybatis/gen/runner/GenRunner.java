@@ -1,39 +1,43 @@
-package com.ttpai.framework.mybatis;
+package com.ttpai.framework.mybatis.gen.runner;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import org.springframework.core.env.SimpleCommandLinePropertySource;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
-/**
- * @author Kail
- */
-public class Main {
+import javax.annotation.Resource;
+
+@Component
+public class GenRunner implements ApplicationRunner {
+
+    @Resource
+    private Environment env;
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        Generator gen = getGenInstance();
+        execute(gen);
+    }
 
     /**
      * 实例化 genClass
      */
-    private static Generator getGenInstance(SimpleCommandLinePropertySource propertySource) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        final String genClass = propertySource.getProperty("genClass");
+    private Generator getGenInstance() throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+        final String genClass = env.getProperty("genClass");
         if (StringUtils.isBlank(genClass)) {
             return new Generator();
         }
 
-
         return (Generator) Class.forName(genClass).newInstance();
     }
 
-
-    public static void main(String[] args) throws Exception {
-
-        SimpleCommandLinePropertySource propertySource = new SimpleCommandLinePropertySource(args);
-
-        Generator gen = getGenInstance(propertySource);
-
-        execute(gen);
-    }
-
-    public static void execute(Generator gen) {
+    /**
+     * 生成代码
+     */
+    public void execute(Generator gen) {
         AutoGenerator generator = new AutoGenerator();
 
         // 设置模板引擎

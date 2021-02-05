@@ -1,13 +1,15 @@
-package com.ttpai.framework.mybatis;
+package com.ttpai.framework.mybatis.gen.runner;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
-import static com.ttpai.framework.mybatis.tool.InputTool.scanner;
+import static com.ttpai.framework.mybatis.gen.tool.InputTool.scanner;
 
-
+/**
+ * 代码生成器配置
+ */
 public class Generator {
 
     /**
@@ -56,8 +58,7 @@ public class Generator {
         tableConfig.setEntityTableFieldAnnotationEnable(true);
 
         // ❤
-//        tableConfig.setNameConvert(new NameConvert());
-
+        // tableConfig.setNameConvert(new NameConvert());
 
         // 过滤指定的表
         final String tableList = scanner("请输入表名(支持 正则，多个用逗号分割 ，空代表所有表)");
