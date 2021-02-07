@@ -1,28 +1,14 @@
 package com.ttpai.framework.mybatis.gen.runner;
 
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.ConstVal;
-import com.baomidou.mybatisplus.generator.config.FileOutConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -71,7 +57,7 @@ public class GenRunner implements ApplicationRunner {
                 // 全局配置
                 gen.newGlobalConfig());
 
-        //自定义模板
+        //自定义模板  不需要自定义的模板时，可注释掉本行
         configBuilder.setInjectionConfig(gen.newInjectionConfig(configBuilder));
 
         generator.setConfig(configBuilder);
@@ -79,7 +65,5 @@ public class GenRunner implements ApplicationRunner {
         // 执行
         generator.execute();
     }
-
-
 
 }

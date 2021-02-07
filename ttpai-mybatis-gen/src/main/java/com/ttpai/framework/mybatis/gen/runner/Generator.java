@@ -33,7 +33,7 @@ class Generator {
         GlobalConfig globalConfig = new GlobalConfig();
         // 默认在 target 目录下面
         globalConfig.setOutputDir(Generator.class.getResource("/").getPath() + "gen");
-        //-Duser.name=lilin.tan@ttpai.cn
+        // -Duser.name=lilin.tan@ttpai.cn
         String author = System.getProperty("user.name");
         if (author != null) {
             globalConfig.setAuthor(author);
@@ -42,7 +42,7 @@ class Generator {
         globalConfig.setOpen(true);
         // 开启 Swagger 注解
         globalConfig.setSwagger2(true);
-        //默认文件命名后缀
+        // 默认文件命名后缀
         globalConfig.setEntityName("%sVO");
         globalConfig.setMapperName("%sMapper");
         globalConfig.setXmlName("%sMapper");
@@ -61,9 +61,10 @@ class Generator {
 
         dataSourceConfig.setDbType(DbType.MYSQL);
         dataSourceConfig.setDriverName("com.mysql.jdbc.Driver");
-        dataSourceConfig.setUrl("jdbc:mysql://172.16.2.160:3306/tanlilin?useSSL=false&useUnicode=true&characterEncoding=utf8");
-        dataSourceConfig.setUsername("admin");
-        dataSourceConfig.setPassword("admin@123123");
+        dataSourceConfig.setUrl(
+                "jdbc:mysql://vip.pub-dbproxy.ttp.wx:3308/ttpai_apm?useSSL=false&useUnicode=true&characterEncoding=utf8");
+        dataSourceConfig.setUsername("ttpai_apm");
+        dataSourceConfig.setPassword("ttpai");
 
         return dataSourceConfig;
     }
@@ -82,18 +83,20 @@ class Generator {
         tableConfig.setControllerMappingHyphenStyle(true);
         // 生成字段注释
         tableConfig.setEntityTableFieldAnnotationEnable(true);
-        //实体不生成 serialVersionUID
+        // 实体不生成 serialVersionUID
         tableConfig.setEntitySerialVersionUID(false);
+        // 生成字段常量
+        tableConfig.setEntityColumnConstant(true);
 
         boolean isContinue = true;
         while (isContinue) {
             final String scanner = scanner("是否针对数据库下所有表生成代码。（Y:yes   N:no ）");
 
-            //生成全部
+            // 生成全部
             if ("Y".equalsIgnoreCase(scanner)) {
                 isContinue = false;
             }
-            //根据输入的 Table 生成代码
+            // 根据输入的 Table 生成代码
             if ("N".equalsIgnoreCase(scanner)) {
                 // 过滤指定的表
                 final String tableList = scanner("请输入需要生成代码的表名(支持 正则，多个用逗号分割 )");
@@ -105,7 +108,6 @@ class Generator {
             }
 
         }
-
 
         return tableConfig;
     }
@@ -136,18 +138,20 @@ class Generator {
         return templateConfig;
     }
 
-
     InjectionConfig newInjectionConfig(ConfigBuilder configBuilder) {
         InjectionConfig injectionConfig = new InjectionConfig() {
+
             @Override
             public void initMap() {
-                //NOP
+                // NOP
             }
         };
         FileOutConfig fileOutConfig = new FileOutConfig() {
+
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return String.format((configBuilder.getPathInfo().get(ConstVal.MAPPER_PATH) + File.separator + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName());
+                return String.format((configBuilder.getPathInfo().get(ConstVal.MAPPER_PATH) + File.separator
+                                              + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName());
             }
         };
         fileOutConfig.setTemplatePath("templates/mapper.java.ftl");
