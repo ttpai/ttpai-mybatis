@@ -1,12 +1,28 @@
 package com.ttpai.framework.mybatis.gen.runner;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
+import com.baomidou.mybatisplus.generator.config.ConstVal;
+import com.baomidou.mybatisplus.generator.config.FileOutConfig;
+import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -37,28 +53,33 @@ public class GenRunner implements ApplicationRunner {
     /**
      * 生成代码
      */
-    public void execute(Generator gen) {
+    private void execute(Generator gen) {
         AutoGenerator generator = new AutoGenerator();
 
         // 设置模板引擎
         generator.setTemplateEngine(new FreemarkerTemplateEngine());
 
-        // 全局配置
-        generator.setGlobalConfig(gen.newGlobalConfig());
+        ConfigBuilder configBuilder = new ConfigBuilder(
+                // 包配置
+                gen.newPackageConfig(),
+                // 数据源
+                gen.newDataSourceConfig(),
+                // 表配置
+                gen.newTableConfig(),
+                // 项目结构配置
+                gen.newTemplateConfig(),
+                // 全局配置
+                gen.newGlobalConfig());
 
-        // 数据源
-        generator.setDataSource(gen.newDataSourceConfig());
+        //自定义模板
+        configBuilder.setInjectionConfig(gen.newInjectionConfig(configBuilder));
 
-        // 表配置
-        generator.setStrategy(gen.newTableConfig());
-
-        // 包配置
-        generator.setPackageInfo(gen.newPackageConfig());
-
-        // 项目结构配置
-        generator.setTemplate(gen.newTemplateConfig());
+        generator.setConfig(configBuilder);
 
         // 执行
         generator.execute();
     }
+
+
+
 }
