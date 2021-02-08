@@ -3,6 +3,7 @@ package com.ttpai.framework.mybatis;
 import com.ttpai.framework.mybatis.config.MybatisConfigurationCustomer;
 import com.ttpai.framework.mybatis.processor.MapperScannerConfigurerPostProcessor;
 
+import org.mybatis.spring.annotation.MapperScannerRegistrar;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -22,7 +23,7 @@ import javax.sql.DataSource;
  * @date 2021/2/5
  */
 @Configuration
-@AutoConfigureBefore(MybatisAutoConfiguration.class)
+@AutoConfigureBefore({MapperScannerRegistrar.class, MybatisAutoConfiguration.class})
 @ConditionalOnBean(DataSource.class)
 public class BootMybatisConfiguration implements ApplicationContextAware {
 
