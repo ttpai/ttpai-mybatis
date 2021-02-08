@@ -9,7 +9,7 @@ public class InputTool {
 
     public static String scanner(String tip) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("请输入" + tip + "：");
+        System.out.println(tip + "：");
 
         if (scanner.hasNext()) {
             String ipt = scanner.next();
