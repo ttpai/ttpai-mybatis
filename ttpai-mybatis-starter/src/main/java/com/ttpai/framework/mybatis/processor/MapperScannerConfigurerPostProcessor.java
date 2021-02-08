@@ -13,11 +13,13 @@ import org.springframework.stereotype.Component;
 
 public class MapperScannerConfigurerPostProcessor implements BeanPostProcessor {
 
-    @Override public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
     }
 
-    @Override public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof MapperScannerConfigurer) {
             MapperScannerConfigurer configurer = (MapperScannerConfigurer) bean;
             configurer.setAnnotationClass(Mapper.class);

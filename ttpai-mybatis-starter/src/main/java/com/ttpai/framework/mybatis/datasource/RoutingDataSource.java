@@ -21,11 +21,13 @@ public class RoutingDataSource extends AbstractDataSource {
         this.dataSourceMap = dataSourceMap;
     }
 
-    @Override public Connection getConnection() throws SQLException {
+    @Override
+    public Connection getConnection() throws SQLException {
         return null;
     }
 
-    @Override public Connection getConnection(String username, String password) throws SQLException {
+    @Override
+    public Connection getConnection(String username, String password) throws SQLException {
         return null;
     }
 }

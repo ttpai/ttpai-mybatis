@@ -3,22 +3,16 @@ package com.ttpai.framework.mybatis;
 import com.ttpai.framework.mybatis.config.MybatisConfigurationCustomer;
 import com.ttpai.framework.mybatis.processor.MapperScannerConfigurerPostProcessor;
 
-import org.mybatis.spring.annotation.MapperScannerRegistrar;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
-import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.env.Environment;
-
-import javax.sql.DataSource;
+import org.springframework.core.type.AnnotationMetadata;
 
 /**
  * Springboot 项目的自动装配类 对Mybatis原生的autoconfig做增强
@@ -26,35 +20,35 @@ import javax.sql.DataSource;
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/5
  */
-@Configuration
-@AutoConfigureBefore({MapperScannerRegistrar.class, MybatisAutoConfiguration.class})
-@ConditionalOnBean(DataSource.class)
-public class BootMybatisConfiguration implements ApplicationContextAware, BeanFactoryAware {
+@org.springframework.context.annotation.Configuration
+@Import(BootMybatisConfiguration.PostProcessorInitializer.class)
+public class BootMybatisConfiguration {
 
-    private ApplicationContext applicationContext;
+    public static class PostProcessorInitializer implements BeanFactoryAware, ImportBeanDefinitionRegistrar {
 
-    private ConfigurableListableBeanFactory beanFactory;
+        @Override
+        public void setBeanFactory(BeanFactory beanFactory) {
+            //加上后置处理器
+            ((ConfigurableListableBeanFactory) beanFactory)
+                    .addBeanPostProcessor(new MapperScannerConfigurerPostProcessor());
+        }
+
+        @Override
+        public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata,
+                                            BeanDefinitionRegistry registry) {
+
+        }
+    }
 
     @Bean
     public ConfigurationCustomizer mybatisConfigurationCustomer(Environment environment) {
         return new MybatisConfigurationCustomer(environment);
     }
 
-    //    @Bean
-    //    @Primary
-    //    public DataSource routingDataSource() {
-    //        Map<String, DataSource> dataSourceMap = applicationContext.getBeansOfType(DataSource.class);
-    //        return new RoutingDataSource(dataSourceMap);
-    //    }
-
-    @Override public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
-
-    @Override public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-        if (beanFactory instanceof ConfigurableListableBeanFactory) {
-            this.beanFactory = (ConfigurableListableBeanFactory) beanFactory;
-            this.beanFactory.addBeanPostProcessor(new MapperScannerConfigurerPostProcessor());
-        }
-    }
+    // @Bean
+    // @Primary
+    // public DataSource routingDataSource() {
+    // Map<String, DataSource> dataSourceMap = applicationContext.getBeansOfType(DataSource.class);
+    // return new RoutingDataSource(dataSourceMap);
+    // }
 }
