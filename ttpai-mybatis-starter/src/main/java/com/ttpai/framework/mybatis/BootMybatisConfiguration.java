@@ -6,6 +6,10 @@ import com.ttpai.framework.mybatis.processor.MapperScannerConfigurerPostProcesso
 import org.mybatis.spring.annotation.MapperScannerRegistrar;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.ApplicationContext;
@@ -25,14 +29,11 @@ import javax.sql.DataSource;
 @Configuration
 @AutoConfigureBefore({MapperScannerRegistrar.class, MybatisAutoConfiguration.class})
 @ConditionalOnBean(DataSource.class)
-public class BootMybatisConfiguration implements ApplicationContextAware {
+public class BootMybatisConfiguration implements ApplicationContextAware, BeanFactoryAware {
 
     private ApplicationContext applicationContext;
 
-    @Bean
-    public MapperScannerConfigurerPostProcessor mapperScannerConfigurerPostProcessor() {
-        return new MapperScannerConfigurerPostProcessor();
-    }
+    private ConfigurableListableBeanFactory beanFactory;
 
     @Bean
     public ConfigurationCustomizer mybatisConfigurationCustomer(Environment environment) {
@@ -49,5 +50,12 @@ public class BootMybatisConfiguration implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
+    }
+
+    @Override public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        if (beanFactory instanceof ConfigurableListableBeanFactory) {
+            this.beanFactory = (ConfigurableListableBeanFactory) beanFactory;
+            this.beanFactory.addBeanPostProcessor(new MapperScannerConfigurerPostProcessor());
+        }
     }
 }
