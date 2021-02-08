@@ -90,7 +90,7 @@ class Generator {
 
         boolean isContinue = true;
         while (isContinue) {
-            final String scanner = scanner("是否针对数据库下所有表生成代码。（Y:yes   N:no ）");
+            final String scanner = scanner("是否针对数据库下所有表生成代码。（Y / N ）");
 
             // 生成全部
             if ("Y".equalsIgnoreCase(scanner)) {

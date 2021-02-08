@@ -52,7 +52,8 @@ public class BootMybatisConfiguration implements ApplicationContextAware, BeanFa
         this.applicationContext = applicationContext;
     }
 
-    @Override public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
         if (beanFactory instanceof ConfigurableListableBeanFactory) {
             this.beanFactory = (ConfigurableListableBeanFactory) beanFactory;
             this.beanFactory.addBeanPostProcessor(new MapperScannerConfigurerPostProcessor());
