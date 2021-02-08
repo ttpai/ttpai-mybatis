@@ -36,14 +36,15 @@ public class BootMybatisConfiguration implements ApplicationContextAware {
         return new MybatisConfigurationCustomer(environment);
     }
 
-//    @Bean
-//    @Primary
-//    public DataSource routingDataSource() {
-//        Map<String, DataSource> dataSourceMap = applicationContext.getBeansOfType(DataSource.class);
-//        return new RoutingDataSource(dataSourceMap);
-//    }
+    // @Bean
+    // @Primary
+    // public DataSource routingDataSource() {
+    // Map<String, DataSource> dataSourceMap = applicationContext.getBeansOfType(DataSource.class);
+    // return new RoutingDataSource(dataSourceMap);
+    // }
 
-    @Override public void setApplicationContext(ApplicationContext applicationContext) {
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 }
