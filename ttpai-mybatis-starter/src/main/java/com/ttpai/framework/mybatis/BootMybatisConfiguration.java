@@ -1,7 +1,7 @@
 package com.ttpai.framework.mybatis;
 
 import com.ttpai.framework.mybatis.config.MybatisConfigurationCustomer;
-import com.ttpai.framework.mybatis.datasource.RoutingDataSource;
+import com.ttpai.framework.mybatis.processor.MapperScannerConfigurerPostProcessor;
 
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
@@ -11,10 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
-
-import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -30,6 +27,11 @@ import javax.sql.DataSource;
 public class BootMybatisConfiguration implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
+
+    @Bean
+    public MapperScannerConfigurerPostProcessor mapperScannerConfigurerPostProcessor() {
+        return new MapperScannerConfigurerPostProcessor();
+    }
 
     @Bean
     public ConfigurationCustomizer mybatisConfigurationCustomer(Environment environment) {
