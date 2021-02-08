@@ -4,6 +4,7 @@ import org.apache.ibatis.session.Configuration;
 
 import lombok.Getter;
 
+import static org.apache.ibatis.session.AutoMappingUnknownColumnBehavior.FAILING;
 import static org.apache.ibatis.session.LocalCacheScope.STATEMENT;
 
 /**
@@ -31,6 +32,13 @@ public enum DefaultMybatisConfig {
         @Override
         public void setConfig(Configuration configuration) {
             configuration.setLocalCacheScope(STATEMENT);
+        }
+    },
+    AUTO_MAPPING_UNKNOWN_COLUMN_BEHAVIOR("mybatis.configuration.autoMappingUnknownColumnBehavior") {
+
+        @Override
+        public void setConfig(Configuration configuration) {
+            configuration.setAutoMappingUnknownColumnBehavior(FAILING);
         }
     };
 

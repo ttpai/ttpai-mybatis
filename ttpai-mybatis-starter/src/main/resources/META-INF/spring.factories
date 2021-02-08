@@ -1,3 +1,3 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.ttpai.framework.mybatis.TtpaiMybatisAutoConfiguration
+com.ttpai.framework.mybatis.BootMybatisConfiguration
