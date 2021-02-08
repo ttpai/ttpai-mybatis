@@ -62,8 +62,8 @@ class Generator {
         dataSourceConfig.setDbType(DbType.MYSQL);
         dataSourceConfig.setDriverName("com.mysql.jdbc.Driver");
         dataSourceConfig.setUrl(
-                "jdbc:mysql://vip.pub-dbproxy.ttp.wx:3308/ttpai_apm?useSSL=false&useUnicode=true&characterEncoding=utf8");
-        dataSourceConfig.setUsername("ttpai_apm");
+                "jdbc:mysql://vip.pub-dbproxy.ttp.wx:3308/ttpai_esjob_monitor?useSSL=false&useUnicode=true&characterEncoding=utf8");
+        dataSourceConfig.setUsername("esjob_monitor");
         dataSourceConfig.setPassword("ttpai");
 
         return dataSourceConfig;
