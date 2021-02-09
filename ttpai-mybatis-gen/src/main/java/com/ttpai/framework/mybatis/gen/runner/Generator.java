@@ -61,8 +61,8 @@ class Generator {
 
         dataSourceConfig.setDbType(DbType.MYSQL);
         dataSourceConfig.setDriverName("com.mysql.jdbc.Driver");
-//        String dbAddress = scanner("请输入数据库连接URL（ip:port）");
-//        String dbName = scanner("请输入数据库名");
+        // String dbAddress = scanner("请输入数据库连接URL（ip:port）");
+        // String dbName = scanner("请输入数据库名");
 
         dataSourceConfig.setUrl(
                 "jdbc:mysql://vip.pub-dbproxy.ttp.wx:3308/ttpai_esjob_monitor?useSSL=false&useUnicode=true&characterEncoding=utf8");
@@ -154,7 +154,7 @@ class Generator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 return String.format((configBuilder.getPathInfo().get(ConstVal.MAPPER_PATH) + File.separator
-                                              + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName());
+                        + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName());
             }
         };
         fileOutConfig.setTemplatePath("templates/mapper.java.ftl");

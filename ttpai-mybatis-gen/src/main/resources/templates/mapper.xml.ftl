@@ -35,10 +35,9 @@
         ${table.fieldNames}
     </sql>
 
-    <!-- 通用增删列 -->
-    <sql id="Base_Update_List">
-        <#list table.fields as field><#if !field.keyFlag && field_index==0>${field.name?string}<#elseif !field.keyFlag && field.name != "CREATE_TIME" && field.name != "MODIFY_TIME">,${field.name?string}</#if></#list>
-    </sql>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from ${table.name} ;
+    </select>
 
 </#if>
 </mapper>

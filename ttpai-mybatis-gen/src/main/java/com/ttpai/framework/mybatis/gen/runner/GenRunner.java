@@ -58,7 +58,7 @@ public class GenRunner implements ApplicationRunner {
                 gen.newGlobalConfig());
 
         // 自定义模板 不需要自定义的模板时，可注释掉本行
-         configBuilder.setInjectionConfig(gen.newInjectionConfig(configBuilder));
+        configBuilder.setInjectionConfig(gen.newInjectionConfig(configBuilder));
 
         generator.setConfig(configBuilder);
 

@@ -1,19 +1,18 @@
 package com.ttpai.framework.mybatis.config;
 
-import org.apache.ibatis.session.Configuration;
-
 import lombok.Getter;
+import org.apache.ibatis.session.Configuration;
 
 import static org.apache.ibatis.session.AutoMappingUnknownColumnBehavior.FAILING;
 import static org.apache.ibatis.session.LocalCacheScope.STATEMENT;
 
 /**
- * 默认值处理
+ * 默认配置处理
  *
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/5
  */
-public enum DefaultMybatisConfig {
+public enum DefaultMyBatisConfig {
     /**
      * 是否开启驼峰命名自动映射，即从经典数据库列名 A_COLUMN 映射到经典 Java 属性名 aColumn。
      */
@@ -34,6 +33,9 @@ public enum DefaultMybatisConfig {
             configuration.setLocalCacheScope(STATEMENT);
         }
     },
+    /**
+     * 列映射不匹配时，改为失败
+     */
     AUTO_MAPPING_UNKNOWN_COLUMN_BEHAVIOR("mybatis.configuration.autoMappingUnknownColumnBehavior") {
 
         @Override
@@ -48,7 +50,7 @@ public enum DefaultMybatisConfig {
     @Getter
     private final String key;
 
-    DefaultMybatisConfig(String key) {
+    DefaultMyBatisConfig(String key) {
         this.key = key;
     }
 
