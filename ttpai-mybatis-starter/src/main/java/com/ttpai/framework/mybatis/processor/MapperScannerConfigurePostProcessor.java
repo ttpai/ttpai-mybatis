@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.stereotype.Component;
 
 /**
  * @author zichao.zhang@ttpai.cn
