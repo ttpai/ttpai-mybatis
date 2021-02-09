@@ -13,6 +13,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +31,25 @@ import org.springframework.core.type.AnnotationMetadata;
 @Configuration
 @Import(BootMyBatisConfiguration.MyBatisFunctionEnhanceRegistrar.class)
 @AutoConfigureBefore(MybatisAutoConfiguration.class)
-public class BootMyBatisConfiguration {
+public class BootMyBatisConfiguration implements BeanDefinitionRegistryPostProcessor {
+
+    @Override
+    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) {
+        // 放在这里的原因是等所有bean定义都初始化完成，防止注入过早，springboot的 autoconfig不生效了
+        // bean 定义的构建器
+        BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RoutingDataSource.class);
+        // 获取bean 定义
+        AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
+        // 设置为主
+        beanDefinition.setPrimary(true);
+        // 注册到bean定义
+        registry.registerBeanDefinition(RoutingDataSource.class.getName(), beanDefinition);
+    }
+
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+        // nothing
+    }
 
     /**
      *
@@ -41,14 +60,7 @@ public class BootMyBatisConfiguration {
 
         @Override
         public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry registry) {
-            // bean 定义的构建器
-            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RoutingDataSource.class);
-            // 获取bean 定义
-            AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
-            // 设置为主
-            beanDefinition.setPrimary(true);
-            // 注册到bean定义
-            registry.registerBeanDefinition(RoutingDataSource.class.getName(), beanDefinition);
+            // nothing
         }
 
         @Override

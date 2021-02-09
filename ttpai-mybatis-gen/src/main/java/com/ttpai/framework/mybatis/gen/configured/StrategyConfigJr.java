@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 数据库表配置
+ * 
  * @author lilin.tan@ttpai.cn
  * @since 2021/2/9 15:28
  **/

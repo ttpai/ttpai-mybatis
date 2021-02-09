@@ -7,6 +7,7 @@ import org.springframework.jdbc.datasource.AbstractDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,7 +26,8 @@ public class RoutingDataSource extends AbstractDataSource implements Application
 
     private Map<String, DataSource> dataSourceMap;
 
-    private Optional<DataSource> defaultDataSource;
+    //todo 缓存
+    private Map<String, DataSource> cachedDataSourceMap;
 
     @Override
     public Connection getConnection() throws SQLException {
@@ -39,6 +41,10 @@ public class RoutingDataSource extends AbstractDataSource implements Application
 
     private DataSource detectDataSource() {
         initDataSource();
+        Optional<DataSource> dataSourceContainer = dataSourceMap.values().stream().findFirst();
+        if (dataSourceContainer.isPresent() && dataSourceMap.size() == 1) {
+            return dataSourceContainer.get();
+        }
         DataSource dataSource = null;
         String dataSourceKey = DataSourceContextHolder.getDataSourceKey();
         if (dataSourceKey != null) {
@@ -48,9 +54,6 @@ public class RoutingDataSource extends AbstractDataSource implements Application
                     break;
                 }
             }
-        }
-        if (dataSource == null && defaultDataSource.isPresent()) {
-            dataSource = defaultDataSource.get();
         }
         if (dataSource == null) {
             throw new IllegalStateException("datasource为空");
@@ -84,7 +87,7 @@ public class RoutingDataSource extends AbstractDataSource implements Application
                 }
             }
             this.dataSourceMap = localDataSourceMap;
-            this.defaultDataSource = localDataSourceMap.values().stream().findFirst();
+            this.cachedDataSourceMap = new HashMap<>(dataSourceMap.size());
         }
     }
 
