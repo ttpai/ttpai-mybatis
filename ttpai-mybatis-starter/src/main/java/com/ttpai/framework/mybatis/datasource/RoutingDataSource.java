@@ -1,12 +1,17 @@
 package com.ttpai.framework.mybatis.datasource;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.jdbc.datasource.AbstractDataSource;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.sql.DataSource;
 
 /**
  * 数据源路由
@@ -14,19 +19,13 @@ import java.util.Optional;
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/7
  */
-public class RoutingDataSource extends AbstractDataSource {
+public class RoutingDataSource extends AbstractDataSource implements ApplicationContextAware {
 
-    private final Map<String, DataSource> dataSourceMap;
+    private ApplicationContext applicationContext;
 
-    private final Optional<DataSource> defaultDataSource;
+    private Map<String, DataSource> dataSourceMap;
 
-    public RoutingDataSource(Map<String, DataSource> dataSourceMap) {
-        if (dataSourceMap == null) {
-            throw new IllegalArgumentException("dataSource不能为空");
-        }
-        this.dataSourceMap = dataSourceMap;
-        this.defaultDataSource = dataSourceMap.values().stream().findFirst();
-    }
+    private Optional<DataSource> defaultDataSource;
 
     @Override
     public Connection getConnection() throws SQLException {
@@ -39,10 +38,16 @@ public class RoutingDataSource extends AbstractDataSource {
     }
 
     private DataSource detectDataSource() {
+        initDataSource();
         DataSource dataSource = null;
         String dataSourceKey = DataSourceContextHolder.getDataSourceKey();
         if (dataSourceKey != null) {
-            dataSource = dataSourceMap.get(dataSourceKey);
+            for (String key : genJadeDataSourceKeys(dataSourceKey)) {
+                dataSource = dataSourceMap.get(key);
+                if (dataSource != null) {
+                    break;
+                }
+            }
         }
         if (dataSource == null && defaultDataSource.isPresent()) {
             dataSource = defaultDataSource.get();
@@ -51,5 +56,40 @@ public class RoutingDataSource extends AbstractDataSource {
             throw new IllegalStateException("datasource为空");
         }
         return dataSource;
+    }
+
+    public List<String> genJadeDataSourceKeys(String dataSourceKey) {
+        List<String> list = new ArrayList<>();
+        int index = dataSourceKey.lastIndexOf(".");
+        while (index > 0) {
+            String key = dataSourceKey.substring(0, index);
+            list.add("jade.dataSource." + key);
+            index = key.lastIndexOf(".");
+        }
+        return list;
+    }
+
+    private synchronized void initDataSource() {
+        if (this.dataSourceMap == null) {
+            Map<String, DataSource> localDataSourceMap = applicationContext.getBeansOfType(DataSource.class);
+            if (!localDataSourceMap.isEmpty()) {
+                String deleteKey = null;
+                for (Map.Entry<String, DataSource> entry : localDataSourceMap.entrySet()) {
+                    if (entry.getValue().equals(this)) {
+                        deleteKey = entry.getKey();
+                    }
+                }
+                if (deleteKey != null) {
+                    localDataSourceMap.remove(deleteKey);
+                }
+            }
+            this.dataSourceMap = localDataSourceMap;
+            this.defaultDataSource = localDataSourceMap.values().stream().findFirst();
+        }
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 }
