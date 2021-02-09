@@ -4,25 +4,22 @@ import com.ttpai.framework.mybatis.config.MyBatisConfigurationCustomer;
 import com.ttpai.framework.mybatis.datasource.RoutingDataSource;
 import com.ttpai.framework.mybatis.datasource.RoutingDataSourcePlugin;
 import com.ttpai.framework.mybatis.processor.MapperScannerConfigurerPostProcessor;
+
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
-import org.mybatis.spring.boot.autoconfigure.MybatisLanguageDriverAutoConfiguration;
+import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotationMetadata;
-
-import javax.sql.DataSource;
-import java.util.Map;
 
 /**
  * Springboot 项目的自动装配类 对Mybatis原生的autoconfig做增强
@@ -32,7 +29,7 @@ import java.util.Map;
  */
 @Configuration
 @Import(BootMyBatisConfiguration.MyBatisFunctionEnhanceRegistrar.class)
-@AutoConfigureAfter({DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class})
+@AutoConfigureBefore(MybatisAutoConfiguration.class)
 public class BootMyBatisConfiguration {
 
     /**
@@ -44,19 +41,14 @@ public class BootMyBatisConfiguration {
 
         @Override
         public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry registry) {
-            // // 获取注册 DataSource
-            // Map<String, DataSource> dataSourceMap = beanFactory.getBeansOfType(DataSource.class);
-            //
-            // // bean 定义的构建器
-            // BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RoutingDataSource.class);
-            // // 设置构造函数
-            // builder.addConstructorArgValue(dataSourceMap);
-            // // 获取bean 定义
-            // AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
-            // // 设置为主
-            // beanDefinition.setPrimary(true);
-            // //
-            // registry.registerBeanDefinition(RoutingDataSource.class.getName(), beanDefinition);
+            // bean 定义的构建器
+            BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RoutingDataSource.class);
+            // 获取bean 定义
+            AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
+            // 设置为主
+            beanDefinition.setPrimary(true);
+            // 注册到bean定义
+            registry.registerBeanDefinition(RoutingDataSource.class.getName(), beanDefinition);
         }
 
         @Override
