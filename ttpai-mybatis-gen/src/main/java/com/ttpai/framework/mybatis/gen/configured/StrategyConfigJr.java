@@ -7,8 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 数据库表配置
- * 
+ * 数据库表配置，通过该配置，可指定需要生成哪些表或者排除哪些表
+ *
  * @author lilin.tan@ttpai.cn
  * @since 2021/2/9 15:28
  **/
