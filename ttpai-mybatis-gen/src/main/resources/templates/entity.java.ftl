@@ -1,12 +1,20 @@
 package ${package.Entity};
 
+<#assign mybatisplus = "com.baomidou.mybatisplus">
+<#assign serializable = "Serializable">
+<#list table.importPackages as pkg>
+<#if !pkg?contains(mybatisplus) && !pkg?contains(serializable)>
+import ${pkg};
+</#if>
+</#list>
 <#if swagger2>
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 </#if>
 <#if entityLombokModel>
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
     <#if chainModel>
 import lombok.experimental.Accessors;
     </#if>
@@ -21,7 +29,9 @@ import lombok.experimental.Accessors;
  * @since ${date}
  */
 <#if entityLombokModel>
-@Data
+@Getter
+@Setter
+@ToString
     <#if superEntityClass??>
 @EqualsAndHashCode(callSuper = true)
     </#if>
