@@ -13,7 +13,7 @@ import static org.apache.ibatis.session.LocalCacheScope.STATEMENT;
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/5
  */
-public enum DefaultMybatisConfig {
+public enum DefaultMyBatisConfig {
     /**
      * 是否开启驼峰命名自动映射，即从经典数据库列名 A_COLUMN 映射到经典 Java 属性名 aColumn。
      */
@@ -48,7 +48,7 @@ public enum DefaultMybatisConfig {
     @Getter
     private final String key;
 
-    DefaultMybatisConfig(String key) {
+    DefaultMyBatisConfig(String key) {
         this.key = key;
     }
 

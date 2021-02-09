@@ -9,17 +9,17 @@ import org.springframework.util.StringUtils;
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/5
  */
-public class MybatisConfigurationCustomer implements ConfigurationCustomizer {
+public class MyBatisConfigurationCustomer implements ConfigurationCustomizer {
 
     private final Environment environment;
 
-    public MybatisConfigurationCustomer(Environment environment) {
+    public MyBatisConfigurationCustomer(Environment environment) {
         this.environment = environment;
     }
 
     @Override
     public void customize(Configuration configuration) {
-        for (DefaultMybatisConfig value : DefaultMybatisConfig.values()) {
+        for (DefaultMyBatisConfig value : DefaultMyBatisConfig.values()) {
             String property = environment.getProperty(value.getKey());
             if (StringUtils.isEmpty(property)) {
                 value.setConfig(configuration);
