@@ -6,8 +6,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 
 /**
+ * MyBatis 修改默认配置
+ *
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/5
+ * @see DefaultMyBatisConfig
  */
 public class MyBatisConfigurationCustomer implements ConfigurationCustomizer {
 
