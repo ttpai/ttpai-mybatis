@@ -21,10 +21,12 @@ import lombok.experimental.Accessors;
 </#if>
 
 /**
+<#if table.comment?? && table.comment != "">
  * <p>
  * ${table.comment!}
  * </p>
  *
+</#if>
  * @author ${author}
  * @since ${date}
  */

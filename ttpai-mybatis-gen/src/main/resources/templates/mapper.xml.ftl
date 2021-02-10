@@ -7,6 +7,15 @@
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
 
 </#if>
+
+<#list table.fields as field>
+<#--主键-->
+    <#if field.keyFlag>
+        <#assign keyPropertyName="${field.propertyName}"/>
+        <#assign keyFieldName="${field.name}"/>
+    </#if>
+</#list>
+
 <#if baseResultMap>
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
@@ -35,9 +44,42 @@
         ${table.fieldNames}
     </sql>
 
-    <select id="selectAll" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/> from ${table.name} ;
+    <!-- 通用【查询】条件  ！不包含主键字段 -->
+    <sql id="Base_Where">
+        <#list table.fields as field>
+        <#if !field.keyFlag>
+        <if test="${field.propertyName} != null "> AND ${field.name} = <#noparse>#</#noparse>{${field.propertyName}}</if>
+        </#if>
+        </#list>
+    </sql>
+
+    <!-- 通用【更新】条件  ！不包含主键字段 -->
+    <sql id="Base_Update">
+        <#list table.fields as field>
+        <#if !field.keyFlag>
+        <if test="${field.propertyName} != null ">${field.name} = <#noparse>#</#noparse>{${field.propertyName}},</if>
+        </#if>
+        </#list>
+    </sql>
+
+
+    <select id="selectByEntity" resultMap="BaseResultMap" parameterType="${package.Entity}.${entity}">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM ${table.name}
+        <trim prefix="WHERE" prefixOverrides="AND"><include refid="Base_Where"/></trim> ;
     </select>
+
+
+<#if keyPropertyName??>
+    <update id="updateBy${keyPropertyName?cap_first}" parameterType="${package.Entity}.${entity}">
+        UPDATE ${table.name}
+        <trim prefix="SET" prefixOverrides=","><include refid="Base_Update"/></trim>
+        where ${keyFieldName} = <#noparse>#</#noparse>{${keyPropertyName}};
+    </update>
+</#if>
+
+
 
 </#if>
 </mapper>
