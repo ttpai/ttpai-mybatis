@@ -26,8 +26,10 @@ public class RoutingDataSource extends AbstractDataSource implements Application
 
     private Map<String, DataSource> dataSourceMap;
 
-    //todo 缓存
-    private Map<String, DataSource> cachedDataSourceMap;
+    /**
+     * 缓存
+     */
+    private final Map<String, DataSource> cachedDataSourceMap = new HashMap<>();
 
     @Override
     public Connection getConnection() throws SQLException {
@@ -40,17 +42,22 @@ public class RoutingDataSource extends AbstractDataSource implements Application
     }
 
     private DataSource detectDataSource() {
-        initDataSource();
-        Optional<DataSource> dataSourceContainer = dataSourceMap.values().stream().findFirst();
-        if (dataSourceContainer.isPresent() && dataSourceMap.size() == 1) {
-            return dataSourceContainer.get();
-        }
         DataSource dataSource = null;
         String dataSourceKey = DataSourceContextHolder.getDataSourceKey();
-        if (dataSourceKey != null) {
+        //获取到DataSource key和 并且缓存中没有DataSource，走寻址逻辑
+        if (dataSourceKey != null && (dataSource = cachedDataSourceMap.get(dataSourceKey)) == null) {
+            //先初始化
+            initDataSource();
+            //如果只有一个数据源，直接获取不走寻址
+            Optional<DataSource> dataSourceContainer = dataSourceMap.values().stream().findFirst();
+            if (dataSourceContainer.isPresent() && dataSourceMap.size() == 1) {
+                return dataSourceContainer.get();
+            }
+            //根据生成的key遍历寻址DataSource
             for (String key : genJadeDataSourceKeys(dataSourceKey)) {
                 dataSource = dataSourceMap.get(key);
                 if (dataSource != null) {
+                    cachedDataSourceMap.put(dataSourceKey, dataSource);
                     break;
                 }
             }
@@ -87,7 +94,6 @@ public class RoutingDataSource extends AbstractDataSource implements Application
                 }
             }
             this.dataSourceMap = localDataSourceMap;
-            this.cachedDataSourceMap = new HashMap<>(dataSourceMap.size());
         }
     }
 

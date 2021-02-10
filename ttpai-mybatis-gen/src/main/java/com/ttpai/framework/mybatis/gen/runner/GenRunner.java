@@ -71,7 +71,7 @@ public class GenRunner implements ApplicationRunner {
                 // 全局配置
                 globalConfigJr);
 
-        //注入配置信息 - 自定义模板
+        // 注入配置信息 - 自定义模板
         configBuilder.setInjectionConfig(newInjectionConfig(configBuilder));
 
         generator.setConfig(configBuilder);
@@ -79,7 +79,6 @@ public class GenRunner implements ApplicationRunner {
         // 执行
         generator.execute();
     }
-
 
     private InjectionConfig newInjectionConfig(ConfigBuilder configBuilder) {
         InjectionConfig injectionConfig = new InjectionConfig() {
@@ -94,7 +93,7 @@ public class GenRunner implements ApplicationRunner {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 return String.format((configBuilder.getPathInfo().get(ConstVal.MAPPER_PATH) + File.separator
-                                              + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName());
+                        + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName());
             }
         };
         fileOutConfig.setTemplatePath("templates/mapper.java.ftl");
