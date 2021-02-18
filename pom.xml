@@ -17,6 +17,7 @@
     <modules>
         <module>ttpai-mybatis-starter</module>
         <module>ttpai-mybatis-gen</module>
+        <module>ttpai_mybatis_test</module>
     </modules>
 
     <repositories>

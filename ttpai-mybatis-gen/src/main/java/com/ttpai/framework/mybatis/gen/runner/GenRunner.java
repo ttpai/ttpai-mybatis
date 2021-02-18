@@ -15,7 +15,6 @@ import com.ttpai.framework.mybatis.gen.configured.TemplateConfigJr;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -29,9 +28,6 @@ import javax.annotation.Resource;
  */
 @Component
 public class GenRunner implements ApplicationRunner {
-
-    @Resource
-    private Environment env;
 
     @Resource
     private DataSourceConfigJr dataSourceConfigJr;
