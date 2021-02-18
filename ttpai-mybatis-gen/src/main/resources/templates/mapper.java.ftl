@@ -34,6 +34,16 @@ public interface ${table.mapperName} {
     ${entity} selectBy${field.propertyName?cap_first}(@Param("${field.propertyName}") ${field.propertyType} ${field.propertyName});
 
     /**
+     * 分页查询（无条件）
+     *
+     * @param startIndex 起始位置
+     * @param pageSize 页面大小
+     * @return List<${entity}>
+     */
+    @Select("SELECT" + BASE_ALL_FIELDS + " FROM  ${table.name} LIMIT #{startIndex},#{pageSize}")
+    List<${entity}> selectByPage(@Param("startIndex") Integer startIndex, @Param("pageSize") Integer pageSize);
+
+    /**
      * 根据${field.propertyName}更新
      *
      * @param entity 实体对象${entity}
