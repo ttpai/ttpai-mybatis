@@ -36,7 +36,7 @@ public interface ${table.mapperName} {
     /**
      * 根据${field.propertyName}更新
      *
-     * @param entity 实体对象
+     * @param entity 实体对象${entity}
      * @return 更新的条数
      */
     long updateBy${field.propertyName?cap_first}(${entity} entity);
@@ -46,9 +46,18 @@ public interface ${table.mapperName} {
     /**
      * 根据传入实体对象查询
      *
-     * @param entity 实体对象
+     * @param entity 实体对象${entity}
      * @return List<${entity}>
      */
     List<${entity}> selectByEntity(${entity} entity);
+
+
+    /**
+     * 新增（不包括主键、createDate、modifyDate）
+     *
+     * @param entity 实体对象${entity}
+     * @return 插入成功记录数
+     */
+    long insertByEntity(${entity} entity);
 }
 </#if>

@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${package.Mapper}.${table.mapperName}">
-
 <#if enableCache>
     <!-- 开启二级缓存 -->
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
 
 </#if>
 
-<#list table.fields as field>
-<#--主键-->
-    <#if field.keyFlag>
-        <#assign keyPropertyName="${field.propertyName}"/>
-        <#assign keyFieldName="${field.name}"/>
-    </#if>
-</#list>
 
 <#if baseResultMap>
     <!-- 通用查询映射结果 -->
@@ -33,8 +25,8 @@
 </#if>
 </#list>
     </resultMap>
-
 </#if>
+
 <#if baseColumnList>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
@@ -63,6 +55,40 @@
     </sql>
 
 
+<#list table.fields as field>
+<#--主键-->
+    <#if field.keyFlag>
+        <#assign propertyName ="${field.propertyName}"/>
+        <#assign primaryKeyName ="${field.name}"/>
+    </#if>
+    <#if field.name == "CREATE_TIME">
+        <#assign createTime="${field.name}"/>
+    </#if>
+    <#if field.name == "MODIFY_TIME">
+        <#assign modifyTime="${field.name}"/>
+    </#if>
+</#list>
+
+<#--根据主键更新-->
+    <#if primaryKeyName??>
+    <update id="updateBy${propertyName?cap_first}" parameterType="${package.Entity}.${entity}">
+        UPDATE ${table.name}
+        <trim prefix="SET" prefixOverrides=","><include refid="Base_Update"/></trim>
+        where ${primaryKeyName} = <#noparse>#</#noparse>{${propertyName}};
+    </update>
+    </#if>
+
+    <insert id="insertByEntity" parameterType="${package.Entity}.${entity}">
+        INSERT INTO  ${table.name}
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+        <#list table.fields as field><#if !field.keyFlag && field.name != "CREATE_TIME" && field.name != "MODIFY_TIME">${field.name},</#if></#list>
+        </trim>
+
+        <trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+        <#list table.fields as field><#if !field.keyFlag && field.name != "CREATE_TIME" && field.name != "MODIFY_TIME"> <#noparse>#</#noparse>{${field.propertyName}},</#if></#list>
+        </trim>
+    </insert>
+
     <select id="selectByEntity" resultMap="BaseResultMap" parameterType="${package.Entity}.${entity}">
         SELECT
         <include refid="Base_Column_List"/>
@@ -70,14 +96,6 @@
         <trim prefix="WHERE" prefixOverrides="AND"><include refid="Base_Where"/></trim> ;
     </select>
 
-
-<#if keyPropertyName??>
-    <update id="updateBy${keyPropertyName?cap_first}" parameterType="${package.Entity}.${entity}">
-        UPDATE ${table.name}
-        <trim prefix="SET" prefixOverrides=","><include refid="Base_Update"/></trim>
-        where ${keyFieldName} = <#noparse>#</#noparse>{${keyPropertyName}};
-    </update>
-</#if>
 
 
 

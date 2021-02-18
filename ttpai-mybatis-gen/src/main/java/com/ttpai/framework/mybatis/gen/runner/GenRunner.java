@@ -24,6 +24,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+/**
+ * @author lilin.tan@ttpai.cn
+ */
 @Component
 public class GenRunner implements ApplicationRunner {
 
