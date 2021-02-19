@@ -50,7 +50,7 @@ public interface ${table.mapperName} {
      * @param entity 实体对象${entity}
      * @return 更新的条数
      */
-    long updateBy${field.propertyName?cap_first}(${entity} entity);
+    Long updateBy${field.propertyName?cap_first}(${entity} entity);
   </#if>
 </#list>
 
@@ -69,7 +69,7 @@ public interface ${table.mapperName} {
      * @param entity 实体对象${entity}
      * @return 插入成功记录数
      */
-    long insertByEntity(${entity} entity);
+    Long insertByEntity(${entity} entity);
 </#if>
 }
 </#if>
