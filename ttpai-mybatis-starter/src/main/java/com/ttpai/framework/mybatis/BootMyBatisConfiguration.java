@@ -10,15 +10,14 @@ import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotationMetadata;
 
@@ -28,27 +27,15 @@ import org.springframework.core.type.AnnotationMetadata;
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/5
  */
-@Configuration
 @Import(BootMyBatisConfiguration.MyBatisFunctionEnhanceRegistrar.class)
+@AutoConfigureAfter(DataSourceAutoConfiguration.class)
 @AutoConfigureBefore(MybatisAutoConfiguration.class)
-public class BootMyBatisConfiguration implements BeanDefinitionRegistryPostProcessor {
+public class BootMyBatisConfiguration {
 
-    @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) {
-        // 放在这里的原因是等所有bean定义都初始化完成，防止注入过早，springboot的 autoconfig不生效了
-        // bean 定义的构建器
-        BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RoutingDataSource.class);
-        // 获取bean 定义
-        AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
-        // 设置为主
-        beanDefinition.setPrimary(true);
-        // 注册到bean定义
-        registry.registerBeanDefinition(RoutingDataSource.class.getName(), beanDefinition);
-    }
-
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
-        // nothing
+    @Bean("routingDataSource")
+    @Primary
+    public RoutingDataSource routingDataSource() {
+        return new RoutingDataSource();
     }
 
     /**
