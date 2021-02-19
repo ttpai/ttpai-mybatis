@@ -20,6 +20,7 @@ interface ${table.mapperName} : ${superMapperClass}<${entity}>
 <#else>
 public interface ${table.mapperName} {
 <#if table.fieldNames??>
+
     String BASE_ALL_FIELDS = " ${table.fieldNames} ";
 
     /**

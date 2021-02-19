@@ -45,10 +45,10 @@
         </#list>
     </sql>
 
-    <!-- 通用【更新】条件  ！不包含主键字段 -->
+    <!-- 通用【更新】条件  ！不包含主键、CREATE_TIME、MODIFY_TIME字段 -->
     <sql id="Base_Update">
         <#list table.fields as field>
-        <#if !field.keyFlag>
+        <#if !field.keyFlag && field.name != "CREATE_TIME" && field.name != "MODIFY_TIME">
         <if test="${field.propertyName} != null ">${field.name} = <#noparse>#</#noparse>{${field.propertyName}},</if>
         </#if>
         </#list>
