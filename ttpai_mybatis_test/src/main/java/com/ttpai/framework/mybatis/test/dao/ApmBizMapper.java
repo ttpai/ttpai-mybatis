@@ -1,25 +1,32 @@
 package com.ttpai.framework.mybatis.test.dao;
 
 import com.ttpai.framework.mybatis.test.model.ApmBizVO;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
-
 /**
  * <p>
  * 业务类型注册表 Mapper 接口
  * </p>
  *
  * @author lilin.tan@ttpai
- * @since 2021-02-18
+ * @since 2021-02-19
  */
 @Mapper
 public interface ApmBizMapper {
-
     String BASE_ALL_FIELDS = " ID, BIZ_NAME, BIZ_KEY, REMAIN_DAY, REMAIN_COUNT, ES_INDEX, ROLL_STRATEGY, MODIFY_TIME, CREATE_TIME, REMARK ";
+
+    /**
+     * 分页查询（无条件）
+     *
+     * @param startIndex 起始位置
+     * @param pageSize 页面大小
+     * @return List<ApmBizVO>
+     */
+    @Select("SELECT" + BASE_ALL_FIELDS + " FROM  APM_BIZ LIMIT #{startIndex},#{pageSize}")
+    List<ApmBizVO> selectByPage(@Param("startIndex") Integer startIndex, @Param("pageSize") Integer pageSize);
 
     /**
      * 根据id查询
@@ -29,16 +36,6 @@ public interface ApmBizMapper {
      */
     @Select("SELECT" + BASE_ALL_FIELDS + " FROM  APM_BIZ WHERE ID = #{id} LIMIT 1")
     ApmBizVO selectById(@Param("id") Long id);
-
-    /**
-     * 分页查询（无条件）
-     *
-     * @param startIndex 起始位置
-     * @param pageSize 页面大小
-     * @return List<ApmBizVO>
-     */
-    @Select("SELECT" + BASE_ALL_FIELDS + " FROM  APM_BIZ  LIMIT #{startIndex},#{pageSize}")
-    List<ApmBizVO> selectByPage(@Param("startIndex") Integer startIndex, @Param("pageSize") Integer pageSize);
 
     /**
      * 根据id更新

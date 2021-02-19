@@ -19,8 +19,18 @@ import java.util.List;
 interface ${table.mapperName} : ${superMapperClass}<${entity}>
 <#else>
 public interface ${table.mapperName} {
-
+<#if table.fieldNames??>
     String BASE_ALL_FIELDS = " ${table.fieldNames} ";
+
+    /**
+     * 分页查询（无条件）
+     *
+     * @param startIndex 起始位置
+     * @param pageSize 页面大小
+     * @return List<${entity}>
+     */
+    @Select("SELECT" + BASE_ALL_FIELDS + " FROM  ${table.name} LIMIT <#noparse>#</#noparse>{startIndex},<#noparse>#</#noparse>{pageSize}")
+    List<${entity}> selectByPage(@Param("startIndex") Integer startIndex, @Param("pageSize") Integer pageSize);
 
 <#list table.fields as field>
   <#if field.keyFlag><#--主键-->
@@ -32,16 +42,6 @@ public interface ${table.mapperName} {
      */
     @Select("SELECT" + BASE_ALL_FIELDS + " FROM  ${table.name} WHERE ${field.annotationColumnName} = <#noparse>#</#noparse>{${field.propertyName}} LIMIT 1")
     ${entity} selectBy${field.propertyName?cap_first}(@Param("${field.propertyName}") ${field.propertyType} ${field.propertyName});
-
-    /**
-     * 分页查询（无条件）
-     *
-     * @param startIndex 起始位置
-     * @param pageSize 页面大小
-     * @return List<${entity}>
-     */
-    @Select("SELECT" + BASE_ALL_FIELDS + " FROM  ${table.name} LIMIT #{startIndex},#{pageSize}")
-    List<${entity}> selectByPage(@Param("startIndex") Integer startIndex, @Param("pageSize") Integer pageSize);
 
     /**
      * 根据${field.propertyName}更新
@@ -69,5 +69,6 @@ public interface ${table.mapperName} {
      * @return 插入成功记录数
      */
     long insertByEntity(${entity} entity);
+</#if>
 }
 </#if>
