@@ -1,4 +1,4 @@
-package com.ttpai.framework.mybatis.annotation;
+package com.ttpai.framework.mybatis.plugin.datasource.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -7,6 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 数据源注解
  *
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/19

@@ -13,9 +13,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@ApiModel(value="UserVO对象", description="")
+@ApiModel(value = "UserVO对象", description = "")
 public class UserVO {
-
 
     @ApiModelProperty(value = "主键ID")
     private Long id;
@@ -28,7 +27,6 @@ public class UserVO {
 
     @ApiModelProperty(value = "邮箱")
     private String email;
-
 
     public static final String ID = "ID";
 

@@ -53,17 +53,17 @@ public class UserMapperTest {
     @Test
     public void updateById() {
         long id = 1;
-        //old User
+        // old User
         UserVO userVO1 = userMapper.selectById(id);
 
-        //update user
+        // update user
         UserVO userVO = new UserVO();
         userVO.setId(id);
         userVO.setAge(500);
         userVO.setEmail("lilin.tan@ttpai.cn");
         long updateNum = userMapper.updateById(userVO);
 
-        //new User
+        // new User
         UserVO userVO2 = userMapper.selectById(id);
 
         Assert.assertTrue(updateNum > 0);
@@ -100,7 +100,6 @@ public class UserMapperTest {
         List<UserVO> userVOS1 = userMapper.selectByEntity(new UserVO());
 
         Assert.assertNotEquals(userVOS.size(), userVOS1.size());
-
 
     }
 }

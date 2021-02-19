@@ -24,16 +24,15 @@ import java.sql.Statement;
 @Import(GenApp.class)
 public class CodeGeneratorTest {
 
-
     @Test
     public void Generator() {
         System.out.println("Generator");
     }
 
-
     @Test
     public void testGetTableNames() throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:p6spy:h2:file:F:\\ideaWorkSpace\\ttpai_mybatis\\ttpai_mybatis_test\\src\\test\\resources\\mybatisplus;TRACE_LEVEL_FILE=0;IFEXISTS=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE",
+        Connection conn = DriverManager.getConnection(
+                "jdbc:p6spy:h2:file:F:\\ideaWorkSpace\\ttpai_mybatis\\ttpai_mybatis_test\\src\\test\\resources\\mybatisplus;TRACE_LEVEL_FILE=0;IFEXISTS=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE",
                 "root",
                 "test");
         Statement stmt = conn.createStatement();
@@ -48,6 +47,5 @@ public class CodeGeneratorTest {
         }
         conn.close();
     }
-
 
 }

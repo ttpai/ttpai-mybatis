@@ -1,5 +1,6 @@
-package com.ttpai.framework.mybatis.datasource;
+package com.ttpai.framework.mybatis.plugin.datasource;
 
+import com.ttpai.framework.mybatis.plugin.datasource.support.DataSourceContextHolder;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
@@ -26,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
         @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})
 })
 @Slf4j
-public class RoutingDataSourcePlugin implements Interceptor {
+public class MyBatisDatasourcePlugin implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {

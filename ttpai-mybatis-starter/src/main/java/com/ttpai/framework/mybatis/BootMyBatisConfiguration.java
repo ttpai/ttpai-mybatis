@@ -1,10 +1,8 @@
 package com.ttpai.framework.mybatis;
 
 import com.ttpai.framework.mybatis.config.MyBatisConfigurationCustomer;
-import com.ttpai.framework.mybatis.datasource.RoutingDataSource;
-import com.ttpai.framework.mybatis.datasource.RoutingDataSourcePlugin;
+import com.ttpai.framework.mybatis.plugins.PluginsConfig;
 import com.ttpai.framework.mybatis.processor.MapperScannerConfigurerPostProcessor;
-
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.beans.factory.BeanFactory;
@@ -17,26 +15,20 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
- * Springboot 项目的自动装配类 对Mybatis原生的autoconfig做增强
+ * Springboot 项目的自动装配类 对 MyBatis 原生的 autoconfig 做增强
  *
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/5
  */
-@Import(BootMyBatisConfiguration.MyBatisFunctionEnhanceRegistrar.class)
-@AutoConfigureAfter(DataSourceAutoConfiguration.class)
-@AutoConfigureBefore(MybatisAutoConfiguration.class)
+@Import({ //
+        BootMyBatisConfiguration.MyBatisFunctionEnhanceRegistrar.class, //
+        PluginsConfig.class //
+})
 public class BootMyBatisConfiguration {
-
-    @Bean("routingDataSource")
-    @Primary
-    public RoutingDataSource routingDataSource() {
-        return new RoutingDataSource();
-    }
 
     /**
      *
@@ -73,8 +65,4 @@ public class BootMyBatisConfiguration {
         return new MyBatisConfigurationCustomer(environment);
     }
 
-    @Bean
-    public RoutingDataSourcePlugin routingDataSourcePlugin() {
-        return new RoutingDataSourcePlugin();
-    }
 }

@@ -6,9 +6,10 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author lilin.tan@ttpai
@@ -23,7 +24,7 @@ public interface UserMapper {
      * 分页查询（无条件）
      *
      * @param startIndex 起始位置
-     * @param pageSize 页面大小
+     * @param pageSize   页面大小
      * @return List<UserVO>
      */
     @Select("SELECT" + BASE_ALL_FIELDS + " FROM  USER LIMIT #{startIndex},#{pageSize}")
@@ -53,7 +54,6 @@ public interface UserMapper {
      * @return List<UserVO>
      */
     List<UserVO> selectByEntity(UserVO entity);
-
 
     /**
      * 新增（不包括主键、createDate、modifyDate）

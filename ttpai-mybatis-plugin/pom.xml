@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>ttpai_mybatis</artifactId>
+        <groupId>com.ttpai.framework</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>ttpai-mybatis-plugin</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <!-- 多数据源支持 -->
+        <module>ttpai-mybatis-plugin-datasource</module>
+        <!-- 对 Mapper 的返回结果进行处理 -->
+        <!-- 1. 如果类型是集合，返回 null 的时候创建空集合 -->
+        <module>ttpai-mybatis-plugin-result</module>
+    </modules>
+
+</project>
