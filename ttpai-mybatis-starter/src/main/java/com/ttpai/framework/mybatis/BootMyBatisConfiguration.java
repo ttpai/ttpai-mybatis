@@ -1,17 +1,12 @@
 package com.ttpai.framework.mybatis;
 
 import com.ttpai.framework.mybatis.config.MyBatisConfigurationCustomer;
-import com.ttpai.framework.mybatis.plugins.PluginsConfig;
 import com.ttpai.framework.mybatis.processor.MapperScannerConfigurerPostProcessor;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
-import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;

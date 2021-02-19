@@ -1,4 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.ttpai.framework.mybatis.BootMyBatisConfiguration,\
-  com.ttpai.framework.mybatis.plugins.PluginsConfig$Datasource
+  com.ttpai.framework.mybatis.plugins.DatasourcePluginConfig
