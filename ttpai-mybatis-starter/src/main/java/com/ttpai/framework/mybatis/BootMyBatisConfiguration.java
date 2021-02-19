@@ -53,7 +53,6 @@ public class BootMyBatisConfiguration {
         @Override
         public void setBeanFactory(BeanFactory beanFactory) {
             this.beanFactory = (ConfigurableListableBeanFactory) beanFactory;
-            //
             addPostProcessor();
         }
 

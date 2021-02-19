@@ -1,5 +1,7 @@
 package com.ttpai.framework.mybatis.datasource;
 
+import com.ttpai.framework.mybatis.annotation.DS;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.jdbc.datasource.AbstractDataSource;
@@ -14,12 +16,15 @@ import java.util.Optional;
 
 import javax.sql.DataSource;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 数据源路由
  *
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/7
  */
+@Slf4j
 public class RoutingDataSource extends AbstractDataSource implements ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -53,19 +58,45 @@ public class RoutingDataSource extends AbstractDataSource implements Application
         String dataSourceKey = DataSourceContextHolder.getDataSourceKey();
         // 获取到DataSource key和 并且缓存中没有DataSource，走寻址逻辑
         if (dataSourceKey != null && (dataSource = cachedDataSourceMap.get(dataSourceKey)) == null) {
+            // 获取类或者方法上的注解
+            String annotationKey = getAnnotationDataSourceKey(dataSourceKey);
+            // 如果获取到注解并且能获取到对应DataSource，加入缓存并返回
+            if (annotationKey != null && (dataSource = dataSourceMap.get(annotationKey)) != null) {
+                cachedDataSourceMap.put(dataSourceKey, dataSource);
+                return dataSource;
+            }
             // 根据生成的key遍历寻址DataSource
             for (String key : genJadeDataSourceKeys(dataSourceKey)) {
                 dataSource = dataSourceMap.get(key);
                 if (dataSource != null) {
                     cachedDataSourceMap.put(dataSourceKey, dataSource);
-                    break;
+                    return dataSource;
                 }
             }
+        } else if (dataSourceKey == null && dataSourceContainer.isPresent()) {
+            // 如果没有Key，说明不是mybatis调用的，直接获取
+            return dataSourceContainer.get();
         }
         if (dataSource == null) {
             throw new IllegalStateException("datasource为空");
         }
         return dataSource;
+    }
+
+    private String getAnnotationDataSourceKey(String dataSourceKey) {
+        String annotationKey = null;
+        int index = dataSourceKey.lastIndexOf(".");
+        String classname = dataSourceKey.substring(0, index);
+        try {
+            Class<?> clazz = Class.forName(classname);
+            DS ds = clazz.getAnnotation(DS.class);
+            if (ds != null) {
+                annotationKey = ds.value();
+            }
+        } catch (ClassNotFoundException e) {
+            log.warn("获取注解时无法生成对应的类", e);
+        }
+        return annotationKey;
     }
 
     public List<String> genJadeDataSourceKeys(String dataSourceKey) {
