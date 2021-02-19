@@ -74,9 +74,33 @@ public class UserMapperTest {
 
     @Test
     public void selectByEntity() {
+        String name = "Tom";
+        UserVO userVO = new UserVO();
+        userVO.setName(name);
+        List<UserVO> userVOS = userMapper.selectByEntity(userVO);
+        Assert.assertNotNull(userVOS);
+        for (UserVO vo : userVOS) {
+            Assert.assertEquals(vo.getName(), name);
+        }
+
     }
 
     @Test
     public void insertByEntity() {
+        List<UserVO> userVOS = userMapper.selectByEntity(new UserVO());
+
+        UserVO userVO = new UserVO();
+        userVO.setName("lilin");
+        userVO.setEmail("lilin.tan@ttpai.cn");
+        userVO.setAge(100);
+        Long aLong = userMapper.insertByEntity(userVO);
+
+        Assert.assertEquals(1, (long) aLong);
+
+        List<UserVO> userVOS1 = userMapper.selectByEntity(new UserVO());
+
+        Assert.assertNotEquals(userVOS.size(), userVOS1.size());
+
+
     }
 }

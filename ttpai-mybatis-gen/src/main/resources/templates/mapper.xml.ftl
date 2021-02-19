@@ -73,7 +73,7 @@
     <#if primaryKeyName??>
     <update id="updateBy${propertyName?cap_first}" parameterType="${package.Entity}.${entity}">
         UPDATE ${table.name}
-        <trim prefix="SET" prefixOverrides=","><include refid="Base_Update"/></trim>
+        <trim prefix="SET" suffixOverrides=","><include refid="Base_Update"/></trim>
         where ${primaryKeyName} = <#noparse>#</#noparse>{${propertyName}};
     </update>
     </#if>
