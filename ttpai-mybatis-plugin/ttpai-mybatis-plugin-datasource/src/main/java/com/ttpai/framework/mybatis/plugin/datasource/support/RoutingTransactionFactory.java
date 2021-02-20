@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 /**
  * 自定义的mybatis事务工厂
+ * 
  * @author zichao.zhang
  */
 public class RoutingTransactionFactory extends SpringManagedTransactionFactory {

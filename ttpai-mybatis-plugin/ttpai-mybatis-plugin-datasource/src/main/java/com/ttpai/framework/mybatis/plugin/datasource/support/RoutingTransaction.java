@@ -42,7 +42,7 @@ public class RoutingTransaction implements Transaction {
      */
     @Override
     public Connection getConnection() throws SQLException {
-        //每次都要执行打开
+        // 每次都要执行打开
         openConnection();
         return Objects.requireNonNull(this.dataSourceStack.peek()).getConnection();
     }
@@ -55,16 +55,16 @@ public class RoutingTransaction implements Transaction {
      * false and will always call commit/rollback so we need to no-op that calls.
      */
     private void openConnection() throws SQLException {
-        //选择真正的DataSource
+        // 选择真正的DataSource
         DataSource realDataSource = detectedRealDataSource();
-        //委托给Spring事务管理器获取连接
+        // 委托给Spring事务管理器获取连接
         Connection connection = DataSourceUtils.getConnection(realDataSource);
         boolean autoCommit = connection.getAutoCommit();
         boolean isConnectionTransactional = DataSourceUtils.isConnectionTransactional(connection, realDataSource);
-        //把DataSource和对应创建的连接放入自定义容器中
+        // 把DataSource和对应创建的连接放入自定义容器中
         DataSourceContainer dataSourceContainer = new DataSourceContainer(realDataSource, connection, autoCommit,
                 isConnectionTransactional);
-        //推入到栈中保存，保证不重复
+        // 推入到栈中保存，保证不重复
         if (!dataSourceStack.contains(dataSourceContainer)) {
             this.dataSourceStack.push(dataSourceContainer);
         }
