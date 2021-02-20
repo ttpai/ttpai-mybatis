@@ -2,6 +2,7 @@ package com.ttpai.framework.mybatis;
 
 import com.ttpai.framework.mybatis.config.MyBatisConfigurationCustomer;
 import com.ttpai.framework.mybatis.processor.MapperScannerConfigurerPostProcessor;
+
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
@@ -20,8 +21,7 @@ import org.springframework.core.type.AnnotationMetadata;
  * @date 2021/2/5
  */
 @Import({ //
-        BootMyBatisConfiguration.MyBatisFunctionEnhanceRegistrar.class, //
-        PluginsConfig.class //
+        BootMyBatisConfiguration.MyBatisFunctionEnhanceRegistrar.class
 })
 public class BootMyBatisConfiguration {
 
