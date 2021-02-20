@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.ttpai.framework</groupId>
         <artifactId>ttpai-parent</artifactId>
-        <version>1.3.9-SNAPSHOT</version>
+        <version>1.3.9</version>
     </parent>
 
     <artifactId>ttpai_mybatis</artifactId>
@@ -15,10 +15,15 @@
     <packaging>pom</packaging>
 
     <modules>
+        <!-- 依赖项目 -->
         <module>ttpai-mybatis-starter</module>
-        <module>ttpai-mybatis-gen</module>
-        <module>ttpai_mybatis_test</module>
+        <!-- MyBatis 插件 -->
         <module>ttpai-mybatis-plugin</module>
+
+        <!-- 代码生成器 -->
+        <module>ttpai-mybatis-gen</module>
+        <!-- 测试项目 -->
+        <module>ttpai-mybatis-test</module>
     </modules>
 
     <repositories>

@@ -21,6 +21,7 @@
             <groupId>com.ttpai.framework</groupId>
             <artifactId>ttpai-mybatis-plugin-datasource</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Mapper 返回值处理 -->
@@ -28,6 +29,7 @@
             <groupId>com.ttpai.framework</groupId>
             <artifactId>ttpai-mybatis-plugin-result</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- endregion -->

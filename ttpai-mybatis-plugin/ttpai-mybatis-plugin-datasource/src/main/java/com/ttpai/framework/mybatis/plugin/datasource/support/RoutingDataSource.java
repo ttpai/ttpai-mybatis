@@ -40,40 +40,56 @@ public class RoutingDataSource extends AbstractDataSource implements Application
     }
 
     public DataSource detectDataSource() {
-        DataSource dataSource = null;
+        DataSource dataSource;
         // 先初始化
         initDataSource();
-        // 如果只有一个数据源，直接获取不走寻址
+
+        // 没有数据源
         Optional<DataSource> dataSourceContainer = dataSourceMap.values().stream().findFirst();
-        if (dataSourceContainer.isPresent() && dataSourceMap.size() == 1) {
+        if (!dataSourceContainer.isPresent()) {
+            throw new IllegalStateException("datasource为空");
+        }
+
+        // 一个数据源
+        if (dataSourceMap.size() == 1) {
             return dataSourceContainer.get();
         }
+
+        // 没有走 MyBatis 插件
         String dataSourceKey = DataSourceContextHolder.getDataSourceKey();
-        // 获取到DataSource key和 并且缓存中没有DataSource，走寻址逻辑
-        if (dataSourceKey != null && (dataSource = cachedDataSourceMap.get(dataSourceKey)) == null) {
-            // 获取类或者方法上的注解
-            String annotationKey = getAnnotationDataSourceKey(dataSourceKey);
-            // 如果获取到注解并且能获取到对应DataSource，加入缓存并返回
-            if (annotationKey != null && (dataSource = dataSourceMap.get(annotationKey)) != null) {
+        if (dataSourceKey == null) {
+            // 如果没有Key，说明不是 mybatis 调用的，直接获取
+            return dataSourceContainer.get();
+        }
+
+        // 缓存中有
+        dataSource = cachedDataSourceMap.get(dataSourceKey);
+        if (null != dataSource) {
+            return dataSource;
+        }
+
+        /*
+         * 1. 根据 @DS 注解找数据源
+         */
+        String dsKey = getAnnotationDataSourceKey(dataSourceKey);
+        // 如果获取到注解并且能获取到对应DataSource，加入缓存并返回
+        if (dsKey != null && (dataSource = dataSourceMap.get(dsKey)) != null) {
+            cachedDataSourceMap.put(dataSourceKey, dataSource);
+            return dataSource;
+        }
+
+        /*
+         * 2. 如果 @DS 注解找不到，适配 jade 逻辑，根据 package 名称找
+         */
+        for (String key : genJadeDataSourceKeys(dataSourceKey)) {
+            dataSource = dataSourceMap.get(key);
+            if (dataSource != null) {
                 cachedDataSourceMap.put(dataSourceKey, dataSource);
                 return dataSource;
             }
-            // 根据生成的key遍历寻址DataSource
-            for (String key : genJadeDataSourceKeys(dataSourceKey)) {
-                dataSource = dataSourceMap.get(key);
-                if (dataSource != null) {
-                    cachedDataSourceMap.put(dataSourceKey, dataSource);
-                    return dataSource;
-                }
-            }
-        } else if (dataSourceKey == null && dataSourceContainer.isPresent()) {
-            // 如果没有Key，说明不是mybatis调用的，直接获取
-            return dataSourceContainer.get();
         }
-        if (dataSource == null) {
-            throw new IllegalStateException("datasource为空");
-        }
-        return dataSource;
+
+        throw new IllegalStateException("datasource为空");
     }
 
     private String getAnnotationDataSourceKey(String dataSourceKey) {

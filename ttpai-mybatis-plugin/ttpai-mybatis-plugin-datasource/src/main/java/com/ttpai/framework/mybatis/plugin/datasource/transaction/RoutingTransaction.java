@@ -4,6 +4,7 @@ import com.ttpai.framework.mybatis.plugin.datasource.support.RoutingDataSource;
 import org.apache.ibatis.transaction.Transaction;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
+import org.mybatis.spring.transaction.SpringManagedTransaction;
 import org.springframework.jdbc.datasource.ConnectionHolder;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
@@ -19,10 +20,13 @@ import javax.sql.DataSource;
 import static org.springframework.util.Assert.notNull;
 
 /**
- * 拷贝SpringManagedTransaction代码 并重写获取DataSource的逻辑 使用栈的方式管理多数据源，让其支持在事务下正确运行
+ * 拷贝 SpringManagedTransaction 代码 并重写获取 DataSource 的逻辑
+ * <p>
+ * 使用栈的方式管理多数据源，让其支持在事务下正确运行
  *
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/19
+ * @see org.mybatis.spring.transaction.SpringManagedTransaction
  */
 public class RoutingTransaction implements Transaction {
 
@@ -32,6 +36,9 @@ public class RoutingTransaction implements Transaction {
 
     private final Deque<DataSourceContainer> dataSourceStack;
 
+    /**
+     * @see RoutingDataSource
+     */
     public RoutingTransaction(DataSource dataSource) {
         notNull(dataSource, "No DataSource specified");
         this.dataSource = dataSource;
@@ -39,26 +46,23 @@ public class RoutingTransaction implements Transaction {
     }
 
     /**
-     * {@inheritDoc}
+     * @see SpringManagedTransaction#getConnection()
      */
     @Override
     public Connection getConnection() throws SQLException {
         // 每次都要执行打开
         openConnection();
+
         return Objects.requireNonNull(this.dataSourceStack.peek()).getConnection();
     }
 
     /**
-     * Gets a connection from Spring transaction manager and discovers if this {@code Transaction} should manage
-     * connection or let it to Spring.
-     * <p>
-     * It also reads autocommit setting because when using Spring Transaction MyBatis thinks that autocommit is always
-     * false and will always call commit/rollback so we need to no-op that calls.
+     * @see SpringManagedTransaction#openConnection()
      */
     private void openConnection() throws SQLException {
         // 选择真正的DataSource
         DataSource realDataSource = detectedRealDataSource();
-        // 委托给Spring事务管理器获取连接
+        // 委托给 Spring 事务管理器获取连接
         Connection connection = DataSourceUtils.getConnection(realDataSource);
         boolean autoCommit = connection.getAutoCommit();
         boolean isConnectionTransactional = DataSourceUtils.isConnectionTransactional(connection, realDataSource);
@@ -82,13 +86,15 @@ public class RoutingTransaction implements Transaction {
     }
 
     /**
-     * {@inheritDoc}
+     * @see SpringManagedTransaction#commit()
      */
     @Override
     public void commit() throws SQLException {
         for (DataSourceContainer dataSourceContainer : this.dataSourceStack) {
-            if (dataSourceContainer.getConnection() != null && !dataSourceContainer
-                    .isConnectionTransactional() && !dataSourceContainer.isAutoCommit()) {
+            if (dataSourceContainer.getConnection() != null
+                    && !dataSourceContainer.isConnectionTransactional()
+                    && !dataSourceContainer.isAutoCommit() //
+            ) {
                 LOGGER.debug(() -> "Committing JDBC Connection [" + dataSourceContainer.getConnection() + "]");
                 dataSourceContainer.getConnection().commit();
             }
@@ -96,13 +102,15 @@ public class RoutingTransaction implements Transaction {
     }
 
     /**
-     * {@inheritDoc}
+     * @see SpringManagedTransaction#rollback()
      */
     @Override
     public void rollback() throws SQLException {
         for (DataSourceContainer dataSourceContainer : this.dataSourceStack) {
-            if (dataSourceContainer.getConnection() != null && !dataSourceContainer
-                    .isConnectionTransactional() && !dataSourceContainer.isAutoCommit()) {
+            if (dataSourceContainer.getConnection() != null
+                    && !dataSourceContainer.isConnectionTransactional()
+                    && !dataSourceContainer.isAutoCommit() //
+            ) {
                 LOGGER.debug(() -> "Committing JDBC Connection [" + dataSourceContainer.getConnection() + "]");
                 dataSourceContainer.getConnection().rollback();
             }
@@ -110,7 +118,7 @@ public class RoutingTransaction implements Transaction {
     }
 
     /**
-     * {@inheritDoc}
+     * @see SpringManagedTransaction#close()
      */
     @Override
     public void close() throws SQLException {
