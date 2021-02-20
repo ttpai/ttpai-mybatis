@@ -1,5 +1,6 @@
 package com.ttpai.framework.mybatis.plugin.datasource.support;
 
+import com.ttpai.framework.mybatis.plugin.datasource.transaction.RoutingTransactionFactory;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.config.BeanPostProcessor;

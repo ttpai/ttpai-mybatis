@@ -39,7 +39,7 @@ public class RoutingDataSource extends AbstractDataSource implements Application
         return detectDataSource().getConnection(username, password);
     }
 
-    protected DataSource detectDataSource() {
+    public DataSource detectDataSource() {
         DataSource dataSource = null;
         // 先初始化
         initDataSource();
