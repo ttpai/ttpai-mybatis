@@ -19,12 +19,15 @@ import lombok.extern.slf4j.Slf4j;
  * @author zichao.zhang
  */
 @Intercepts({
-        @Signature(type = Executor.class, method = "query", args = {MappedStatement.class, Object.class,
-                RowBounds.class, ResultHandler.class}),
-        @Signature(type = Executor.class, method = "query", //
-                args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class,
-                        BoundSql.class}),
-        @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})
+        @Signature(type = Executor.class, method = "query", args = { //
+                MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class //
+        }),
+        @Signature(type = Executor.class, method = "query", args = { //
+                MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class, CacheKey.class, BoundSql.class //
+        }),
+        @Signature(type = Executor.class, method = "update", args = { //
+                MappedStatement.class, Object.class //
+        })
 })
 @Slf4j
 public class MyBatisDatasourcePlugin implements Interceptor {
@@ -32,14 +35,17 @@ public class MyBatisDatasourcePlugin implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
+        //
+        // com.ttpai.framework.mybatis.test.dao.TtpaiUserMapper.selectByPage
         String id = mappedStatement.getId();
-        //
-        DataSourceContextHolder.setDataSourceKey(resolveDataSourceKey(id));
-        //
-        Object obj = invocation.proceed();
-        //
-        DataSourceContextHolder.clearDataSourceKey();
-        return obj;
+
+        try {
+            DataSourceContextHolder.setDataSourceKey(resolveDataSourceKey(id));
+            //
+            return invocation.proceed();
+        } finally {
+            DataSourceContextHolder.clearDataSourceKey();
+        }
     }
 
     @Override
@@ -47,6 +53,9 @@ public class MyBatisDatasourcePlugin implements Interceptor {
         return Plugin.wrap(target, this);
     }
 
+    /**
+     * com.ttpai.framework.mybatis.test.dao.TtpaiUserMapper.selectByPage
+     */
     private String resolveDataSourceKey(String id) {
         return id;
     }
