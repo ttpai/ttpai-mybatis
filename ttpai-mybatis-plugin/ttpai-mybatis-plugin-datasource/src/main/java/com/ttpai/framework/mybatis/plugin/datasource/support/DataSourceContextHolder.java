@@ -1,6 +1,7 @@
 package com.ttpai.framework.mybatis.plugin.datasource.support;
 
 /**
+ * 线程本地容器，存储多数据源切换的key
  * @author zichao.zhang
  */
 public class DataSourceContextHolder {

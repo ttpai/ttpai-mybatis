@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
- * 数据源路由
+ * 带路由功能的数据源
  *
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/7

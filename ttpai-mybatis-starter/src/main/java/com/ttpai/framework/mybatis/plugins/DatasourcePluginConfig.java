@@ -2,6 +2,8 @@ package com.ttpai.framework.mybatis.plugins;
 
 import com.ttpai.framework.mybatis.plugin.datasource.MyBatisDatasourcePlugin;
 import com.ttpai.framework.mybatis.plugin.datasource.support.RoutingDataSource;
+import com.ttpai.framework.mybatis.plugin.datasource.support.SqlSessionFactoryPostProcessor;
+
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -38,4 +40,8 @@ public class DatasourcePluginConfig {
         return new RoutingDataSource();
     }
 
+    @Bean
+    public SqlSessionFactoryPostProcessor sqlSessionFactoryPostProcessor() {
+        return new SqlSessionFactoryPostProcessor();
+    }
 }

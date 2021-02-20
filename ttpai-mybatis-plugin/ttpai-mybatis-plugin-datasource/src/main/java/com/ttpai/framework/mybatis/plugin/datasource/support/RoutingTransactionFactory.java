@@ -2,14 +2,18 @@ package com.ttpai.framework.mybatis.plugin.datasource.support;
 
 import org.apache.ibatis.session.TransactionIsolationLevel;
 import org.apache.ibatis.transaction.Transaction;
-import org.apache.ibatis.transaction.TransactionFactory;
+import org.mybatis.spring.transaction.SpringManagedTransactionFactory;
 
 import java.sql.Connection;
 import java.util.Properties;
 
 import javax.sql.DataSource;
 
-public class RoutingTransactionFactory implements TransactionFactory {
+/**
+ * 自定义的mybatis事务工厂
+ * @author zichao.zhang
+ */
+public class RoutingTransactionFactory extends SpringManagedTransactionFactory {
 
     /**
      * {@inheritDoc}
