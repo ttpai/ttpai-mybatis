@@ -1,5 +1,7 @@
 package com.ttpai.framework.mybatis.datasource;
 
+import com.ttpai.framework.mybatis.plugin.datasource.support.DataSourceContextHolder;
+import com.ttpai.framework.mybatis.plugin.datasource.support.RoutingDataSource;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

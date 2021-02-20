@@ -1,22 +1,15 @@
-package com.ttpai.framework.mybatis.datasource;
+package com.ttpai.framework.mybatis.plugin.datasource.support;
 
-import com.ttpai.framework.mybatis.annotation.DS;
-
+import com.ttpai.framework.mybatis.plugin.datasource.annotation.DS;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.jdbc.datasource.AbstractDataSource;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import javax.sql.DataSource;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.*;
 
 /**
  * 数据源路由

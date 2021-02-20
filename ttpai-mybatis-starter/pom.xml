@@ -2,16 +2,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.ttpai.framework</groupId>
         <artifactId>ttpai_mybatis</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ttpai-mybatis-starter</artifactId>
 
     <dependencies>
+
+        <!-- region 插件 -->
+
+        <!-- 多数据源支持 -->
+        <dependency>
+            <groupId>com.ttpai.framework</groupId>
+            <artifactId>ttpai-mybatis-plugin-datasource</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Mapper 返回值处理 -->
+        <dependency>
+            <groupId>com.ttpai.framework</groupId>
+            <artifactId>ttpai-mybatis-plugin-result</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- endregion -->
 
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -49,7 +68,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        
+
     </dependencies>
 
 </project>

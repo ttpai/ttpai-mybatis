@@ -1,4 +1,4 @@
-package com.ttpai.framework.mybatis.datasource;
+package com.ttpai.framework.mybatis.plugin.datasource.support;
 
 /**
  * @author zichao.zhang
