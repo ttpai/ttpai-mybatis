@@ -12,6 +12,7 @@
     <artifactId>ttpai-mybatis-gen</artifactId>
 
     <properties>
+        <mainClass>com.ttpai.framework.mybatis.gen.GenApp</mainClass>
         <mybatis.plus.gen.version>3.4.1</mybatis.plus.gen.version>
     </properties>
 

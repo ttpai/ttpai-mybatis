@@ -92,7 +92,7 @@ public class GenRunner implements ApplicationRunner {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 return String.format((configBuilder.getPathInfo().get(ConstVal.MAPPER_PATH) + File.separator
-                                                       + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName());
+                        + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName());
             }
         };
         fileOutConfig.setTemplatePath("templates/mapper.java.ftl");

@@ -14,9 +14,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@ApiModel(value="TtpaiUserVO对象", description="")
+@ApiModel(value = "TtpaiUserVO对象", description = "")
 public class TtpaiUserVO {
-
 
     @ApiModelProperty(value = "主键ID")
     private Long id;
@@ -35,7 +34,6 @@ public class TtpaiUserVO {
 
     @ApiModelProperty(value = "记录创建时间")
     private Date createTime;
-
 
     public static final String ID = "ID";
 
