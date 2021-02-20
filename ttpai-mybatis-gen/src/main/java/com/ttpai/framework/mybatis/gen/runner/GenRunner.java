@@ -71,7 +71,7 @@ public class GenRunner implements ApplicationRunner {
                 globalConfigJr);
 
         // 注入配置信息 - 自定义模板
-        // configBuilder.setInjectionConfig(newInjectionConfig(configBuilder));
+        configBuilder.setInjectionConfig(newInjectionConfig(configBuilder));
 
         generator.setConfig(configBuilder);
 
@@ -79,28 +79,28 @@ public class GenRunner implements ApplicationRunner {
         generator.execute();
     }
 
-    // private InjectionConfig newInjectionConfig(ConfigBuilder configBuilder) {
-    // InjectionConfig injectionConfig = new InjectionConfig() {
-    //
-    // @Override
-    // public void initMap() {
-    // // NOP
-    // }
-    // };
-    // FileOutConfig fileOutConfig = new FileOutConfig() {
-    //
-    // @Override
-    // public File outputFile(TableInfo tableInfo) {
-    // return new File(String.format((configBuilder.getPathInfo().get(ConstVal.MAPPER_PATH) + File.separator
-    // + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName()));
-    // }
-    // };
-    // fileOutConfig.setTemplatePath("templates/mapper.java.ftl");
-    // List<FileOutConfig> fileOutConfigs = new ArrayList<>();
-    // fileOutConfigs.add(fileOutConfig);
-    // injectionConfig.setFileOutConfigList(fileOutConfigs);
-    //
-    // return injectionConfig;
-    // }
+    private InjectionConfig newInjectionConfig(ConfigBuilder configBuilder) {
+        InjectionConfig injectionConfig = new InjectionConfig() {
+
+            @Override
+            public void initMap() {
+                // NOP
+            }
+        };
+        FileOutConfig fileOutConfig = new FileOutConfig() {
+
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                return String.format((configBuilder.getPathInfo().get(ConstVal.MAPPER_PATH) + File.separator
+                                                       + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName());
+            }
+        };
+        fileOutConfig.setTemplatePath("templates/mapper.java.ftl");
+        List<FileOutConfig> fileOutConfigs = new ArrayList<>();
+        fileOutConfigs.add(fileOutConfig);
+        injectionConfig.setFileOutConfigList(fileOutConfigs);
+
+        return injectionConfig;
+    }
 
 }

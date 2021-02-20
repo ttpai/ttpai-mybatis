@@ -1,6 +1,6 @@
 package com.ttpai.framework.mybatis.test.dao;
 
-import com.ttpai.framework.mybatis.test.model.UserVO;
+import com.ttpai.framework.mybatis.test.model.TtpaiUserVO;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -8,14 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 import javax.annotation.Resource;
-
-import static org.junit.Assert.*;
 
 /**
  * @author lilin.tan@ttpai.cn
@@ -26,7 +23,7 @@ import static org.junit.Assert.*;
 public class UserMapperTest {
 
     @Resource
-    private UserMapper userMapper;
+    private TtpaiUserMapper userMapper;
 
     @Before
     public void setUp() throws Exception {
@@ -39,67 +36,68 @@ public class UserMapperTest {
     @Test
     public void selectByPage() {
         int pageSize = 2;
-        List<UserVO> userVOS = userMapper.selectByPage(0, pageSize);
+        List<TtpaiUserVO> userVOS = userMapper.selectByPage(0, pageSize);
         Assert.assertNotNull(userVOS);
         Assert.assertTrue(userVOS.size() <= pageSize);
     }
 
     @Test
     public void selectById() {
-        UserVO userVO = userMapper.selectById(1L);
+        TtpaiUserVO userVO = userMapper.selectById(1L);
         Assert.assertNotNull(userVO);
     }
 
     @Test
     public void updateById() {
         long id = 1;
-        // old User
-        UserVO userVO1 = userMapper.selectById(id);
+        //old User
+        TtpaiUserVO userVO1 = userMapper.selectById(id);
 
-        // update user
-        UserVO userVO = new UserVO();
+        //update user
+        TtpaiUserVO userVO = new TtpaiUserVO();
         userVO.setId(id);
         userVO.setAge(500);
         userVO.setEmail("lilin.tan@ttpai.cn");
         long updateNum = userMapper.updateById(userVO);
 
-        // new User
-        UserVO userVO2 = userMapper.selectById(id);
+        //new User
+        TtpaiUserVO userVO2 = userMapper.selectById(id);
 
         Assert.assertTrue(updateNum > 0);
-        assertNotEquals(userVO1.getEmail(), userVO2.getEmail());
-        assertNotEquals(userVO1.getAge(), userVO2.getAge());
+        Assert.assertNotEquals(userVO1.getEmail(), userVO2.getEmail());
+        Assert.assertNotEquals(userVO1.getAge(), userVO2.getAge());
 
     }
 
     @Test
     public void selectByEntity() {
-        String name = "Tom";
-        UserVO userVO = new UserVO();
-        userVO.setName(name);
-        List<UserVO> userVOS = userMapper.selectByEntity(userVO);
+        String name = "Sandy";
+        TtpaiUserVO userVO = new TtpaiUserVO();
+        userVO.setUserName(name);
+        List<TtpaiUserVO> userVOS = userMapper.selectByEntity(userVO);
         Assert.assertNotNull(userVOS);
-        for (UserVO vo : userVOS) {
-            Assert.assertEquals(vo.getName(), name);
+        for (TtpaiUserVO vo : userVOS) {
+            Assert.assertEquals(vo.getUserName(), name);
         }
 
     }
 
     @Test
     public void insertByEntity() {
-        List<UserVO> userVOS = userMapper.selectByEntity(new UserVO());
+        List<TtpaiUserVO> userVOS = userMapper.selectByEntity(new TtpaiUserVO());
 
-        UserVO userVO = new UserVO();
-        userVO.setName("lilin");
+        TtpaiUserVO userVO = new TtpaiUserVO();
+        userVO.setUserName("lilin");
         userVO.setEmail("lilin.tan@ttpai.cn");
         userVO.setAge(100);
         Long aLong = userMapper.insertByEntity(userVO);
 
         Assert.assertEquals(1, (long) aLong);
 
-        List<UserVO> userVOS1 = userMapper.selectByEntity(new UserVO());
+        List<TtpaiUserVO> userVOS1 = userMapper.selectByEntity(new TtpaiUserVO());
 
         Assert.assertNotEquals(userVOS.size(), userVOS1.size());
+
 
     }
 }
