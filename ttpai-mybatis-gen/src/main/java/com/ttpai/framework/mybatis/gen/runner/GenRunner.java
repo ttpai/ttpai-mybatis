@@ -73,7 +73,7 @@ public class GenRunner implements ApplicationRunner {
         // 注入配置信息 - 自定义模板
         configBuilder.setInjectionConfig(newInjectionConfig(configBuilder));
 
-        generator.config(configBuilder);
+        generator.setConfig(configBuilder);
 
         // 执行
         generator.execute();
@@ -90,9 +90,9 @@ public class GenRunner implements ApplicationRunner {
         FileOutConfig fileOutConfig = new FileOutConfig() {
 
             @Override
-            public File outputFile(TableInfo tableInfo) {
-                return new File(String.format((configBuilder.getPathInfo().get(ConstVal.MAPPER_PATH) + File.separator
-                                                       + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName()));
+            public String outputFile(TableInfo tableInfo) {
+                return String.format((configBuilder.getPathInfo().get(ConstVal.MAPPER_PATH) + File.separator
+                                                       + tableInfo.getMapperName() + ".java"), tableInfo.getEntityName());
             }
         };
         fileOutConfig.setTemplatePath("templates/mapper.java.ftl");

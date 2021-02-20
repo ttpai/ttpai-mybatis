@@ -3,17 +3,15 @@ package com.ttpai.framework.mybatis.test;
 import com.ttpai.framework.mybatis.gen.GenApp;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
  * @author lilin.tan@ttpai.cn
@@ -24,30 +22,46 @@ import java.sql.Statement;
 @Import(GenApp.class)
 public class CodeGeneratorTest {
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Value("${ttpai.mybatis.generator.strategy.include:TTPAI_USER}")
+    private String tableName;
+
 
     @Test
     public void Generator() {
         System.out.println("Generator");
     }
 
+    @Before
+    public void createTable() {
 
-    @Test
-    public void testGetTableNames() throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:p6spy:h2:file:F:\\ideaWorkSpace\\ttpai_mybatis\\ttpai_mybatis_test\\src\\test\\resources\\mybatisplus;TRACE_LEVEL_FILE=0;IFEXISTS=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE",
-                "root",
-                "test");
-        Statement stmt = conn.createStatement();
-        ResultSet resultSet = stmt.executeQuery("SELECT * FROM INFORMATION_SCHEMA.TABLES ");
-        while (resultSet.next()) {
-            System.out.println(resultSet.getObject("TABLE_NAME"));
-        }
-        // add application code here
-        resultSet = stmt.executeQuery("show table status WHERE 1=1  AND NAME IN ('USER')");
-        while (resultSet.next()) {
-            System.out.println(resultSet.getString(1));
-        }
-        conn.close();
+        jdbcTemplate.execute("DROP TABLE IF EXISTS " + tableName + ";");
+
+        String createTable = "CREATE TABLE " + tableName +
+                                     "(\n" +
+                                     "    ID          BIGINT(20)  NOT NULL AUTO_INCREMENT COMMENT '主键ID',\n" +
+                                     "    USER_NAME   VARCHAR(30) NULL     DEFAULT NULL COMMENT '姓名',\n" +
+                                     "    AGE         INT(11)     NULL     DEFAULT NULL COMMENT '年龄',\n" +
+                                     "    EMAIL       VARCHAR(50) NULL     DEFAULT NULL COMMENT '邮箱',\n" +
+                                     "    MODIFY_TIME datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录修改时间',\n" +
+                                     "    CREATE_TIME datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',\n" +
+                                     "    PRIMARY KEY (ID)\n" +
+                                     ")";
+
+        String insert = "INSERT INTO " + tableName + " (`USER_NAME`, `AGE`, `EMAIL`) VALUES " +
+                                "( 'Sandy', 13, 'adaa@xx.com')," +
+                                "( '张三', 50, '123@xx.com')," +
+                                "( '李四', 10, 'qw3@xx.com')," +
+                                "( 'Billie', 13, 'qaaaaw3@xx.com')," +
+                                "( 'Jone', 20, 'qw3@xx.com');";
+
+        jdbcTemplate.execute(createTable);
+        jdbcTemplate.execute(insert);
     }
+
+
 
 
 }

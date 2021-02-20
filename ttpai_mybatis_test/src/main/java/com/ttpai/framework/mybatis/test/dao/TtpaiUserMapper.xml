@@ -1,58 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ttpai.framework.mybatis.test.dao.UserMapper">
+<mapper namespace="com.ttpai.framework.mybatis.test.dao.TtpaiUserMapper">
 
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ttpai.framework.mybatis.test.model.UserVO">
+    <resultMap id="BaseResultMap" type="com.ttpai.framework.mybatis.test.model.TtpaiUserVO">
         <id column="ID" property="id" />
-        <result column="NAME" property="name" />
+        <result column="USER_NAME" property="userName" />
         <result column="AGE" property="age" />
         <result column="EMAIL" property="email" />
+        <result column="MODIFY_TIME" property="modifyTime" />
+        <result column="CREATE_TIME" property="createTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        ID, NAME, AGE, EMAIL
+        ID, USER_NAME, AGE, EMAIL, MODIFY_TIME, CREATE_TIME
     </sql>
 
     <!-- 通用【查询】条件  ！不包含主键字段 -->
     <sql id="Base_Where">
-        <if test="name != null "> AND NAME = #{name}</if>
+        <if test="userName != null "> AND USER_NAME = #{userName}</if>
         <if test="age != null "> AND AGE = #{age}</if>
         <if test="email != null "> AND EMAIL = #{email}</if>
+        <if test="modifyTime != null "> AND MODIFY_TIME = #{modifyTime}</if>
+        <if test="createTime != null "> AND CREATE_TIME = #{createTime}</if>
     </sql>
 
     <!-- 通用【更新】条件  ！不包含主键、CREATE_TIME、MODIFY_TIME字段 -->
     <sql id="Base_Update">
-        <if test="name != null ">NAME = #{name},</if>
+        <if test="userName != null ">USER_NAME = #{userName},</if>
         <if test="age != null ">AGE = #{age},</if>
         <if test="email != null ">EMAIL = #{email},</if>
     </sql>
 
 
 
-    <update id="updateById" parameterType="com.ttpai.framework.mybatis.test.model.UserVO">
-        UPDATE USER
+    <update id="updateById" parameterType="com.ttpai.framework.mybatis.test.model.TtpaiUserVO">
+        UPDATE TTPAI_USER
         <trim prefix="SET" suffixOverrides=","><include refid="Base_Update"/></trim>
         where ID = #{id};
     </update>
 
-    <insert id="insertByEntity" parameterType="com.ttpai.framework.mybatis.test.model.UserVO">
-        INSERT INTO  USER
+    <insert id="insertByEntity" parameterType="com.ttpai.framework.mybatis.test.model.TtpaiUserVO">
+        INSERT INTO  TTPAI_USER
         <trim prefix="(" suffix=")" suffixOverrides="," >
-        NAME,AGE,EMAIL,
+        USER_NAME,AGE,EMAIL,
         </trim>
 
         <trim prefix="VALUES (" suffix=")" suffixOverrides="," >
-         #{name}, #{age}, #{email},
+         #{userName}, #{age}, #{email},
         </trim>
     </insert>
 
-    <select id="selectByEntity" resultMap="BaseResultMap" parameterType="com.ttpai.framework.mybatis.test.model.UserVO">
+    <select id="selectByEntity" resultMap="BaseResultMap" parameterType="com.ttpai.framework.mybatis.test.model.TtpaiUserVO">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM USER
+        FROM TTPAI_USER
         <trim prefix="WHERE" prefixOverrides="AND"><include refid="Base_Where"/></trim> ;
     </select>
 
