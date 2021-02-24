@@ -50,7 +50,7 @@ public enum DefaultMyBatisConfig {
      * 因为能查到数据，只是数据列为 null，不能因为字段没值就认为当前数据不存在
      * 根据 ID 查询特定的一些字段的时候很容易出现这些字段都是 null，但是这行数据还是存在的
      */
-    RETURN_INSTANCE_FOR_EMPTY_ROW("mybatis.configuration.return-instance-for-empty-row") {
+    RETURN_INSTANCE_FOR_EMPTY_ROW("mybatis.configuration.returnInstanceForEmptyRow") {
 
         @Override
         public void setConfig(Configuration configuration) {
@@ -62,7 +62,7 @@ public enum DefaultMyBatisConfig {
      * 因为 null 也是一种数据状态，查到的字段不存在时，应该覆盖掉 VO 中的值，而不应该什么也不做
      * 同时也保证 VO 中的对象都是包装类型对象，不能是 基本数据类型
      */
-    CALL_SETTERS_ON_NULLS("mybatis.configuration.call-setters-on-nulls") {
+    CALL_SETTERS_ON_NULLS("mybatis.configuration.callSettersOnNulls") {
 
         @Override
         public void setConfig(Configuration configuration) {
