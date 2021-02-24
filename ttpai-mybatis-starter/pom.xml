@@ -24,14 +24,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Mapper 返回值处理 -->
-        <dependency>
-            <groupId>com.ttpai.framework</groupId>
-            <artifactId>ttpai-mybatis-plugin-result</artifactId>
-            <version>${project.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
         <!-- endregion -->
 
         <dependency>

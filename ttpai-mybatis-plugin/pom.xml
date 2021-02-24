@@ -17,9 +17,9 @@
     <modules>
         <!-- 多数据源支持 -->
         <module>ttpai-mybatis-plugin-datasource</module>
-        <!-- 对 Mapper 的返回结果进行处理 -->
-        <!-- 1. 如果类型是集合，返回 null 的时候创建空集合 -->
-        <module>ttpai-mybatis-plugin-result</module>
+
+        <!-- 【Debug】临时插件进行调试 -->
+        <module>ttpai-mybatis-plugin-test</module>
     </modules>
 
 </project>

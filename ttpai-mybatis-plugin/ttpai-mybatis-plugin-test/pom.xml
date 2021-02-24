@@ -10,6 +10,13 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ttpai-mybatis-plugin-result</artifactId>
+    <artifactId>ttpai-mybatis-plugin-test</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -7,12 +7,9 @@ import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.env.Environment;
-import org.springframework.core.type.AnnotationMetadata;
 
 /**
  * Springboot 项目的自动装配类 对 MyBatis 原生的 autoconfig 做增强
@@ -21,21 +18,16 @@ import org.springframework.core.type.AnnotationMetadata;
  * @date 2021/2/5
  */
 @Import({ //
-        BootMyBatisConfiguration.MyBatisFunctionEnhanceRegistrar.class
+        BootMyBatisConfiguration.MyBatisFunctionEnhance.class
 })
 public class BootMyBatisConfiguration {
 
     /**
-     *
+     * MyBatis 功能增强
      */
-    public static class MyBatisFunctionEnhanceRegistrar implements BeanFactoryAware, ImportBeanDefinitionRegistrar {
+    public static class MyBatisFunctionEnhance implements BeanFactoryAware {
 
         private ConfigurableListableBeanFactory beanFactory;
-
-        @Override
-        public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry registry) {
-            // nothing
-        }
 
         @Override
         public void setBeanFactory(BeanFactory beanFactory) {
