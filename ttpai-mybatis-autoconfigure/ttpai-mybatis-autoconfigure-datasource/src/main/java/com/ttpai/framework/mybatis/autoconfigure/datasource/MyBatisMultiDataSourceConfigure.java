@@ -27,20 +27,20 @@ import static com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBat
 @Configuration
 @EnableConfigurationProperties(MybatisProperties.class)
 @Import(MyBatisBeanFactoryPostProcessor.class)
-public class MultiDatasourceConfigure implements InitializingBean {
+public class MyBatisMultiDataSourceConfigure implements InitializingBean {
 
     @Resource
     private DefaultListableBeanFactory beanFactory;
 
     private final MybatisAutoConfiguration delegation;
 
-    public MultiDatasourceConfigure(MybatisProperties properties,
-                                    ObjectProvider<Interceptor[]> interceptorsProvider,
-                                    ObjectProvider<TypeHandler[]> typeHandlersProvider,
-                                    ObjectProvider<LanguageDriver[]> languageDriversProvider,
-                                    ResourceLoader resourceLoader,
-                                    ObjectProvider<DatabaseIdProvider> databaseIdProvider,
-                                    ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider) {
+    public MyBatisMultiDataSourceConfigure(MybatisProperties properties,
+                                           ObjectProvider<Interceptor[]> interceptorsProvider,
+                                           ObjectProvider<TypeHandler[]> typeHandlersProvider,
+                                           ObjectProvider<LanguageDriver[]> languageDriversProvider,
+                                           ResourceLoader resourceLoader,
+                                           ObjectProvider<DatabaseIdProvider> databaseIdProvider,
+                                           ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider) {
         this.delegation = new MybatisAutoConfiguration(
                 properties,
                 interceptorsProvider,
