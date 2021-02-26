@@ -15,7 +15,7 @@ import lombok.Getter;
  */
 @Getter
 @EqualsAndHashCode
-public class DataSourceContainer {
+public class DataSourceHolder {
 
     private final DataSource dataSource;
 
@@ -25,8 +25,8 @@ public class DataSourceContainer {
 
     private final boolean autoCommit;
 
-    public DataSourceContainer(DataSource dataSource, Connection connection, boolean isConnectionTransactional,
-            boolean autoCommit) {
+    public DataSourceHolder(DataSource dataSource, Connection connection, boolean isConnectionTransactional,
+                            boolean autoCommit) {
         this.dataSource = dataSource;
         this.connection = connection;
         this.isConnectionTransactional = isConnectionTransactional;

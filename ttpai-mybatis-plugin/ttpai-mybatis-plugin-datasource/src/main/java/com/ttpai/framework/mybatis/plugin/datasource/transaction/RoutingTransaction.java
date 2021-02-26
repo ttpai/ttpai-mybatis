@@ -34,7 +34,7 @@ public class RoutingTransaction implements Transaction {
 
     private final DataSource dataSource;
 
-    private final Deque<DataSourceContainer> dataSourceStack;
+    private final Deque<DataSourceHolder> dataSourceStack;
 
     /**
      * @see RoutingDataSource
@@ -67,11 +67,11 @@ public class RoutingTransaction implements Transaction {
         boolean autoCommit = connection.getAutoCommit();
         boolean isConnectionTransactional = DataSourceUtils.isConnectionTransactional(connection, realDataSource);
         // 把DataSource和对应创建的连接放入自定义容器中
-        DataSourceContainer dataSourceContainer = new DataSourceContainer(realDataSource, connection, autoCommit,
+        DataSourceHolder dataSourceHolder = new DataSourceHolder(realDataSource, connection, autoCommit,
                 isConnectionTransactional);
         // 推入到栈中保存，保证不重复
-        if (!dataSourceStack.contains(dataSourceContainer)) {
-            this.dataSourceStack.push(dataSourceContainer);
+        if (!dataSourceStack.contains(dataSourceHolder)) {
+            this.dataSourceStack.push(dataSourceHolder);
         }
         LOGGER.debug(() -> "JDBC Connection [" + connection + "] will"
                 + (isConnectionTransactional ? " " : " not ") + "be managed by Spring");
@@ -90,13 +90,13 @@ public class RoutingTransaction implements Transaction {
      */
     @Override
     public void commit() throws SQLException {
-        for (DataSourceContainer dataSourceContainer : this.dataSourceStack) {
-            if (dataSourceContainer.getConnection() != null
-                    && !dataSourceContainer.isConnectionTransactional()
-                    && !dataSourceContainer.isAutoCommit() //
+        for (DataSourceHolder dataSourceHolder : this.dataSourceStack) {
+            if (dataSourceHolder.getConnection() != null
+                    && !dataSourceHolder.isConnectionTransactional()
+                    && !dataSourceHolder.isAutoCommit() //
             ) {
-                LOGGER.debug(() -> "Committing JDBC Connection [" + dataSourceContainer.getConnection() + "]");
-                dataSourceContainer.getConnection().commit();
+                LOGGER.debug(() -> "Committing JDBC Connection [" + dataSourceHolder.getConnection() + "]");
+                dataSourceHolder.getConnection().commit();
             }
         }
     }
@@ -106,13 +106,13 @@ public class RoutingTransaction implements Transaction {
      */
     @Override
     public void rollback() throws SQLException {
-        for (DataSourceContainer dataSourceContainer : this.dataSourceStack) {
-            if (dataSourceContainer.getConnection() != null
-                    && !dataSourceContainer.isConnectionTransactional()
-                    && !dataSourceContainer.isAutoCommit() //
+        for (DataSourceHolder dataSourceHolder : this.dataSourceStack) {
+            if (dataSourceHolder.getConnection() != null
+                    && !dataSourceHolder.isConnectionTransactional()
+                    && !dataSourceHolder.isAutoCommit() //
             ) {
-                LOGGER.debug(() -> "Committing JDBC Connection [" + dataSourceContainer.getConnection() + "]");
-                dataSourceContainer.getConnection().rollback();
+                LOGGER.debug(() -> "Committing JDBC Connection [" + dataSourceHolder.getConnection() + "]");
+                dataSourceHolder.getConnection().rollback();
             }
         }
     }
@@ -123,8 +123,8 @@ public class RoutingTransaction implements Transaction {
     @Override
     public void close() throws SQLException {
         while (!this.dataSourceStack.isEmpty()) {
-            DataSourceContainer dataSourceContainer = this.dataSourceStack.pop();
-            DataSourceUtils.releaseConnection(dataSourceContainer.getConnection(), dataSourceContainer.getDataSource());
+            DataSourceHolder dataSourceHolder = this.dataSourceStack.pop();
+            DataSourceUtils.releaseConnection(dataSourceHolder.getConnection(), dataSourceHolder.getDataSource());
         }
     }
 

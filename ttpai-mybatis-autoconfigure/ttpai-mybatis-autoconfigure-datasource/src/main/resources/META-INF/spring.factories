@@ -1,0 +1,10 @@
+#
+#
+#
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.ttpai.framework.mybatis.autoconfigure.datasource.MultiDatasourceConfigure
+#
+#
+# AutoConfiguration 过滤器
+org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=\
+com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisAutoConfigurationExclude

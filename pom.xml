@@ -24,6 +24,7 @@
         <module>ttpai-mybatis-gen</module>
         <!-- 测试项目 -->
         <module>ttpai-mybatis-test</module>
+        <module>ttpai-mybatis-autoconfigure</module>
     </modules>
 
     <repositories>
