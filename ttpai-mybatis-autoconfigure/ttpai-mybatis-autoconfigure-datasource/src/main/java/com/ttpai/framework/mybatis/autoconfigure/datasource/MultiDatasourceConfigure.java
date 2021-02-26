@@ -20,8 +20,9 @@ import org.springframework.core.io.ResourceLoader;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Map;
 
-import static com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisBeanFactoryPostProcessor.AUTO_PREFIX;
+import static com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisBeanFactoryPostProcessor.MAPPING_BEAN_NAME;
 
 @Configuration
 @EnableConfigurationProperties(MybatisProperties.class)
@@ -52,22 +53,15 @@ public class MultiDatasourceConfigure implements InitializingBean {
         delegation.afterPropertiesSet();
     }
 
+
     @Override
+    @SuppressWarnings("all")
     public void afterPropertiesSet() throws Exception {
-        String[] beanNamesForType = beanFactory.getBeanNamesForType(DataSource.class);
-
-        for (String beanName : beanNamesForType) {
-            for (String prefix : AUTO_PREFIX) {
-                if (beanName.startsWith(prefix)) {
-                    String packageName = beanName.substring(prefix.length());
-                    DataSource dataSource = beanFactory.getBean(beanName, DataSource.class);
-                    SqlSessionFactory sqlSessionFactory = delegation.sqlSessionFactory(dataSource);
-
-                    beanFactory.registerSingleton("SqlSessionFactory." + packageName, sqlSessionFactory);
-                    break;
-                }
-
-            }
+        Map<String, String> mappings = beanFactory.getBean(MAPPING_BEAN_NAME, Map.class);
+        for (Map.Entry<String, String> entry : mappings.entrySet()) {
+            DataSource dataSource = beanFactory.getBean(entry.getKey(), DataSource.class);
+            SqlSessionFactory sqlSessionFactory = delegation.sqlSessionFactory(dataSource);
+            beanFactory.registerSingleton("SqlSessionFactory." + entry.getValue(), sqlSessionFactory);
         }
     }
 

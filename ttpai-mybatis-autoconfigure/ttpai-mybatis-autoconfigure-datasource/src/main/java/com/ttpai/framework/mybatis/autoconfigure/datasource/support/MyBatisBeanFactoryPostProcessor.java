@@ -10,10 +10,10 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * @see MapperScannerConfigurer#postProcessBeanDefinitionRegistry
@@ -27,8 +27,11 @@ public class MyBatisBeanFactoryPostProcessor implements ApplicationContextAware,
     public static final String[] AUTO_PREFIX = new String[]{
             "jade.dataSource.",  // 兼容 Rose
             "mybatis.dataSource.",  // 自定义前缀
-            "ttpai.mybatis.dataSource." // // 自定义前缀
+            "ttpai.mybatis.dataSource." // 自定义前缀
     };
+
+    public static final String MAPPING_BEAN_NAME = //
+            MyBatisBeanFactoryPostProcessor.class.getSimpleName() + ".dataSourcePackageMappings";
 
     private ApplicationContext applicationContext;
 
@@ -44,40 +47,65 @@ public class MyBatisBeanFactoryPostProcessor implements ApplicationContextAware,
         this.applicationContext = applicationContext;
     }
 
+    protected String defaultPackageName() {
+        // FIXME 单数据源逻辑处理（如 Spring 入口类）
+
+        return "com.ttpai";
+    }
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        String[] definitionNames = beanFactory.getBeanDefinitionNames();
+        Set<String> dataSourceNames = filterDataSourceNames(beanFactory);
 
+        // 没有 DataSource
+        if (dataSourceNames.isEmpty()) {
+            return;
+        }
+
+        // dataSourceName <-> packageName
+        Map<String, String> dataSourcePackageMappings = findDataSourceMappings(dataSourceNames);
+
+        // 先查找子包，再查找父包
+        ArrayList<String> packages = new ArrayList<>(dataSourcePackageMappings.values());
+        Collections.sort(packages);
+        Collections.reverse(packages);
+
+        // FIXME 多个数据源对应用一个包，抛出异常，并提示原因
+
+        // 扫包
+        packages.forEach(this::scan);
+
+        // 注册 dataSource <-> packageName 的映射关系
+        beanFactory.registerSingleton(MAPPING_BEAN_NAME, dataSourcePackageMappings);
+    }
+
+
+    /**
+     * 查找类型是 DataSource 的 Bean Name
+     */
+    private Set<String> filterDataSourceNames(ConfigurableListableBeanFactory beanFactory) {
+        Set<String> dataSourceBeanName = new HashSet<>();
+
+        String[] definitionNames = beanFactory.getBeanDefinitionNames();
         for (String beanName : definitionNames) {
             Class<?> beanType = beanFactory.getType(beanName);
 
-            int datasourceStatus = isDatasource(beanType, beanName);
             // 不是 DataSource，不处理
-            if (datasourceStatus < 0) {
+            if (!DataSource.class.isAssignableFrom(beanType)) {
                 continue;
             }
-            if (datasourceStatus == 0) {
-                // TODO 没有前缀，根据配置获取映射
-            }
-            if (datasourceStatus > 0) {
-                String packageName = beanName.substring(datasourceStatus);
-                this.scan(packageName);
-            }
-            // TODO 单个 DataSource 的情况
+
+            // 记录 DataSource Name
+            dataSourceBeanName.add(beanName);
         }
+
+        return dataSourceBeanName;
     }
 
     /**
-     * @return -1:不是 DataSource; 0 是 DataSource; >0 前缀索引截止位置
+     * @return 0 是 没有前缀; >0 前缀索引截止位置
      */
-    protected int isDatasource(Class<?> beanType, String beanName) {
-        // DataSource 不是是 beanType 的父类
-        if (!DataSource.class.isAssignableFrom(beanType)) {
-            return -1;
-        }
-
-        // 找到了前缀
+    protected int hasAutoPrefix(String beanName) {
         for (String prefix : AUTO_PREFIX) {
             if (beanName.startsWith(prefix)) {
                 return prefix.length();
@@ -87,6 +115,44 @@ public class MyBatisBeanFactoryPostProcessor implements ApplicationContextAware,
         // 没有找到前缀
         return 0;
     }
+
+    /**
+     * 多数据源的情况
+     */
+    private Map<String, String> findDataSourceMappings(Set<String> dataSourceNames) {
+        Map<String, String> beanPackageMappings = new HashMap<>();
+
+        for (String dataSourceName : dataSourceNames) {
+            int prefixIndex = hasAutoPrefix(dataSourceName);
+
+            // 默认扫包
+            String packageName = this.defaultPackageName();
+
+            // 没有前缀
+            if (prefixIndex <= 0) {
+                // FIXME 从配置文件，或 其他地方找映射关系
+                String foundPackage = this.findDataSourcePackage(dataSourceName);
+                // FIXME 打印警告日志
+                packageName = StringUtils.isEmpty(foundPackage) ? packageName : foundPackage;
+            } else {
+                String foundPackage = dataSourceName.substring(prefixIndex);
+                // FIXME 打印警告日志
+                packageName = StringUtils.isEmpty(foundPackage) ? packageName : foundPackage;
+            }
+
+            beanPackageMappings.put(dataSourceName, packageName);
+        }
+
+        return beanPackageMappings;
+    }
+
+    /**
+     * FIXME 找到 DataSource 对应的 package
+     */
+    protected String findDataSourcePackage(String beanName) {
+        return null;
+    }
+
 
     /**
      * 其他自定义配置
@@ -101,20 +167,4 @@ public class MyBatisBeanFactoryPostProcessor implements ApplicationContextAware,
         scanner.registerFilters();
         scanner.scan(packages);
     }
-
-
-    public static void main(String[] args) {
-        ArrayList<String> objects = new ArrayList<>();
-        objects.add("xyz.kail.demo.mybatis.spring.boot.mapper");
-        objects.add("xyz.kail.demo.mybatis.spring.boot.mapper.sys");
-        objects.add("xyz.kail.demo.mybatis.spring.boot");
-
-        Collections.sort(objects);
-        Collections.reverse(objects);
-
-        // 先查找子包，再查找父包
-        System.out.println(objects);
-
-    }
-
 }
