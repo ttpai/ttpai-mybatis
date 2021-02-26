@@ -2,7 +2,7 @@
 #
 #
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceConfigure
+com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceProcessorConfigure
 #
 #
 # AutoConfiguration 过滤器

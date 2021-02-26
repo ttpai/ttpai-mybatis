@@ -1,6 +1,6 @@
-package com.ttpai.framework.mybatis.autoconfigure.datasource;
+package com.ttpai.framework.mybatis.autoconfigure.datasource.support;
 
-import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisBeanFactoryPostProcessor;
+import com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceProcessorConfigure;
 import org.apache.ibatis.mapping.DatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.scripting.LanguageDriver;
@@ -22,25 +22,24 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 
-import static com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisBeanFactoryPostProcessor.MAPPING_BEAN_NAME;
+import static com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceProcessorConfigure.MAPPING_BEAN_NAME;
 
 @Configuration
 @EnableConfigurationProperties(MybatisProperties.class)
-@Import(MyBatisBeanFactoryPostProcessor.class)
-public class MyBatisMultiDataSourceConfigure implements InitializingBean {
+public class MyBatisSqlSessionFactoryInit implements InitializingBean {
 
     @Resource
     private DefaultListableBeanFactory beanFactory;
 
     private final MybatisAutoConfiguration delegation;
 
-    public MyBatisMultiDataSourceConfigure(MybatisProperties properties,
-                                           ObjectProvider<Interceptor[]> interceptorsProvider,
-                                           ObjectProvider<TypeHandler[]> typeHandlersProvider,
-                                           ObjectProvider<LanguageDriver[]> languageDriversProvider,
-                                           ResourceLoader resourceLoader,
-                                           ObjectProvider<DatabaseIdProvider> databaseIdProvider,
-                                           ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider) {
+    public MyBatisSqlSessionFactoryInit(MybatisProperties properties,
+                                        ObjectProvider<Interceptor[]> interceptorsProvider,
+                                        ObjectProvider<TypeHandler[]> typeHandlersProvider,
+                                        ObjectProvider<LanguageDriver[]> languageDriversProvider,
+                                        ResourceLoader resourceLoader,
+                                        ObjectProvider<DatabaseIdProvider> databaseIdProvider,
+                                        ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider) {
         this.delegation = new MybatisAutoConfiguration(
                 properties,
                 interceptorsProvider,

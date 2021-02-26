@@ -53,6 +53,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.ttpai.framework</groupId>
+            <artifactId>ttpai-mybatis-autoconfigure-datasource</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
 
     </dependencies>
 

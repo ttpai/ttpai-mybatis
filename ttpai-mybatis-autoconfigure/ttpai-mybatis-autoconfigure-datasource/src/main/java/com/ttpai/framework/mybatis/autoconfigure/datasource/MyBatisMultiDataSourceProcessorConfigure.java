@@ -1,5 +1,6 @@
-package com.ttpai.framework.mybatis.autoconfigure.datasource.support;
+package com.ttpai.framework.mybatis.autoconfigure.datasource;
 
+import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInit;
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.mapper.ClassPathMapperScanner;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
@@ -19,7 +21,8 @@ import java.util.*;
  * @see MapperScannerConfigurer#postProcessBeanDefinitionRegistry
  */
 @Configuration
-public class MyBatisBeanFactoryPostProcessor implements ApplicationContextAware, BeanDefinitionRegistryPostProcessor {
+@Import(MyBatisSqlSessionFactoryInit.class)
+public class MyBatisMultiDataSourceProcessorConfigure implements ApplicationContextAware, BeanDefinitionRegistryPostProcessor {
 
     /**
      * DataSource Bean Name 符合以下前缀规范，支持自定义配置
@@ -31,7 +34,7 @@ public class MyBatisBeanFactoryPostProcessor implements ApplicationContextAware,
     };
 
     public static final String MAPPING_BEAN_NAME = //
-            MyBatisBeanFactoryPostProcessor.class.getSimpleName() + ".dataSourcePackageMappings";
+            MyBatisMultiDataSourceProcessorConfigure.class.getSimpleName() + ".dataSourcePackageMappings";
 
     private ApplicationContext applicationContext;
 
@@ -91,7 +94,7 @@ public class MyBatisBeanFactoryPostProcessor implements ApplicationContextAware,
             Class<?> beanType = beanFactory.getType(beanName);
 
             // 不是 DataSource，不处理
-            if (!DataSource.class.isAssignableFrom(beanType)) {
+            if (null == beanType || !DataSource.class.isAssignableFrom(beanType)) {
                 continue;
             }
 
@@ -156,6 +159,7 @@ public class MyBatisBeanFactoryPostProcessor implements ApplicationContextAware,
 
     /**
      * 其他自定义配置
+     * TODO 覆盖该方法或者重写 ClassPathMapperScanner，扩充其他过滤规则，如 自定义注解 等
      * <p>
      * // TODO 扩充其他自定义配置
      */
