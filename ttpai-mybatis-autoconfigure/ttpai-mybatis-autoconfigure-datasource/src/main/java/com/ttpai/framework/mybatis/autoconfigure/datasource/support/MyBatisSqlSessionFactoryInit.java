@@ -13,6 +13,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.ResourceLoader;
@@ -50,6 +51,11 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean {
                 configurationCustomizersProvider
         );
         delegation.afterPropertiesSet();
+    }
+
+    @Bean
+    public MyBatisSqlSessionFactoryInitEventListener myBatisSqlSessionFactoryInitEventListener(){
+        return new MyBatisSqlSessionFactoryInitEventListener();
     }
 
 

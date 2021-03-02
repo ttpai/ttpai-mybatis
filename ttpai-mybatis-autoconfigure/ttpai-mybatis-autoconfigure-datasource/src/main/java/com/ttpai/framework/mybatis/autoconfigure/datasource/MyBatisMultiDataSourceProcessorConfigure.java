@@ -21,10 +21,7 @@ import java.util.*;
 /**
  * @see MapperScannerConfigurer#postProcessBeanDefinitionRegistry
  */
-@Import({
-        MyBatisSqlSessionFactoryInit.class, //
-        MyBatisSqlSessionFactoryInitEventListener.class //
-})
+@Import(MyBatisSqlSessionFactoryInit.class)
 public class MyBatisMultiDataSourceProcessorConfigure implements ApplicationContextAware, BeanDefinitionRegistryPostProcessor {
 
     /**
