@@ -16,7 +16,7 @@ import org.springframework.core.Ordered;
  * @see AbstractApplicationContext#registerListeners() 把 MyBatisSqlSessionFactoryInit 的初始化时机提前，先进行初始化
  * @see AbstractApplicationContext#finishBeanFactoryInitialization(ConfigurableListableBeanFactory) 实例化所有单例 Bean
  */
-public class MyBatisSqlSessionFactoryInitListener implements SmartApplicationListener {
+public class MyBatisSqlSessionFactoryInitEventListener implements SmartApplicationListener {
 
     @Override
     public void onApplicationEvent(ApplicationEvent event) {
@@ -26,7 +26,7 @@ public class MyBatisSqlSessionFactoryInitListener implements SmartApplicationLis
 
     @Override
     public boolean supportsEventType(Class<? extends ApplicationEvent> eventType) {
-        return MyBatisDataSourceEarlyEvent.class.isAssignableFrom(eventType);
+        return MyBatisSqlSessionFactoryInitEvent.class.isAssignableFrom(eventType);
     }
 
     @Override

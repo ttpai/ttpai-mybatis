@@ -1,7 +1,7 @@
 package com.ttpai.framework.mybatis.autoconfigure.datasource;
 
-import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisDataSourceEarlyEvent;
-import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInitListener;
+import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInitEvent;
+import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInitEventListener;
 import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInit;
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.mapper.ClassPathMapperScanner;
@@ -23,7 +23,7 @@ import java.util.*;
  */
 @Import({
         MyBatisSqlSessionFactoryInit.class, //
-        MyBatisSqlSessionFactoryInitListener.class //
+        MyBatisSqlSessionFactoryInitEventListener.class //
 })
 public class MyBatisMultiDataSourceProcessorConfigure implements ApplicationContextAware, BeanDefinitionRegistryPostProcessor {
 
@@ -85,7 +85,7 @@ public class MyBatisMultiDataSourceProcessorConfigure implements ApplicationCont
         beanFactory.registerSingleton(MAPPING_BEAN_NAME, dataSourcePackageMappings);
 
         // 发布早期事件，在 getBean 之前初始化
-        applicationContext.publishEvent(new MyBatisDataSourceEarlyEvent(applicationContext));
+        applicationContext.publishEvent(new MyBatisSqlSessionFactoryInitEvent(applicationContext));
     }
 
 
