@@ -1,6 +1,7 @@
-package com.ttpai.framework.mybatis.test.model;
+package com.ttpai.framework.mybatis.test.biz.user.model;
 
 import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;

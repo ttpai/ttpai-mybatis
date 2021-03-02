@@ -26,7 +26,7 @@ public class DataSourceHolder {
     private final boolean autoCommit;
 
     public DataSourceHolder(DataSource dataSource, Connection connection, boolean isConnectionTransactional,
-                            boolean autoCommit) {
+            boolean autoCommit) {
         this.dataSource = dataSource;
         this.connection = connection;
         this.isConnectionTransactional = isConnectionTransactional;

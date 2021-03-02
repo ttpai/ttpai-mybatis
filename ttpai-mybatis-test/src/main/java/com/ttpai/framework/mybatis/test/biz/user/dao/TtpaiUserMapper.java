@@ -1,10 +1,9 @@
-package com.ttpai.framework.mybatis.test.dao;
+package com.ttpai.framework.mybatis.test.biz.user.dao;
 
-import com.ttpai.framework.mybatis.test.model.TtpaiUserVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-
+import com.ttpai.framework.mybatis.test.biz.user.model.TtpaiUserVO;
 import java.util.List;
 
 /**

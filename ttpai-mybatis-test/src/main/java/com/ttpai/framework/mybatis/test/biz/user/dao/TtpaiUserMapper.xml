@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ttpai.framework.mybatis.test.dao.TtpaiUserMapper">
+<mapper namespace="com.ttpai.framework.mybatis.test.biz.user.dao.TtpaiUserMapper">
 
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ttpai.framework.mybatis.test.model.TtpaiUserVO">
+    <resultMap id="BaseResultMap" type="com.ttpai.framework.mybatis.test.biz.user.model.TtpaiUserVO">
         <id column="ID" property="id" />
         <result column="USER_NAME" property="userName" />
         <result column="AGE" property="age" />
@@ -36,13 +36,13 @@
 
 
 
-    <update id="updateById" parameterType="com.ttpai.framework.mybatis.test.model.TtpaiUserVO">
+    <update id="updateById" parameterType="com.ttpai.framework.mybatis.test.biz.user.model.TtpaiUserVO">
         UPDATE TTPAI_USER
         <trim prefix="SET" suffixOverrides=","><include refid="Base_Update"/></trim>
         where ID = #{id};
     </update>
 
-    <insert id="insertByEntity" parameterType="com.ttpai.framework.mybatis.test.model.TtpaiUserVO">
+    <insert id="insertByEntity" parameterType="com.ttpai.framework.mybatis.test.biz.user.model.TtpaiUserVO">
         INSERT INTO  TTPAI_USER
         <trim prefix="(" suffix=")" suffixOverrides="," >
         USER_NAME,AGE,EMAIL,
@@ -53,7 +53,7 @@
         </trim>
     </insert>
 
-    <select id="selectByEntity" resultMap="BaseResultMap" parameterType="com.ttpai.framework.mybatis.test.model.TtpaiUserVO">
+    <select id="selectByEntity" resultMap="BaseResultMap" parameterType="com.ttpai.framework.mybatis.test.biz.user.model.TtpaiUserVO">
         SELECT
         <include refid="Base_Column_List"/>
         FROM TTPAI_USER

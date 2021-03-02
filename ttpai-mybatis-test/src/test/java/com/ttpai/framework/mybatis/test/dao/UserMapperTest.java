@@ -1,6 +1,7 @@
 package com.ttpai.framework.mybatis.test.dao;
 
-import com.ttpai.framework.mybatis.test.model.TtpaiUserVO;
+import com.ttpai.framework.mybatis.test.biz.user.dao.TtpaiUserMapper;
+import com.ttpai.framework.mybatis.test.biz.user.model.TtpaiUserVO;
 
 import org.junit.After;
 import org.junit.Assert;
