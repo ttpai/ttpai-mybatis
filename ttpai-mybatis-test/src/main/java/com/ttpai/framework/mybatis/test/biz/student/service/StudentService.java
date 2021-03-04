@@ -28,6 +28,9 @@ public class StudentService {
     @Autowired
     private UserService userService;
     
+    public StudentVO selectStudent(){
+        return studentMapper.selectById(3L);
+    }
     public void testUpdateA(){
         studentMapper.updateAge();
     }

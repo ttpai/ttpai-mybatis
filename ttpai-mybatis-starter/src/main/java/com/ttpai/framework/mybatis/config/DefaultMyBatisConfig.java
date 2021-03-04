@@ -9,7 +9,6 @@ import static org.apache.ibatis.session.LocalCacheScope.STATEMENT;
 /**
  * 默认配置处理
  * <p>
- * FIXME 用该是 autoMappingUnknownColumnBehavior 还是 return-instance-for-empty-row，如果不行，如何兼容
  *
  * @author zichao.zhang@ttpai.cn
  * @date 2021/2/5

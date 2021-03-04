@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * TODO
  *
  * @author zichao.zhang@ttpai.cn
  * @date 2021/3/3
