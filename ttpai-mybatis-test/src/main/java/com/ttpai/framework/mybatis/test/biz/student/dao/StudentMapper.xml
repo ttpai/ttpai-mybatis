@@ -31,7 +31,9 @@
         <if test="studentAge != null ">STUDENT_AGE = #{studentAge},</if>
     </sql>
 
-
+    <update id="updateAge">
+        UPDATE STUDENT set STUDENT_AGE = STUDENT_AGE + 1 where ID = 1;
+    </update>
 
     <update id="updateById" parameterType="com.ttpai.framework.mybatis.test.biz.student.model.StudentVO">
         UPDATE STUDENT

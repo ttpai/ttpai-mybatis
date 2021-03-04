@@ -45,7 +45,8 @@ public interface StudentMapper {
      * @return 更新的条数
      */
     Long updateById(StudentVO entity);
-
+    
+    void updateAge();
     /**
      * 根据传入实体对象查询
      *

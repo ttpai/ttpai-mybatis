@@ -4,10 +4,8 @@ import com.alibaba.druid.pool.DruidDataSource;
 
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource;
@@ -30,7 +28,7 @@ import javax.sql.DataSource;
 @Configuration
 public class MutiDataSourceConfig {
 
-    @Bean("mybatis.dataSource.com.ttpai.framework.mybatis.test.biz.user")
+    @Bean(name = "mybatis.dataSource.com.ttpai.framework.mybatis.test.biz.user.dao")
     public DataSource userDataSource(){
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setUrl("jdbc:mysql://172.16.2.160:3306/tanlilin?useUnicode=true&characterEncoding=utf-8");
@@ -38,7 +36,7 @@ public class MutiDataSourceConfig {
         druidDataSource.setPassword("admin@123123");
         return druidDataSource;
     }
-    @Bean("mybatis.dataSource.com.ttpai.framework.mybatis.test.biz.student")
+    @Bean(name = "mybatis.dataSource.com.ttpai.framework.mybatis.test.biz.student.dao")
     public DataSource studentDataSource(){
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setUrl("jdbc:mysql://172.16.2.160:3306/zhangzichao?useUnicode=true&characterEncoding=utf-8");
@@ -55,11 +53,11 @@ public class MutiDataSourceConfig {
     public PlatformTransactionManager studentDataSourceTransactionManager() {
         return new DataSourceTransactionManager(studentDataSource());
     }
-    @Bean
+    @Bean("userDataSourceTransactionPointcutAdvisor")
     public DefaultBeanFactoryPointcutAdvisor  userDataSourceTransactionPointcutAdvisor() {
         return customBeanFactoryPointcutAdvisor(userDataSourceTransactionManager(), "execution(* com.ttpai.framework.mybatis.test.biz.user.service..*.*(..))");
     }
-    @Bean
+    @Bean("studentDataSourceTransactionPointcutAdvisor")
     public DefaultBeanFactoryPointcutAdvisor  studentDataSourceTransactionPointcutAdvisor() {
         return customBeanFactoryPointcutAdvisor(studentDataSourceTransactionManager(), "execution(* com.ttpai.framework.mybatis.test.biz.student.service..*.*(..))");
     }

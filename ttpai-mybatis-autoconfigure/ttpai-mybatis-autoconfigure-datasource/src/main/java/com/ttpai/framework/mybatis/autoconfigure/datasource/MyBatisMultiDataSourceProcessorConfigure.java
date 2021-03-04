@@ -2,6 +2,7 @@ package com.ttpai.framework.mybatis.autoconfigure.datasource;
 
 import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInit;
 import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInitEvent;
+import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInitEventListener;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.mapper.ClassPathMapperScanner;
@@ -30,7 +31,7 @@ import javax.sql.DataSource;
 /**
  * @see MapperScannerConfigurer#postProcessBeanDefinitionRegistry
  */
-@Import(MyBatisSqlSessionFactoryInit.class)
+@Import({MyBatisSqlSessionFactoryInit.class,MyBatisSqlSessionFactoryInitEventListener.class})
 public class MyBatisMultiDataSourceProcessorConfigure
         implements ApplicationContextAware, BeanDefinitionRegistryPostProcessor {
 

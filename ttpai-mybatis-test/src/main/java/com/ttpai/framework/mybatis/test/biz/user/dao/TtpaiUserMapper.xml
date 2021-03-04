@@ -34,7 +34,9 @@
         <if test="email != null ">EMAIL = #{email},</if>
     </sql>
 
-
+    <update id="updateAge">
+        UPDATE TTPAI_USER set AGE = AGE + 1 where ID = 1;
+    </update>
 
     <update id="updateById" parameterType="com.ttpai.framework.mybatis.test.biz.user.model.TtpaiUserVO">
         UPDATE TTPAI_USER

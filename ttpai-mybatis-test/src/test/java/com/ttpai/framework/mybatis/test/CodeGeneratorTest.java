@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since 2021/2/18 15:42
  **/
 @RunWith(SpringRunner.class)
-//@SpringBootTest
+@SpringBootTest
 @Import(GenApp.class)
 public class CodeGeneratorTest {
 

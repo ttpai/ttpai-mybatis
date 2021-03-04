@@ -8,6 +8,7 @@ import org.apache.ibatis.type.TypeHandler;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -15,7 +16,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.PriorityOrdered;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ResourceLoader;
 
 import java.util.List;
@@ -35,32 +35,46 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
     @Resource
     private DefaultListableBeanFactory beanFactory;
 
-    private final MybatisAutoConfiguration delegation;
+    @Resource
+    private MybatisProperties properties;
 
-    public MyBatisSqlSessionFactoryInit(MybatisProperties properties,
-            ObjectProvider<Interceptor[]> interceptorsProvider,
-            ObjectProvider<TypeHandler[]> typeHandlersProvider,
-            ObjectProvider<LanguageDriver[]> languageDriversProvider,
-            ResourceLoader resourceLoader,
-            ObjectProvider<DatabaseIdProvider> databaseIdProvider,
-            ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider) {
-        this.delegation = new MybatisAutoConfiguration(
-                properties,
-                interceptorsProvider,
-                typeHandlersProvider,
-                languageDriversProvider,
-                resourceLoader,
-                databaseIdProvider,
-                configurationCustomizersProvider);
-        delegation.afterPropertiesSet();
-    }
+    @Resource
+    private ObjectProvider<Interceptor[]> interceptorsProvider;
+
+    @Resource
+    private ObjectProvider<TypeHandler[]> typeHandlersProvider;
+
+    @Resource
+    private ObjectProvider<LanguageDriver[]> languageDriversProvider;
+
+    @Resource
+    private ResourceLoader resourceLoader;
+
+    @Resource
+    private ObjectProvider<DatabaseIdProvider> databaseIdProvider;
+
+    @Resource
+    private ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider;
 
     @Override
     @SuppressWarnings("all")
     public void afterPropertiesSet() throws Exception {
         Map<String, String> mappings = beanFactory.getBean(MAPPING_BEAN_NAME, Map.class);
+        MybatisAutoConfiguration delegation;
         for (Map.Entry<String, String> entry : mappings.entrySet()) {
             DataSource dataSource = beanFactory.getBean(entry.getValue(), DataSource.class);
+            org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+            BeanUtils.copyProperties(properties.getConfiguration(), configuration);
+            properties.setConfiguration(configuration);
+            delegation = new MybatisAutoConfiguration(
+                    properties,
+                    interceptorsProvider,
+                    typeHandlersProvider,
+                    languageDriversProvider,
+                    resourceLoader,
+                    databaseIdProvider,
+                    configurationCustomizersProvider);
+            delegation.afterPropertiesSet();
             SqlSessionFactory sqlSessionFactory = delegation.sqlSessionFactory(dataSource);
             beanFactory.registerSingleton("SqlSessionFactory." + entry.getKey(), sqlSessionFactory);
         }
