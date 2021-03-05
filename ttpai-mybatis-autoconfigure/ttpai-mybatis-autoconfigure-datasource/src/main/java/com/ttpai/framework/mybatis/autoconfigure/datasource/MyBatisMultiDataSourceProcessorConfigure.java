@@ -44,8 +44,8 @@ public class MyBatisMultiDataSourceProcessorConfigure
             "ttpai.mybatis.dataSource." // 自定义前缀
     };
 
-    public static final String MAPPING_BEAN_NAME =
-            MyBatisMultiDataSourceProcessorConfigure.class.getSimpleName() + ".packageDataSourceMappings";
+    public static final String MAPPING_BEAN_NAME = MyBatisMultiDataSourceProcessorConfigure.class.getSimpleName()
+            + ".packageDataSourceMappings";
 
     private ApplicationContext applicationContext;
 

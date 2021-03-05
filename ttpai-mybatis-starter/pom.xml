@@ -19,7 +19,7 @@
         <!-- 多数据源支持【需要手动引用】 -->
         <dependency>
             <groupId>com.ttpai.framework</groupId>
-            <artifactId>ttpai-mybatis-plugin-datasource</artifactId>
+            <artifactId>ttpai-mybatis-autoconfigure-datasource</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
