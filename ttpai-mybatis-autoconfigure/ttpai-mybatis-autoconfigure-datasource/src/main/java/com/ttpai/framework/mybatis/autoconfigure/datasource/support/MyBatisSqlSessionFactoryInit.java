@@ -83,7 +83,10 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
                     configurationCustomizersProvider);
             delegation.afterPropertiesSet();
             SqlSessionFactory sqlSessionFactory = delegation.sqlSessionFactory(dataSource);
-            beanFactory.registerSingleton("SqlSessionFactory." + entry.getKey(), sqlSessionFactory);
+            beanFactory.registerSingleton(
+                    SqlSessionFactory.class.getSimpleName() + "." + entry.getKey(), //
+                    sqlSessionFactory //
+            );
         }
     }
 
