@@ -10,11 +10,15 @@ import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.boot.web.servlet.ServletContextInitializerBeans;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.core.io.ResourceLoader;
 
@@ -28,6 +32,9 @@ import javax.sql.DataSource;
 
 import static com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceProcessorConfigure.MAPPING_BEAN_NAME;
 
+/**
+ * @see #onStartup(ServletContext)
+ */
 @Configuration
 @EnableConfigurationProperties(MybatisProperties.class)
 public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletContextInitializer, PriorityOrdered {
@@ -80,9 +87,21 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
         }
     }
 
+    /**
+     * 为了把 Bean 的初始化提前到 AbstractApplicationContext#onRefresh() 的阶段
+     *
+     * @see AbstractApplicationContext#onRefresh()
+     * @see EmbeddedWebApplicationContext#createEmbeddedServletContainer()
+     * @see EmbeddedWebApplicationContext#getSelfInitializer()
+     * @see EmbeddedWebApplicationContext#selfInitialize(ServletContext)
+     * @see EmbeddedWebApplicationContext#getServletContextInitializerBeans()
+     * @see ServletContextInitializerBeans#ServletContextInitializerBeans(ListableBeanFactory)
+     * @see ServletContextInitializerBeans#addServletContextInitializerBeans(ListableBeanFactory)
+     * @see ServletContextInitializerBeans#getOrderedBeansOfType(ListableBeanFactory, Class)
+     */
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-
+        // Noting 什么也不做
     }
 
     @Override

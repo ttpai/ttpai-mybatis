@@ -16,7 +16,7 @@
 
         <!-- region 插件 -->
 
-        <!-- 多数据源支持 -->
+        <!-- 多数据源支持【需要手动引用】 -->
         <dependency>
             <groupId>com.ttpai.framework</groupId>
             <artifactId>ttpai-mybatis-plugin-datasource</artifactId>
