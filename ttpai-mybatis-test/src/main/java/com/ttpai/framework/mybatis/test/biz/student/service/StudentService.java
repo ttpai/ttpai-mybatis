@@ -24,69 +24,81 @@ public class StudentService {
 
     @Autowired
     private TtpaiUserMapper userMapper;
-    
+
     @Autowired
     private UserService userService;
-    
-    public StudentVO selectStudent(){
+
+    public StudentVO selectStudent() {
         return studentMapper.selectById(3L);
     }
-    public void testUpdateA(){
+
+    public void testUpdateA() {
         studentMapper.updateAge();
     }
-    public void testFailA(){
+
+    public void testFailA() {
         StudentVO studentVO = new StudentVO();
         studentMapper.updateById(studentVO);
     }
-    public void testUpdateB(){
-       
+
+    public void testUpdateB() {
+
         userMapper.updateAge();
     }
-    public void testFailB(){
+
+    public void testFailB() {
         TtpaiUserVO ttpaiUserVO = new TtpaiUserVO();
         userMapper.updateById(ttpaiUserVO);
     }
-    
-    public void testSingleTransactionA1(){
+
+    public void testSingleTransactionA1() {
         testUpdateA();
         testUpdateB();
     }
-    public void testSingleTransactionA2(){
+
+    public void testSingleTransactionA2() {
         testUpdateA();
         testFailB();
     }
-    public void testSingleTransactionA3(){
+
+    public void testSingleTransactionA3() {
         testUpdateB();
         testFailA();
     }
-    public void testSingleTransactionA4(){
+
+    public void testSingleTransactionA4() {
         testUpdateA();
         testUpdateB();
         testFailA();
     }
-    public void testSingleTransactionA5(){
+
+    public void testSingleTransactionA5() {
         testUpdateA();
         testUpdateB();
         testFailB();
     }
-    
-    public void testNestedTransactionQ1(){
+
+    public void testNestedTransactionQ1() {
         testSingleTransactionA1();
         userService.testSingleTransactionB1();
     }
-    public void testNestedTransactionQ2(){
+
+    public void testNestedTransactionQ2() {
         testSingleTransactionA1();
         userService.testSingleTransactionB2();
     }
-    public void testNestedTransactionQ3(){
+
+    public void testNestedTransactionQ3() {
         testSingleTransactionA1();
         userService.testSingleTransactionB3();
     }
-    public void testNestedTransactionQ4(){
+
+    public void testNestedTransactionQ4() {
         testSingleTransactionA1();
         userService.testSingleTransactionB4();
     }
-    public void testNestedTransactionQ5(){
+
+    public void testNestedTransactionQ5() {
         testSingleTransactionA1();
         userService.testSingleTransactionB5();
     }

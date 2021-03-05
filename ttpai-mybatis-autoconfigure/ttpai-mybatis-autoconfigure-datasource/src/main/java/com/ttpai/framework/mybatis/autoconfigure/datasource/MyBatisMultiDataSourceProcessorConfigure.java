@@ -31,7 +31,7 @@ import javax.sql.DataSource;
 /**
  * @see MapperScannerConfigurer#postProcessBeanDefinitionRegistry
  */
-@Import({MyBatisSqlSessionFactoryInit.class,MyBatisSqlSessionFactoryInitEventListener.class})
+@Import({MyBatisSqlSessionFactoryInit.class, MyBatisSqlSessionFactoryInitEventListener.class})
 public class MyBatisMultiDataSourceProcessorConfigure
         implements ApplicationContextAware, BeanDefinitionRegistryPostProcessor {
 
@@ -191,9 +191,7 @@ public class MyBatisMultiDataSourceProcessorConfigure
     }
 
     /**
-     * 其他自定义配置 TODO 覆盖该方法或者重写 ClassPathMapperScanner，扩充其他过滤规则，如 自定义注解 等
-     * <p>
-     * // TODO 扩充其他自定义配置
+     * 扩充其他自定义配置
      */
     protected void scan(String packages) {
         ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);

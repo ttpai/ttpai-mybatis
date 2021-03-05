@@ -6,9 +6,10 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author lilin.tan@ttpai
@@ -23,7 +24,7 @@ public interface StudentMapper {
      * 分页查询（无条件）
      *
      * @param startIndex 起始位置
-     * @param pageSize 页面大小
+     * @param pageSize   页面大小
      * @return List<StudentVO>
      */
     @Select("SELECT" + BASE_ALL_FIELDS + " FROM  STUDENT LIMIT #{startIndex},#{pageSize}")
@@ -45,8 +46,9 @@ public interface StudentMapper {
      * @return 更新的条数
      */
     Long updateById(StudentVO entity);
-    
+
     void updateAge();
+
     /**
      * 根据传入实体对象查询
      *
@@ -54,7 +56,6 @@ public interface StudentMapper {
      * @return List<StudentVO>
      */
     List<StudentVO> selectByEntity(StudentVO entity);
-
 
     /**
      * 新增（不包括主键、createDate、modifyDate）

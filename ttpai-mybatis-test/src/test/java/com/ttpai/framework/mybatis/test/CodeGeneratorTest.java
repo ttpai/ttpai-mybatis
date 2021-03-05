@@ -33,7 +33,7 @@ public class CodeGeneratorTest {
         System.out.println("Generator");
     }
 
-//    @Before
+    // @Before
     public void createTable() {
 
         jdbcTemplate.execute("DROP TABLE IF EXISTS " + tableName + ";");

@@ -21,10 +21,10 @@ public class StudentServiceTest {
 
     @Autowired
     private StudentService studentService;
-    
+
     @Test
     public void selectStudentTest() {
-        StudentVO studentVO =studentService.selectStudent();
+        StudentVO studentVO = studentService.selectStudent();
         System.out.println(studentVO);
     }
 }

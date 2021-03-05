@@ -16,72 +16,84 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserService {
+
     @Autowired
     private StudentMapper studentMapper;
 
     @Autowired
     private TtpaiUserMapper userMapper;
-    
+
     @Autowired
     private StudentService studentService;
-    public void testUpdateA(){
+
+    public void testUpdateA() {
         studentMapper.updateAge();
     }
-    public void testFailA(){
+
+    public void testFailA() {
         StudentVO studentVO = new StudentVO();
         studentMapper.updateById(studentVO);
     }
-    public void testUpdateB(){
+
+    public void testUpdateB() {
         userMapper.updateAge();
     }
-    public void testFailB(){
+
+    public void testFailB() {
         TtpaiUserVO ttpaiUserVO = new TtpaiUserVO();
         userMapper.updateById(ttpaiUserVO);
     }
 
-    public void testSingleTransactionB1(){
+    public void testSingleTransactionB1() {
         testUpdateA();
         testUpdateB();
     }
-    public void testSingleTransactionB2(){
+
+    public void testSingleTransactionB2() {
         testUpdateA();
         testFailB();
     }
-    public void testSingleTransactionB3(){
+
+    public void testSingleTransactionB3() {
         testUpdateB();
         testFailA();
     }
-    public void testSingleTransactionB4(){
+
+    public void testSingleTransactionB4() {
         testUpdateA();
         testUpdateB();
         testFailA();
     }
-    public void testSingleTransactionB5(){
+
+    public void testSingleTransactionB5() {
         testUpdateA();
         testUpdateB();
         testFailB();
     }
 
-    public void testNestedTransactionW1(){
+    public void testNestedTransactionW1() {
         testSingleTransactionB1();
         studentService.testSingleTransactionA1();
     }
-    public void testNestedTransactionW2(){
+
+    public void testNestedTransactionW2() {
         testSingleTransactionB1();
         studentService.testSingleTransactionA2();
     }
-    public void testNestedTransactionW3(){
+
+    public void testNestedTransactionW3() {
         testSingleTransactionB1();
         studentService.testSingleTransactionA3();
     }
-    public void testNestedTransactionW4(){
+
+    public void testNestedTransactionW4() {
         testSingleTransactionB1();
         studentService.testSingleTransactionA4();
     }
-    public void testNestedTransactionW5(){
+
+    public void testNestedTransactionW5() {
         testSingleTransactionB1();
         studentService.testSingleTransactionA5();
     }
-    
-    
+
 }

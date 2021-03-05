@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("student")
 public class StudentController {
-    
+
     @Autowired
     private UserService userService;
-
 
     @Autowired
     private StudentService studentService;

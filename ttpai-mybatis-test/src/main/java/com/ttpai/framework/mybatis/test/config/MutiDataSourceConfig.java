@@ -28,40 +28,47 @@ import javax.sql.DataSource;
 public class MutiDataSourceConfig {
 
     @Bean(name = "mybatis.dataSource.com.ttpai.framework.mybatis.test.biz.user.dao")
-    public DataSource userDataSource(){
+    public DataSource userDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setUrl("jdbc:mysql://172.16.2.160:3306/tanlilin?useUnicode=true&characterEncoding=utf-8");
         druidDataSource.setUsername("admin");
         druidDataSource.setPassword("admin@123123");
         return druidDataSource;
     }
+
     @Bean(name = "mybatis.dataSource.com.ttpai.framework.mybatis.test.biz.student.dao")
-    public DataSource studentDataSource(){
+    public DataSource studentDataSource() {
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setUrl("jdbc:mysql://172.16.2.160:3306/zhangzichao?useUnicode=true&characterEncoding=utf-8");
         druidDataSource.setUsername("admin");
         druidDataSource.setPassword("admin@123123");
         return druidDataSource;
     }
-    
+
     @Bean(name = {"userDataSourceTransactionManager"})
     public PlatformTransactionManager userDataSourceTransactionManager() {
         return new DataSourceTransactionManager(userDataSource());
     }
+
     @Bean(name = {"studentDataSourceTransactionManager"})
     public PlatformTransactionManager studentDataSourceTransactionManager() {
         return new DataSourceTransactionManager(studentDataSource());
     }
+
     @Bean("userDataSourceTransactionPointcutAdvisor")
-    public DefaultBeanFactoryPointcutAdvisor  userDataSourceTransactionPointcutAdvisor() {
-        return customBeanFactoryPointcutAdvisor(userDataSourceTransactionManager(), "execution(* com.ttpai.framework.mybatis.test.biz.user.service..*.*(..))");
-    }
-    @Bean("studentDataSourceTransactionPointcutAdvisor")
-    public DefaultBeanFactoryPointcutAdvisor  studentDataSourceTransactionPointcutAdvisor() {
-        return customBeanFactoryPointcutAdvisor(studentDataSourceTransactionManager(), "execution(* com.ttpai.framework.mybatis.test.biz.student.service..*.*(..))");
+    public DefaultBeanFactoryPointcutAdvisor userDataSourceTransactionPointcutAdvisor() {
+        return customBeanFactoryPointcutAdvisor(userDataSourceTransactionManager(),
+                "execution(* com.ttpai.framework.mybatis.test.biz.user.service..*.*(..))");
     }
 
-    public static DefaultBeanFactoryPointcutAdvisor customBeanFactoryPointcutAdvisor(PlatformTransactionManager transactionManager, String expression) {
+    @Bean("studentDataSourceTransactionPointcutAdvisor")
+    public DefaultBeanFactoryPointcutAdvisor studentDataSourceTransactionPointcutAdvisor() {
+        return customBeanFactoryPointcutAdvisor(studentDataSourceTransactionManager(),
+                "execution(* com.ttpai.framework.mybatis.test.biz.student.service..*.*(..))");
+    }
+
+    public static DefaultBeanFactoryPointcutAdvisor customBeanFactoryPointcutAdvisor(PlatformTransactionManager transactionManager,
+                                                                                     String expression) {
         DefaultBeanFactoryPointcutAdvisor defaultBeanFactoryPointcutAdvisor = new DefaultBeanFactoryPointcutAdvisor();
         TransactionInterceptor transactionInterceptor = new TransactionInterceptor();
         transactionInterceptor.setTransactionManager(transactionManager);
@@ -74,10 +81,19 @@ public class MutiDataSourceConfig {
     }
 
     private static NameMatchTransactionAttributeSource[] newTransactionAttributes() {
-        return new NameMatchTransactionAttributeSource[]{newNameMatchTransactionAttributeSource("select*", newReadTransactionAttribute()), newNameMatchTransactionAttributeSource("find*", newReadTransactionAttribute()), newNameMatchTransactionAttributeSource("save*", newWriteTransactionAttribute()), newNameMatchTransactionAttributeSource("insert*", newWriteTransactionAttribute()), newNameMatchTransactionAttributeSource("update*", newWriteTransactionAttribute()), newNameMatchTransactionAttributeSource("del*", newWriteTransactionAttribute()), newNameMatchTransactionAttributeSource("add*", newWriteTransactionAttribute()), newNameMatchTransactionAttributeSource("test*", newWriteTransactionAttribute())};
+        return new NameMatchTransactionAttributeSource[] {
+                newNameMatchTransactionAttributeSource("select*", newReadTransactionAttribute()),
+                newNameMatchTransactionAttributeSource("find*", newReadTransactionAttribute()),
+                newNameMatchTransactionAttributeSource("save*", newWriteTransactionAttribute()),
+                newNameMatchTransactionAttributeSource("insert*", newWriteTransactionAttribute()),
+                newNameMatchTransactionAttributeSource("update*", newWriteTransactionAttribute()),
+                newNameMatchTransactionAttributeSource("del*", newWriteTransactionAttribute()),
+                newNameMatchTransactionAttributeSource("add*", newWriteTransactionAttribute()),
+                newNameMatchTransactionAttributeSource("test*", newWriteTransactionAttribute())};
     }
 
-    private static NameMatchTransactionAttributeSource newNameMatchTransactionAttributeSource(String methodName, TransactionAttribute attr) {
+    private static NameMatchTransactionAttributeSource newNameMatchTransactionAttributeSource(String methodName,
+                                                                                              TransactionAttribute attr) {
         NameMatchTransactionAttributeSource source = new NameMatchTransactionAttributeSource();
         source.addTransactionalMethod(methodName, attr);
         return source;

@@ -47,6 +47,7 @@ public interface TtpaiUserMapper {
     Long updateById(TtpaiUserVO entity);
 
     void updateAge();
+
     /**
      * 根据传入实体对象查询
      *

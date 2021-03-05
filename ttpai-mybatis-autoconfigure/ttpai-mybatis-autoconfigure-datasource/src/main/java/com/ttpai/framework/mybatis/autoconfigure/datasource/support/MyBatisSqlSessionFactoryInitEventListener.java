@@ -9,10 +9,12 @@ import org.springframework.core.Ordered;
 
 /**
  * 把 MyBatisSqlSessionFactoryInit 的初始化时机提前，先进行初始化，
- * 避免 {@link com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceProcessorConfigure#scan(String)} 找不到 SqlSessionFactory
+ * 避免 {@link com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceProcessorConfigure#scan(String)}
+ * 找不到 SqlSessionFactory
  *
  * @see AbstractApplicationContext#refresh()
- * @see AbstractApplicationContext#invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory) 调用 BeanFactoryPostProcessors
+ * @see AbstractApplicationContext#invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory) 调用
+ *      BeanFactoryPostProcessors
  * @see AbstractApplicationContext#registerListeners() 把 MyBatisSqlSessionFactoryInit 的初始化时机提前，先进行初始化
  * @see AbstractApplicationContext#finishBeanFactoryInitialization(ConfigurableListableBeanFactory) 实例化所有单例 Bean
  */
