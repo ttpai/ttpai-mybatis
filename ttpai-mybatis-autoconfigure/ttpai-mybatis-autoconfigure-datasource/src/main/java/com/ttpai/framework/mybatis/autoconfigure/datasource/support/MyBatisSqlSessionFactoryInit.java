@@ -71,7 +71,10 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
         for (Map.Entry<String, String> entry : mappings.entrySet()) {
             DataSource dataSource = beanFactory.getBean(entry.getValue(), DataSource.class);
             org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
-            BeanUtils.copyProperties(properties.getConfiguration(), configuration);
+            // 如果没有配置configuration，这里会为null，需要判断一下
+            if (properties.getConfiguration() != null) {
+                BeanUtils.copyProperties(properties.getConfiguration(), configuration);
+            }
             properties.setConfiguration(configuration);
             delegation = new MybatisAutoConfiguration(
                     properties,
@@ -104,7 +107,7 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
      */
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        // Noting 什么也不做
+
     }
 
     @Override

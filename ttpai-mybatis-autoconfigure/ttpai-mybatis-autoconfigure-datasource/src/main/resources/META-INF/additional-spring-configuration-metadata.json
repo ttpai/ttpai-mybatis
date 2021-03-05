@@ -1,0 +1,11 @@
+{
+  "properties": [
+    {
+      "defaultValue": "",
+      "name": "ttpai.mybatis.datasource.mapping",
+      "description": "自定义DataSource对应package的关系，package用逗号分隔比如:【ttpai.mybatis.datasource.mapping.xxx=com.ttapi.arch.mapper】 .",
+      "type": "java.util.Map<java.lang.String,java.lang.String>"
+    }
+  ]
+}
+ 
