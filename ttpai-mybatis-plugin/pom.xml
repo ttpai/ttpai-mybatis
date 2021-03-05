@@ -15,9 +15,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <!-- 多数据源支持 -->
-        <module>ttpai-mybatis-plugin-datasource</module>
-
         <!-- 【Debug】临时插件进行调试 -->
         <module>ttpai-mybatis-plugin-test</module>
     </modules>
