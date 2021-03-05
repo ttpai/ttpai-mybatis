@@ -44,8 +44,8 @@ public class MyBatisMultiDataSourceProcessorConfigure
             "ttpai.mybatis.dataSource." // 自定义前缀
     };
 
-    public static final String MAPPING_BEAN_NAME = //
-            MyBatisMultiDataSourceProcessorConfigure.class.getSimpleName() + ".dataSourcePackageMappings";
+    public static final String MAPPING_BEAN_NAME =
+            MyBatisMultiDataSourceProcessorConfigure.class.getSimpleName() + ".packageDataSourceMappings";
 
     private ApplicationContext applicationContext;
 
@@ -79,17 +79,17 @@ public class MyBatisMultiDataSourceProcessorConfigure
         }
 
         // 包名对应DataSource名称的关系 packageName <-> dataSourceName
-        Map<String, String> dataSourcePackageMappings = findDataSourceMappings(dataSourceNames);
+        Map<String, String> packageDataSourceMappings = findDataSourceMappings(dataSourceNames);
 
         // 先查找子包，再查找父包
-        ArrayList<String> packages = new ArrayList<>(dataSourcePackageMappings.keySet());
+        ArrayList<String> packages = new ArrayList<>(packageDataSourceMappings.keySet());
         Collections.sort(packages);
         Collections.reverse(packages);
         // 扫包
         packages.forEach(this::scan);
 
         // 注册 dataSource <-> packageName 的映射关系
-        beanFactory.registerSingleton(MAPPING_BEAN_NAME, dataSourcePackageMappings);
+        beanFactory.registerSingleton(MAPPING_BEAN_NAME, packageDataSourceMappings);
         // 发布早期事件，在 getBean 之前初始化
         applicationContext.publishEvent(new MyBatisSqlSessionFactoryInitEvent(applicationContext));
 
