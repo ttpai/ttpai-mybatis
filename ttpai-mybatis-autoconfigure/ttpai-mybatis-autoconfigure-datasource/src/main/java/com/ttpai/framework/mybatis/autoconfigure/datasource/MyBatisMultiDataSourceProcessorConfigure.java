@@ -17,12 +17,10 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -63,7 +61,6 @@ public class MyBatisMultiDataSourceProcessorConfigure
      */
     private List<String> defaultPackageNames;
 
-    // TODO 增加配置提示
     private static final String CONFIG_PREFIX = "ttpai.mybatis.datasource.mapping.";
 
     @Override
@@ -134,8 +131,6 @@ public class MyBatisMultiDataSourceProcessorConfigure
                 continue;
             }
 
-            // FIXME 会不会扫描到 tomcat 的 datasource，是否需要处理，为什么
-
             // 记录 DataSource Name
             dataSourceBeanName.add(beanName);
         }
@@ -160,48 +155,49 @@ public class MyBatisMultiDataSourceProcessorConfigure
     /**
      * 多数据源的情况，对多数据源进行包的映射
      * <p>
-     * FIXME package 重复配置的问题 和 逻辑调整
      */
     protected Map<String, String> findDataSourceMappings(Set<String> dataSourceNames) {
         Map<String, String> packageBeanMappings = new HashMap<>();
-
-        // 所有配置的 packages
-        List<String> totalPackages = new ArrayList<>();
-
+        // 如果是单一数据源并且存在 SpringBoot 默认包名，则加入映射关系
+        if (1 == dataSourceNames.size() && !defaultPackageNames.isEmpty()) {
+            for (String defaultPackageName : defaultPackageNames) {
+                packageBeanMappings.put(defaultPackageName, dataSourceNames.iterator().next());
+            }
+        }
         for (String dataSourceName : dataSourceNames) {
             // 如果数据源名称符合规范，则使用约定格式的 包名->数据源的映射
             int prefixIndex = hasAutoPrefix(dataSourceName);
             if (prefixIndex > 0) {
                 String foundPackage = dataSourceName.substring(prefixIndex);
-
-                packageBeanMappings.put(foundPackage, dataSourceName);
-                totalPackages.add(foundPackage);
+                checkAndCacheMapping(packageBeanMappings, foundPackage, dataSourceName);
             }
-
             // 查找用户自定义配置的包名映射
             List<String> packages = this.findDataSourcePackage(dataSourceName);
             if (!packages.isEmpty()) {
                 for (String pkg : packages) {
-                    packageBeanMappings.put(pkg, dataSourceName);
-                    totalPackages.add(pkg);
+                    checkAndCacheMapping(packageBeanMappings, pkg, dataSourceName);
                 }
             }
-
-            // 如果是单一数据源并且存在 SpringBoot 默认包名，则加入映射关系
-            if (1 == dataSourceNames.size() && !defaultPackageNames.isEmpty()) {
-                for (String defaultPackageName : defaultPackageNames) {
-                    packageBeanMappings.put(defaultPackageName, dataSourceName);
-                }
-                totalPackages.addAll(defaultPackageNames);
-            }
         }
-
-        // 配置不规范告警 存在多个数据源对应同一个包的情况
-        if (packageBeanMappings.keySet().size() != totalPackages.size()) {
-            throw new IllegalStateException("数据源配置信息有误,多个数据源不能映射到同一个的包名上（同一个包下不能使用多个数据源）,请检查数据源相关配置");
-        }
-
         return packageBeanMappings;
+    }
+
+    /**
+     * 检查是否有重复配置
+     * 没有重复配置就放入映射关系
+     * 
+     * @param packageBeanMappings 映射关系map
+     * @param packageName         包名
+     * @param dataSourceName      数据源名
+     */
+    private void checkAndCacheMapping(Map<String, String> packageBeanMappings, String packageName,
+                                      String dataSourceName) {
+        // 配置不规范告警 存在多个数据源对应同一个包的情况
+        String existedDataSource = packageBeanMappings.get(packageName);
+        if (existedDataSource != null && !existedDataSource.equals(dataSourceName)) {
+            throw new IllegalStateException("数据源配置信息有误,多个数据源不能映射到同一个的包名上【package: " + packageName + "】,请检查数据源相关配置");
+        }
+        packageBeanMappings.put(packageName, dataSourceName);
     }
 
     /**
@@ -216,9 +212,7 @@ public class MyBatisMultiDataSourceProcessorConfigure
         // 配置文件读取
         String packageNames = applicationContext.getEnvironment().getProperty(CONFIG_PREFIX + dataSourceBeanName);
         if (packageNames != null) {
-            // TODO
-            String[] split = packageNames.split(",");
-            packages.addAll(Arrays.asList(split));
+            packages.addAll(StringUtils.commaDelimitedListToSet(packageNames));
         }
         // 别名读取
         String[] aliases = applicationContext.getAliases(dataSourceBeanName);
