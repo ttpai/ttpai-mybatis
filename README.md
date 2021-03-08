@@ -9,7 +9,7 @@ MyBatis代码生成器，[接入方式](http://confluence.ttpai.cn/pages/viewpag
 - 修改MyBatis默认配置,参考 [MyBatis全局配置](http://confluence.ttpai.cn/pages/viewpage.action?pageId=9591766)
 - 自定义 @MapperScan 行为， Mapper 上必须增加 @Mapper 注解
 
-### v1.0.1
+### v1.0.1 2021-03-08
 
 - 如果 Mapper 返回值是集合类型，当查不到数据时，返回空集合，而不是 null，【MyBatis 默认就是这样的，无需处理】
 - 【增加默认配置】
@@ -23,3 +23,8 @@ MyBatis代码生成器，[接入方式](http://confluence.ttpai.cn/pages/viewpag
 -  多数据源自动配置 [接入方式](http://confluence.ttpai.cn/pages/viewpage.action?pageId=9591768)
     - 支持 rose-jade 命名规范
     - 当跨库事务时，Service 的事务管理器 和 Mapper 的 DataSource 不匹配时，事务失效，而不是使用当前事务的 DataSource，即采用 rose-jade 和 jdbcTemplate 的方式
+
+### v1.0.2 TODO
+
+- 多数据源时，无需配置 `spring.datasource.initialize=false`，进行自动配置
+- 单数据源时，使 `ttpai-mybatis-autoconfigure-datasource` 配置失效
