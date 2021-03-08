@@ -75,7 +75,7 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
 
             //
             org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
-            // 如果没有配置configuration，这里会为null，需要判断一下
+            // 如果没有配置 configuration，这里会为 null，需要判断一下
             if (properties.getConfiguration() != null) {
                 BeanUtils.copyProperties(properties.getConfiguration(), configuration);
             }
