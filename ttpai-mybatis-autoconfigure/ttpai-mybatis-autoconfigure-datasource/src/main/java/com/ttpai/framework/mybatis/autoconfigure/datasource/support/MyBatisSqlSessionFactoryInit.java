@@ -67,12 +67,17 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
     @SuppressWarnings("all")
     public void afterPropertiesSet() throws Exception {
         Map<String, String> mappings = beanFactory.getBean(MAPPING_BEAN_NAME, Map.class);
+
         MybatisAutoConfiguration delegation;
-        for (Map.Entry<String, String> entry : mappings.entrySet()) {
-            DataSource dataSource = beanFactory.getBean(entry.getValue(), DataSource.class);
+
+        for (Map.Entry<String, String> packageDatasource : mappings.entrySet()) {
+            DataSource dataSource = beanFactory.getBean(packageDatasource.getValue(), DataSource.class);
+
+            //
             org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
             BeanUtils.copyProperties(properties.getConfiguration(), configuration);
             properties.setConfiguration(configuration);
+
             delegation = new MybatisAutoConfiguration(
                     properties,
                     interceptorsProvider,
@@ -82,9 +87,11 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
                     databaseIdProvider,
                     configurationCustomizersProvider);
             delegation.afterPropertiesSet();
+
             SqlSessionFactory sqlSessionFactory = delegation.sqlSessionFactory(dataSource);
+
             beanFactory.registerSingleton(
-                    SqlSessionFactory.class.getSimpleName() + "." + entry.getKey(), //
+                    SqlSessionFactory.class.getSimpleName() + "." + packageDatasource.getKey(), //
                     sqlSessionFactory //
             );
         }

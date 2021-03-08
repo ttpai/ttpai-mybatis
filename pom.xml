@@ -17,6 +17,8 @@
     <modules>
         <!-- 依赖项目 -->
         <module>ttpai-mybatis-starter</module>
+        <!-- 自动配置 -->
+        <module>ttpai-mybatis-autoconfigure</module>
         <!-- MyBatis 插件 -->
         <module>ttpai-mybatis-plugin</module>
 
@@ -24,7 +26,6 @@
         <module>ttpai-mybatis-gen</module>
         <!-- 测试项目 -->
         <module>ttpai-mybatis-test</module>
-        <module>ttpai-mybatis-autoconfigure</module>
     </modules>
 
     <repositories>
