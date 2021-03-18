@@ -16,12 +16,13 @@
 
         <!-- region 插件 -->
 
-        <!-- 多数据源支持【需要手动引用】 -->
+        <!-- 多数据源支持 -->
+        <!-- 如果数据源只有多，很根据 Bean 的名称自动识别 Mapper -->
+        <!-- 如果数据源只有一个，会使用官方 starter 的方式，该模块自动失效 -->
         <dependency>
             <groupId>com.ttpai.framework</groupId>
             <artifactId>ttpai-mybatis-autoconfigure-datasource</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- endregion -->

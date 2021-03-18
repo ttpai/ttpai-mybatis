@@ -1,5 +1,6 @@
 package com.ttpai.framework.mybatis.autoconfigure.datasource;
 
+import com.ttpai.framework.mybatis.autoconfigure.common.ConditionalOnBeanCount;
 import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInit;
 import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInitEvent;
 import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInitEventListener;
@@ -33,6 +34,7 @@ import javax.sql.DataSource;
 /**
  * @see MapperScannerConfigurer#postProcessBeanDefinitionRegistry
  */
+@ConditionalOnBeanCount(type = {DataSource.class}, count = ConditionalOnBeanCount.Count.MULTI)
 @Import({MyBatisSqlSessionFactoryInit.class, MyBatisSqlSessionFactoryInitEventListener.class})
 public class MyBatisMultiDataSourceProcessorConfigure
         implements ApplicationContextAware, BeanDefinitionRegistryPostProcessor {
@@ -185,7 +187,7 @@ public class MyBatisMultiDataSourceProcessorConfigure
     /**
      * 检查是否有重复配置
      * 没有重复配置就放入映射关系
-     * 
+     *
      * @param packageBeanMappings 映射关系map
      * @param packageName         包名
      * @param dataSourceName      数据源名
