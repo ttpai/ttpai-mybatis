@@ -2,24 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
     <parent>
+        <artifactId>ttpai-mybatis-autoconfigure</artifactId>
         <groupId>com.ttpai.framework</groupId>
-        <artifactId>ttpai_mybatis</artifactId>
         <version>1.0.2-SNAPSHOT</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ttpai-mybatis-autoconfigure</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <!-- 自动配置公共模块 -->
-        <module>ttpai-mybatis-autoconfigure-common</module>
-        <!-- 多数据源支持 -->
-        <module>ttpai-mybatis-autoconfigure-datasource</module>
-        <module>ttpai-mybatis-autoconfigure-conf</module>
-    </modules>
+    <artifactId>ttpai-mybatis-autoconfigure-conf</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
