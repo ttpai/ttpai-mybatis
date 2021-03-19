@@ -28,6 +28,11 @@
         <module>ttpai-mybatis-test</module>
     </modules>
 
+    <properties>
+        <!-- 跳过 Maven 依赖管理 -->
+        <ttpai-dependencies.skip>true</ttpai-dependencies.skip>
+    </properties>
+
     <repositories>
 
         <repository>
