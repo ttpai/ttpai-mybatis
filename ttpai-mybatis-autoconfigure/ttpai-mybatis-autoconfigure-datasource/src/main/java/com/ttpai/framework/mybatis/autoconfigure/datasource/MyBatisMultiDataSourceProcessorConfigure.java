@@ -1,6 +1,6 @@
 package com.ttpai.framework.mybatis.autoconfigure.datasource;
 
-import com.ttpai.framework.mybatis.autoconfigure.common.ConditionalOnBeanCount;
+import com.ttpai.framework.mybatis.autoconfigure.common.condition.ConditionalOnBeanCount;
 import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInit;
 import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInitEvent;
 import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInitEventListener;

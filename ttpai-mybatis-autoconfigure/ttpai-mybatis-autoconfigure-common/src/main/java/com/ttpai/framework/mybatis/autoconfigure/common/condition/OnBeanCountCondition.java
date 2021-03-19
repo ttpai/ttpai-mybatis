@@ -1,4 +1,4 @@
-package com.ttpai.framework.mybatis.autoconfigure.common;
+package com.ttpai.framework.mybatis.autoconfigure.common.condition;
 
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
@@ -9,8 +9,8 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 import java.util.Arrays;
 import java.util.Map;
 
-import static com.ttpai.framework.mybatis.autoconfigure.common.ConditionalOnBeanCount.ATTR_COUNT;
-import static com.ttpai.framework.mybatis.autoconfigure.common.ConditionalOnBeanCount.ATTR_TYPE;
+import static com.ttpai.framework.mybatis.autoconfigure.common.condition.ConditionalOnBeanCount.ATTR_COUNT;
+import static com.ttpai.framework.mybatis.autoconfigure.common.condition.ConditionalOnBeanCount.ATTR_TYPE;
 
 /**
  * @see org.springframework.boot.autoconfigure.condition.OnBeanCondition

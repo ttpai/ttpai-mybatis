@@ -1,6 +1,6 @@
 package com.ttpai.framework.mybatis.autoconfigure.datasource.choose;
 
-import com.ttpai.framework.mybatis.autoconfigure.common.ConditionalOnBeanCount;
+import com.ttpai.framework.mybatis.autoconfigure.common.condition.ConditionalOnBeanCount;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
