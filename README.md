@@ -25,6 +25,6 @@ MyBatis代码生成器，[接入方式](http://confluence.ttpai.cn/pages/viewpag
     - 当跨库事务时，Service 的事务管理器 和 Mapper 的 DataSource 不匹配时，事务失效，而不是使用当前事务的 DataSource，即采用 rose-jade 和 jdbcTemplate 的方式
 
 ### v1.0.2 Doing
-
-- 多数据源时，无需配置 `spring.datasource.initialize=false`，进行自动配置
 - 单数据源时，使 `ttpai-mybatis-autoconfigure-datasource` 配置失效
+  
+- 多数据源时，无需配置 `spring.datasource.initialize=false`，进行自动配置
