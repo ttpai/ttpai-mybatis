@@ -61,6 +61,17 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.ttpai.framework</groupId>
+            <artifactId>ttpai-rose-spring-boot-starter</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.54chen</groupId>
+            <artifactId>paoding-rose</artifactId>
+        </dependency>
+
 
     </dependencies>
 
