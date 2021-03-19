@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * 排除 MybatisAutoConfiguration，
  *
+ * @author kail
  * @see MyBatisAutoConfigurationImporter 根据自定义条件判断是否重新启用
  *      ---
  * @see AutoConfigurationImportSelector#selectImports(AnnotationMetadata) > 获取所有 自动配置配

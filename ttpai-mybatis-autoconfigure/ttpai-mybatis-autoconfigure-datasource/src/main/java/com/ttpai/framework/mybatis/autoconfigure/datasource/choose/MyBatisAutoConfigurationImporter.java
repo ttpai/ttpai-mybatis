@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 /**
  * 重新启用 MybatisAutoConfiguration，生效条件是 DataSource 的实例只有一个
  *
+ * @author kail
  * @see MyBatisAutoConfigurationExcludeFilter 排除 MybatisAutoConfiguration
  */
 @ConditionalOnBeanCount(type = DataSource.class, count = ConditionalOnBeanCount.Count.SINGLE)
