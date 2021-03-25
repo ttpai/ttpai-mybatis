@@ -18,7 +18,6 @@
         <module>ttpai-mybatis-autoconfigure-common</module>
         <!-- 多数据源支持 -->
         <module>ttpai-mybatis-autoconfigure-datasource</module>
-        <module>ttpai-mybatis-autoconfigure-conf</module>
     </modules>
 
     <properties>
