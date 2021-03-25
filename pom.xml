@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>ttpai_mybatis</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -27,6 +27,11 @@
         <!-- 测试项目 -->
         <module>ttpai-mybatis-test</module>
     </modules>
+
+    <properties>
+        <!-- 跳过 Maven 依赖管理 -->
+        <ttpai-dependencies.skip>true</ttpai-dependencies.skip>
+    </properties>
 
     <repositories>
 

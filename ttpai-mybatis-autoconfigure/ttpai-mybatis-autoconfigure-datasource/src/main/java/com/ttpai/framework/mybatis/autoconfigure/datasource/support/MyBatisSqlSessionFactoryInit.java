@@ -17,25 +17,22 @@ import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.ServletContextInitializerBeans;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.core.io.ResourceLoader;
-
-import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
+import java.util.List;
+import java.util.Map;
 
 import static com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceProcessorConfigure.MAPPING_BEAN_NAME;
 
 /**
  * @see #onStartup(ServletContext)
  */
-@Configuration
 @EnableConfigurationProperties(MybatisProperties.class)
 public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletContextInitializer, PriorityOrdered {
 
@@ -114,7 +111,7 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
      */
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-
+        // getBean
     }
 
     @Override

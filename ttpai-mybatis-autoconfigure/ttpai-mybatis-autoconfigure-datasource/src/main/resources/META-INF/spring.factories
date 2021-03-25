@@ -2,9 +2,15 @@
 #
 #
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceProcessorConfigure
+com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceProcessorConfigure,\
+  com.ttpai.framework.mybatis.autoconfigure.datasource.choose.MyBatisAutoConfigurationImporter
 #
 #
 # AutoConfiguration 过滤器
 org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=\
-com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisAutoConfigurationExclude
+com.ttpai.framework.mybatis.autoconfigure.datasource.choose.MyBatisAutoConfigurationExcludeFilter
+#
+#
+#
+org.springframework.context.ApplicationListener=\
+com.ttpai.framework.mybatis.autoconfigure.datasource.listener.DefaultDataSourceInitListener

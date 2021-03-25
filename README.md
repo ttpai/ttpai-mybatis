@@ -20,11 +20,14 @@ MyBatis代码生成器，[接入方式](http://confluence.ttpai.cn/pages/viewpag
         - 因为 null 也是一种数据状态，查到的字段不存在时，应该覆盖掉 VO 中的值，而不应该什么也不做
         - 同时也保证 VO 中的对象都是包装类型对象，不能是 基本数据类型
 - 【fix】修复默认配置覆盖，仅支持 驼峰配置的问题；修复后支持 Spring Boot 的多种格式配置
--  多数据源自动配置 [接入方式](http://confluence.ttpai.cn/pages/viewpage.action?pageId=9591768)
+- 多数据源自动配置 [接入方式](http://confluence.ttpai.cn/pages/viewpage.action?pageId=9591768)
     - 支持 rose-jade 命名规范
     - 当跨库事务时，Service 的事务管理器 和 Mapper 的 DataSource 不匹配时，事务失效，而不是使用当前事务的 DataSource，即采用 rose-jade 和 jdbcTemplate 的方式
 
-### v1.0.2 TODO
+### v1.0.2 2021-03-25
 
-- 多数据源时，无需配置 `spring.datasource.initialize=false`，进行自动配置
-- 单数据源时，使 `ttpai-mybatis-autoconfigure-datasource` 配置失效
+- `ttpai-mybatis-starter` 默认依赖 `ttpai-mybatis-autoconfigure-datasource`
+
+- 单数据源时，使 `ttpai-mybatis-autoconfigure-datasource` 功能失效，默认 使用 mybatis 官方的 starter
+
+- 多数据源时，无需配置 `spring.datasource.initialize=false` 来解决报错问题，会把该属性自动设置为 false 
