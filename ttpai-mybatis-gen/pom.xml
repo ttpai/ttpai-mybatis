@@ -6,7 +6,7 @@
     <parent>
         <artifactId>ttpai_mybatis</artifactId>
         <groupId>com.ttpai.framework</groupId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.2</version>
     </parent>
 
     <artifactId>ttpai-mybatis-gen</artifactId>
