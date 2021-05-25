@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>com.ttpai.framework</groupId>
-        <artifactId>ttpai-parent</artifactId>
+        <artifactId>ttpai-parent2</artifactId>
         <version>2.2.3</version>
     </parent>
 
