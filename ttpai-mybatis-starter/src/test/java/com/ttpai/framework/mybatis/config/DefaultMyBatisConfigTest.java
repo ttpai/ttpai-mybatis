@@ -1,7 +1,6 @@
 package com.ttpai.framework.mybatis.config;
 
 import org.junit.Test;
-import org.springframework.boot.bind.RelaxedNames;
 
 public class DefaultMyBatisConfigTest {
 
@@ -11,6 +10,7 @@ public class DefaultMyBatisConfigTest {
         for (String relaxedName : relaxedNames) {
             System.out.println(relaxedName);
         }
+
     }
 
 }

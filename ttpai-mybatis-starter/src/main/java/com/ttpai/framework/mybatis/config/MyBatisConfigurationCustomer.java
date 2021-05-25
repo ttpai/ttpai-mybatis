@@ -2,7 +2,6 @@ package com.ttpai.framework.mybatis.config;
 
 import org.apache.ibatis.session.Configuration;
 import org.mybatis.spring.boot.autoconfigure.ConfigurationCustomizer;
-import org.springframework.boot.bind.RelaxedNames;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 
@@ -35,9 +34,8 @@ public class MyBatisConfigurationCustomer implements ConfigurationCustomizer {
                 continue;
             }
 
-            // region 支持 Spring 配置的各种格式
-
             boolean found = false;
+            // region 支持 Spring 配置的各种格式
             // 获取的结果不包含自己
             RelaxedNames relaxedNames = RelaxedNames.forCamelCase(configKey);
             for (String relaxedName : relaxedNames) {
@@ -48,11 +46,12 @@ public class MyBatisConfigurationCustomer implements ConfigurationCustomizer {
                     break;
                 }
             }
+            // endregion
+
             // 如果最终仍然没有找到，则进行设置
             if (!found) {
                 value.setConfig(configuration);
             }
-            // endregion
 
         }
     }

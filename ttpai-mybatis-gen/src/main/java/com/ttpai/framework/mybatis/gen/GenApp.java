@@ -13,7 +13,11 @@ public class GenApp {
     public static void main(String[] args) {
         final SpringApplication application = new SpringApplication(GenApp.class);
         application.setBannerMode(Banner.Mode.OFF);
-        application.setWebEnvironment(false);
+
+        // 【无需设置】 该方法 Spring Boot 1 和 2 不兼容
+        // 1 application.setWebEnvironment(false);
+        // 2 application.setWebApplicationType(WebApplicationType.NONE);
+
         application.setLogStartupInfo(false);
         application.run(args);
     }
