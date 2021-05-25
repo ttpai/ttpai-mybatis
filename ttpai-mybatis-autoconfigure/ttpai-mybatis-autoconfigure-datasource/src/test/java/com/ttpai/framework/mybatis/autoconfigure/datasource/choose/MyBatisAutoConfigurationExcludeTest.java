@@ -15,18 +15,21 @@ public class MyBatisAutoConfigurationExcludeTest {
 
         String key = "spring.autoconfigure.exclude";
 
-        MyBatisAutoConfigurationExclude myBatisAutoConfigurationExclude = new MyBatisAutoConfigurationExclude(null, null);
+        MyBatisAutoConfigurationExclude myBatisAutoConfigurationExclude = new MyBatisAutoConfigurationExclude();
 
         final StandardEnvironment environment = new StandardEnvironment();
 
-        final MapPropertySource mapPropertySource = new MapPropertySource(this.getClass().getName(), Collections.singletonMap(key, "123"));
+        final MapPropertySource mapPropertySource = new MapPropertySource(this.getClass().getName(),
+                Collections.singletonMap(key, "123"));
 
         environment.getPropertySources().addLast(mapPropertySource);
 
         Assert.assertEquals("123", environment.getProperty(key));
         myBatisAutoConfigurationExclude.environmentPrepared(environment);
-        Assert.assertEquals("123,org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration", environment.getProperty(key));
-        Assert.assertEquals("org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration", environment.getProperty(key, ArrayList.class).get(1));
+        Assert.assertEquals("123,org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration",
+                environment.getProperty(key));
+        Assert.assertEquals("org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration",
+                environment.getProperty(key, ArrayList.class).get(1));
     }
 
 }

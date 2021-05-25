@@ -10,9 +10,7 @@ com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceProce
 #org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=\
 #com.ttpai.framework.mybatis.autoconfigure.datasource.choose.MyBatisAutoConfigurationExcludeFilter
 #
-org.springframework.boot.SpringApplicationRunListener=com.ttpai.framework.mybatis.autoconfigure.datasource.choose.MyBatisAutoConfigurationExclude
-#
-#
 #
 org.springframework.context.ApplicationListener=\
-com.ttpai.framework.mybatis.autoconfigure.datasource.listener.DefaultDataSourceInitListener
+com.ttpai.framework.mybatis.autoconfigure.datasource.listener.DefaultDataSourceInitListener,\
+  com.ttpai.framework.mybatis.autoconfigure.datasource.choose.MyBatisAutoConfigurationExclude

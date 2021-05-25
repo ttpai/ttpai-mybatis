@@ -1,10 +1,9 @@
 package com.ttpai.framework.mybatis.autoconfigure.datasource.choose;
 
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.SpringApplicationRunListener;
 import org.springframework.boot.autoconfigure.AutoConfigurationImportSelector;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
+import org.springframework.context.ApplicationListener;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 
@@ -18,25 +17,17 @@ import java.util.Map;
  * @author kail
  * @see AutoConfigurationImportSelector
  */
-public class MyBatisAutoConfigurationExclude implements SpringApplicationRunListener {
+public class MyBatisAutoConfigurationExclude implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
 
     private static final String EXCLUDE_KEY = "spring.autoconfigure.exclude";
 
-    /**
-     * 必须有的默认构造函数，
-     */
-    public MyBatisAutoConfigurationExclude(SpringApplication application, String[] args) {
-
+    @Override
+    public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
+        this.environmentPrepared(event.getEnvironment());
     }
 
-    public void starting() {
-
-    }
-
-
-
+    @SuppressWarnings("All")
     public void environmentPrepared(ConfigurableEnvironment environment) {
-
         // 获取原始值
         final ArrayList<String> excludes = environment.getProperty(EXCLUDE_KEY, ArrayList.class,
                 new ArrayList<String>());
@@ -48,25 +39,5 @@ public class MyBatisAutoConfigurationExclude implements SpringApplicationRunList
         final MapPropertySource mapPropertySource = new MapPropertySource(this.getClass().getName(), exclude);
         // 设置
         environment.getPropertySources().addFirst(mapPropertySource);
-    }
-
-    public void contextPrepared(ConfigurableApplicationContext context) {
-
-    }
-
-    public void contextLoaded(ConfigurableApplicationContext context) {
-
-    }
-
-    public void started(ConfigurableApplicationContext context) {
-
-    }
-
-    public void running(ConfigurableApplicationContext context) {
-
-    }
-
-    public void failed(ConfigurableApplicationContext context, Throwable exception) {
-
     }
 }
