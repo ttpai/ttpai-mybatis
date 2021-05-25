@@ -6,9 +6,11 @@ com.ttpai.framework.mybatis.autoconfigure.datasource.MyBatisMultiDataSourceProce
   com.ttpai.framework.mybatis.autoconfigure.datasource.choose.MyBatisAutoConfigurationImporter
 #
 #
-# AutoConfiguration 过滤器
-org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=\
-com.ttpai.framework.mybatis.autoconfigure.datasource.choose.MyBatisAutoConfigurationExcludeFilter
+# 【废弃】AutoConfiguration 过滤器，有兼容性问题，Spring Boot 1 & 2 下，行为不一致
+#org.springframework.boot.autoconfigure.AutoConfigurationImportFilter=\
+#com.ttpai.framework.mybatis.autoconfigure.datasource.choose.MyBatisAutoConfigurationExcludeFilter
+#
+org.springframework.boot.SpringApplicationRunListener=com.ttpai.framework.mybatis.autoconfigure.datasource.choose.MyBatisAutoConfigurationExclude
 #
 #
 #

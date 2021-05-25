@@ -1,7 +1,9 @@
 package com.ttpai.framework.mybatis.autoconfigure.datasource.choose;
 
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
-import org.springframework.boot.autoconfigure.*;
+import org.springframework.boot.autoconfigure.AutoConfigurationImportFilter;
+import org.springframework.boot.autoconfigure.AutoConfigurationImportSelector;
+import org.springframework.boot.autoconfigure.AutoConfigurationMetadata;
 import org.springframework.core.type.AnnotationMetadata;
 
 import java.util.List;
@@ -16,6 +18,11 @@ import java.util.List;
  * @see AutoConfigurationImportSelector#filter(List, AutoConfigurationMetadata) > 从自动配置出删除指定的类
  *      ---
  * @see MybatisAutoConfiguration
+ *      ----------------------------------------------------------------------------------------------------
+ * @deprecated AutoConfigurationImportFilter Spring 4 & 5 不兼容，替换为系统变量的形式
+ *             该类的本意是只在 Spring Boot 下生效，基于 AutoConfigurationImportSelector#selectImports 流程
+ *             但是 Spring 5 之后，ConfigurationClassParser#processImports 多了 filter 参数，同样会对 @Import 生效
+ *             从而导致 MyBatisAutoConfigurationImporter 失效
  */
 public class MyBatisAutoConfigurationExcludeFilter implements AutoConfigurationImportFilter {
 
