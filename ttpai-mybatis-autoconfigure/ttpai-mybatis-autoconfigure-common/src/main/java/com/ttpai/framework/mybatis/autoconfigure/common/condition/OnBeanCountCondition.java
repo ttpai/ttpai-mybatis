@@ -13,7 +13,8 @@ import static com.ttpai.framework.mybatis.autoconfigure.common.condition.Conditi
 import static com.ttpai.framework.mybatis.autoconfigure.common.condition.ConditionalOnBeanCount.ATTR_TYPE;
 
 /**
- * @see org.springframework.boot.autoconfigure.condition.OnBeanCondition
+ * see org.springframework.boot.autoconfigure.condition.OnBeanCondition
+ * 
  * @see ConditionalOnBeanCount
  */
 public class OnBeanCountCondition extends SpringBootCondition implements ConfigurationCondition {

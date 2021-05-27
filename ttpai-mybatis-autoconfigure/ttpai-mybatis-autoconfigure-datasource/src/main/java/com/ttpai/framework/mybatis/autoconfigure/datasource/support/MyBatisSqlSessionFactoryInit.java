@@ -100,14 +100,14 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
     /**
      * 为了把 Bean 的初始化提前到 AbstractApplicationContext#onRefresh() 的阶段
      *
-     * @see AbstractApplicationContext#onRefresh()
-     * @see EmbeddedWebApplicationContext#createEmbeddedServletContainer()
-     * @see EmbeddedWebApplicationContext#getSelfInitializer()
-     * @see EmbeddedWebApplicationContext#selfInitialize(ServletContext)
-     * @see EmbeddedWebApplicationContext#getServletContextInitializerBeans()
-     * @see ServletContextInitializerBeans#ServletContextInitializerBeans(ListableBeanFactory)
-     * @see ServletContextInitializerBeans#addServletContextInitializerBeans(ListableBeanFactory)
-     * @see ServletContextInitializerBeans#getOrderedBeansOfType(ListableBeanFactory, Class)
+     * see AbstractApplicationContext#onRefresh()
+     * see EmbeddedWebApplicationContext#createEmbeddedServletContainer()
+     * see EmbeddedWebApplicationContext#getSelfInitializer()
+     * see EmbeddedWebApplicationContext#selfInitialize(ServletContext)
+     * see EmbeddedWebApplicationContext#getServletContextInitializerBeans()
+     * see ServletContextInitializerBeans#ServletContextInitializerBeans(ListableBeanFactory)
+     * see ServletContextInitializerBeans#addServletContextInitializerBeans(ListableBeanFactory)
+     * see ServletContextInitializerBeans#getOrderedBeansOfType(ListableBeanFactory, Class)
      */
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {

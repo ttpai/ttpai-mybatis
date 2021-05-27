@@ -12,14 +12,14 @@ import java.util.Map;
  * 多数据源 且没有 @Primary 时，避免报错
  *
  * @author kail
- * @see org.springframework.boot.SpringApplication#initialize(Object[])
+ *         see org.springframework.boot.SpringApplication#initialize(Object[])
  * @see org.springframework.boot.context.event.EventPublishingRunListener#environmentPrepared(ConfigurableEnvironment)
  */
 public class DefaultDataSourceInitListener implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
 
     /**
      * @see org.springframework.boot.autoconfigure.jdbc.DataSourceProperties
-     * @see org.springframework.boot.autoconfigure.jdbc.DataSourceInitializer#init()
+     *      see org.springframework.boot.autoconfigure.jdbc.DataSourceInitializer#init()
      */
     private static final String KEY = "spring.datasource.initialize";
 

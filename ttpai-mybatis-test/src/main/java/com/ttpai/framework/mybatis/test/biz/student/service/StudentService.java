@@ -5,16 +5,12 @@ import com.ttpai.framework.mybatis.test.biz.student.model.StudentVO;
 import com.ttpai.framework.mybatis.test.biz.user.dao.TtpaiUserMapper;
 import com.ttpai.framework.mybatis.test.biz.user.model.TtpaiUserVO;
 import com.ttpai.framework.mybatis.test.biz.user.service.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 /**
- *
  * @author zichao.zhang@ttpai.cn
- * @date 2021/3/3
+ * @since 2021/3/3
  */
 @Service
 public class StudentService {

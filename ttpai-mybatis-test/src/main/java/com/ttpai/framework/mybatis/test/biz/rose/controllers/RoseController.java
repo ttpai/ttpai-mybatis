@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * 使 StudentMapper 先加载，这时其对应的 SqlSessionFactory 还没有被 MyBatisSqlSessionFactoryInit 初始化
  *
  * @see com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInit
- * @see com.ttpai.framework.rose.boot.autoconfigure.RoseAutoConfiguration#roseBootFilterRegistration(RoseBootFilter)
+ *      see com.ttpai.framework.rose.boot.autoconfigure.RoseAutoConfiguration#roseBootFilterRegistration(RoseBootFilter)
  */
 @Path("/")
 public class RoseController {

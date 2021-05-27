@@ -4,7 +4,7 @@
 
 ### v1.0.0
 
-- 修改MyBatis默认配置,参考 [MyBatis全局配置](http://confluence.ttpai.cn/pages/viewpage.action?pageId=9591766)
+- 修改MyBatis默认配置
 - 自定义 @MapperScan 行为， Mapper 上必须增加 @Mapper 注解
 
 
@@ -20,7 +20,7 @@
         - 因为 null 也是一种数据状态，查到的字段不存在时，应该覆盖掉 VO 中的值，而不应该什么也不做
         - 同时也保证 VO 中的对象都是包装类型对象，不能是 基本数据类型
 - 【fix】修复默认配置覆盖，仅支持 驼峰配置的问题；修复后支持 Spring Boot 的多种格式配置
-- 多数据源自动配置 [接入方式](http://confluence.ttpai.cn/pages/viewpage.action?pageId=9591768)
+- 多数据源自动配置
     - 支持 rose-jade 命名规范
     - 当跨库事务时，Service 的事务管理器 和 Mapper 的 DataSource 不匹配时，事务失效，而不是使用当前事务的 DataSource，即采用 rose-jade 和 jdbcTemplate 的方式
 

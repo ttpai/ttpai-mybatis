@@ -12,7 +12,8 @@ import org.springframework.util.StringUtils;
  * 全局策略配置
  *
  * @author lilin.tan@ttpai.cn
- * @link {https://baomidou.com/config/generator-config.html#%E5%85%A8%E5%B1%80%E7%AD%96%E7%95%A5-globalconfig-%E9%85%8D%E7%BD%AE}
+ *         see
+ *         {https://baomidou.com/config/generator-config.html#%E5%85%A8%E5%B1%80%E7%AD%96%E7%95%A5-globalconfig-%E9%85%8D%E7%BD%AE}
  * @since 2021/2/9 15:44
  **/
 

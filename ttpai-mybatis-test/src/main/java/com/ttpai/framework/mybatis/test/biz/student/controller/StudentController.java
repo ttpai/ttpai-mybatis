@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  *
  * @author zichao.zhang@ttpai.cn
- * @date 2021/3/3
+ * @since 2021/3/3
  */
 @RestController
 @RequestMapping("student")

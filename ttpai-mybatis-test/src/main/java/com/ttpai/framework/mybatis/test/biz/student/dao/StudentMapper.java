@@ -25,7 +25,6 @@ public interface StudentMapper {
      *
      * @param startIndex 起始位置
      * @param pageSize   页面大小
-     * @return List<StudentVO>
      */
     @Select("SELECT" + BASE_ALL_FIELDS + " FROM  STUDENT LIMIT #{startIndex},#{pageSize}")
     List<StudentVO> selectByPage(@Param("startIndex") Integer startIndex, @Param("pageSize") Integer pageSize);
@@ -53,7 +52,6 @@ public interface StudentMapper {
      * 根据传入实体对象查询
      *
      * @param entity 实体对象StudentVO
-     * @return List<StudentVO>
      */
     List<StudentVO> selectByEntity(StudentVO entity);
 

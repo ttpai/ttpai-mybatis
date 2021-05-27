@@ -1,13 +1,8 @@
 package com.ttpai.framework.mybatis.autoconfigure.common.condition;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-import com.ttpai.framework.mybatis.autoconfigure.common.condition.OnBeanCountCondition;
 import org.springframework.context.annotation.Conditional;
+
+import java.lang.annotation.*;
 
 /**
  * 根据 Bean 的数量生效，不管是否是 Primary
@@ -27,11 +22,15 @@ public @interface ConditionalOnBeanCount {
 
     /**
      * 根据该类型获取 Bean
+     *
+     * @return Bean 的类型
      */
     Class<?>[] type();
 
     /**
      * 定义 Bean 的个数
+     *
+     * @return Bean 的个数
      */
     Count count();
 

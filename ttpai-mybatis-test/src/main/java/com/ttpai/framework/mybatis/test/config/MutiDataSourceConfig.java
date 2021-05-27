@@ -1,28 +1,21 @@
 package com.ttpai.framework.mybatis.test.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
-
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource;
-import org.springframework.transaction.interceptor.RollbackRuleAttribute;
-import org.springframework.transaction.interceptor.RuleBasedTransactionAttribute;
-import org.springframework.transaction.interceptor.TransactionAttribute;
-import org.springframework.transaction.interceptor.TransactionInterceptor;
+import org.springframework.transaction.interceptor.*;
 
+import javax.sql.DataSource;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 /**
- *
  * @author zichao.zhang@ttpai.cn
- * @date 2021/3/3
+ * @since 2021/3/3
  */
 @Configuration
 public class MutiDataSourceConfig {

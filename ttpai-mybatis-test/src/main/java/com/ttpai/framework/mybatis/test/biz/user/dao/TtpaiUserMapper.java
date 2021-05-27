@@ -24,7 +24,6 @@ public interface TtpaiUserMapper {
      *
      * @param startIndex 起始位置
      * @param pageSize   页面大小
-     * @return List<TtpaiUserVO>
      */
     @Select("SELECT" + BASE_ALL_FIELDS + " FROM  TTPAI_USER LIMIT #{startIndex},#{pageSize}")
     List<TtpaiUserVO> selectByPage(@Param("startIndex") Integer startIndex, @Param("pageSize") Integer pageSize);
@@ -52,7 +51,6 @@ public interface TtpaiUserMapper {
      * 根据传入实体对象查询
      *
      * @param entity 实体对象TtpaiUserVO
-     * @return List<TtpaiUserVO>
      */
     List<TtpaiUserVO> selectByEntity(TtpaiUserVO entity);
 

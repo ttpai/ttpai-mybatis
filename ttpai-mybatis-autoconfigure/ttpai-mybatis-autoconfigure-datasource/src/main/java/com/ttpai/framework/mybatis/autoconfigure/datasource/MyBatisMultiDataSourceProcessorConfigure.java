@@ -104,6 +104,9 @@ public class MyBatisMultiDataSourceProcessorConfigure
 
     /**
      * 获取 springboot 扫描的 base package
+     *
+     * @param beanFactory Spring 容器
+     * @return package 列表
      */
     protected List<String> findDefaultPackages(BeanFactory beanFactory) {
         return AutoConfigurationPackages.get(beanFactory);
@@ -111,6 +114,9 @@ public class MyBatisMultiDataSourceProcessorConfigure
 
     /**
      * 查找类型是 DataSource 的 BeanName
+     *
+     * @param beanFactory Spring 容器
+     * @return DataSource 的 BeanName 列表
      */
     protected Set<String> filterDataSourceNames(ConfigurableListableBeanFactory beanFactory) {
         Set<String> dataSourceBeanName = new HashSet<>();
@@ -138,7 +144,8 @@ public class MyBatisMultiDataSourceProcessorConfigure
     }
 
     /**
-     * @return 0 是 没有前缀; >0 前缀索引截止位置
+     * @param beanName Bean 的名称
+     * @return 0 是 没有前缀; 大于 0 前缀索引截止位置
      */
     protected int hasAutoPrefix(String beanName) {
         for (String prefix : AUTO_PREFIX) {
@@ -153,7 +160,9 @@ public class MyBatisMultiDataSourceProcessorConfigure
 
     /**
      * 多数据源的情况，对多数据源进行包的映射
-     * <p>
+     *
+     * @param dataSourceNames DataSource Bean 名称
+     * @return package 和 beanName 的映射
      */
     protected Map<String, String> findDataSourceMappings(Set<String> dataSourceNames) {
         Map<String, String> packageBeanMappings = new HashMap<>();
@@ -205,6 +214,9 @@ public class MyBatisMultiDataSourceProcessorConfigure
      * 1. 先读取配置文件里配置的映射关系
      * <p>
      * 2. 读取bean上面的别名，判断别名是否符合规范
+     *
+     * @param dataSourceBeanName DataSource Bean 名称
+     * @return DataSource 对应的 packages
      */
     protected List<String> findDataSourcePackage(String dataSourceBeanName) {
         List<String> packages = new ArrayList<>();
@@ -228,6 +240,8 @@ public class MyBatisMultiDataSourceProcessorConfigure
 
     /**
      * 这里扩充其他自定义扫描规则
+     * 
+     * @param packages package 名
      */
     protected void scan(String packages) {
         ClassPathMapperScanner scanner = new ClassPathMapperScanner(registry);

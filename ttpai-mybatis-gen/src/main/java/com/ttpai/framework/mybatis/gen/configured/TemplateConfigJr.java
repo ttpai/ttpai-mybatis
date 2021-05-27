@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * 模板配置，可自定义代码生成的模板，实现个性化操作
  *
  * @author lilin.tan@ttpai.cn
- * @link {https://baomidou.com/config/generator-config.html#%E6%A8%A1%E6%9D%BF%E9%85%8D%E7%BD%AE}
+ *         see {https://baomidou.com/config/generator-config.html#%E6%A8%A1%E6%9D%BF%E9%85%8D%E7%BD%AE}
  * @since 2021/2/9 15:41
  **/
 @Configuration

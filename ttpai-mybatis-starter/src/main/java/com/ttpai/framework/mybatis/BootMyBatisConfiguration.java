@@ -18,7 +18,7 @@ import org.springframework.core.type.AnnotationMetadata;
  * Springboot 项目的自动装配类 对 MyBatis 原生的 autoconfig 做增强
  *
  * @author zichao.zhang@ttpai.cn
- * @date 2021/2/5
+ * @since 2021/2/5
  */
 @Import({ //
         BootMyBatisConfiguration.MyBatisFunctionEnhance.class

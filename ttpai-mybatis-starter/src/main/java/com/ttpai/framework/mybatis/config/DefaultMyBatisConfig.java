@@ -11,7 +11,7 @@ import static org.apache.ibatis.session.LocalCacheScope.STATEMENT;
  * <p>
  *
  * @author zichao.zhang@ttpai.cn
- * @date 2021/2/5
+ * @since 2021/2/5
  */
 public enum DefaultMyBatisConfig {
     /**

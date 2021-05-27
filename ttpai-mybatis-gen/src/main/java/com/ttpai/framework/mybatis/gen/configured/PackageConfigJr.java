@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * 包名配置，通过该配置，指定生成代码的包路径
  *
  * @author lilin.tan@ttpai.cn
- * @link {https://baomidou.com/config/generator-config.html#%E5%8C%85%E5%90%8D%E9%85%8D%E7%BD%AE}
+ *         see {https://baomidou.com/config/generator-config.html#%E5%8C%85%E5%90%8D%E9%85%8D%E7%BD%AE}
  * @since 2021/2/9 15:05
  **/
 @Configuration

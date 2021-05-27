@@ -33,4 +33,48 @@
         <ttpai-dependencies.skip>true</ttpai-dependencies.skip>
     </properties>
 
+    <name>${project.artifactId}</name>
+    <description>MyBatis Quick Start</description>
+    <url>https://github.com/ttpai/ttpai_mybatis</url>
+
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/ttpai/ttpai_mybatis</url>
+        <connection>https://github.com/ttpai/ttpai_mybatis.git</connection>
+        <developerConnection>https://github.com/ttpai/ttpai_mybatis</developerConnection>
+    </scm>
+
+    <developers>
+
+        <developer>
+            <name>ttpai</name>
+            <email>github@ttpai.cn</email>
+            <url>https://www.ttpai.cn</url>
+        </developer>
+
+        <developer>
+            <name>kailbin</name>
+            <email>ykb553@163.com</email>
+            <url>https://github.com/kailbin</url>
+        </developer>
+
+        <developer>
+            <name>zichao.zhang</name>
+            <url>https://github.com/mmx1960</url>
+        </developer>
+
+        <developer>
+            <name>lilin.tan</name>
+            <url>https://github.com/</url>
+        </developer>
+
+    </developers>
+
 </project>
