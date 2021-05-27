@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
+        <groupId>cn.ttpai.framework</groupId>
         <artifactId>ttpai_mybatis</artifactId>
-        <groupId>com.ttpai.framework</groupId>
         <version>1.0.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -51,12 +51,14 @@
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>com.ttpai.framework</groupId>
+            <groupId>cn.ttpai.framework</groupId>
             <artifactId>ttpai-mybatis-autoconfigure-datasource</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -70,6 +72,11 @@
         <dependency>
             <groupId>com.54chen</groupId>
             <artifactId>paoding-rose</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
 
 

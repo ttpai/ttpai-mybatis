@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.ttpai.framework</groupId>
+        <groupId>cn.ttpai.framework</groupId>
         <artifactId>ttpai-mybatis-plugin</artifactId>
         <version>1.0.3-SNAPSHOT</version>
     </parent>

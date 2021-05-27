@@ -5,7 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.ttpai.framework</groupId>
+        <groupId>cn.ttpai.framework</groupId>
         <artifactId>ttpai_mybatis</artifactId>
         <version>1.0.3-SNAPSHOT</version>
     </parent>
@@ -20,7 +20,7 @@
         <!-- 如果数据源只有多，很根据 Bean 的名称自动识别 Mapper -->
         <!-- 如果数据源只有一个，会使用官方 starter 的方式，该模块自动失效 -->
         <dependency>
-            <groupId>com.ttpai.framework</groupId>
+            <groupId>cn.ttpai.framework</groupId>
             <artifactId>ttpai-mybatis-autoconfigure-datasource</artifactId>
             <version>${project.version}</version>
         </dependency>

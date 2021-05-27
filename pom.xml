@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.ttpai.framework</groupId>
+        <groupId>cn.ttpai.framework</groupId>
         <artifactId>ttpai-parent2</artifactId>
         <version>2.2.3</version>
     </parent>
@@ -32,18 +32,5 @@
         <!-- 跳过 Maven 依赖管理 -->
         <ttpai-dependencies.skip>true</ttpai-dependencies.skip>
     </properties>
-
-    <repositories>
-
-        <repository>
-            <id>ttpai-public</id>
-            <url>http://maven.ttpai.cn:8081/nexus/content/groups/public/</url>
-            <snapshots>
-                <!-- 始终下载最新的 snapshot 包 -->
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-
-    </repositories>
 
 </project>

@@ -16,12 +16,12 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Import;
 import org.springframework.util.StringUtils;
+import z.ZAutoConfiguration;
 
 import javax.sql.DataSource;
 import java.util.*;
@@ -30,8 +30,7 @@ import java.util.*;
  * @see MapperScannerConfigurer#postProcessBeanDefinitionRegistry
  */
 
-@AutoConfigureOrder(0)
-@AutoConfigureAfter(DataSourceAutoConfiguration.class)
+@AutoConfigureAfter(value = {DataSourceAutoConfiguration.class, ZAutoConfiguration.class})
 @ConditionalOnBeanCount(type = {DataSource.class}, count = ConditionalOnBeanCount.Count.MULTI)
 @Import({MyBatisSqlSessionFactoryInit.class, MyBatisSqlSessionFactoryInitEventListener.class})
 public class MyBatisMultiDataSourceProcessorConfigure
