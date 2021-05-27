@@ -1,13 +1,13 @@
-## ttpai-mybatis-gen
+## CHANGE LOG
 
-MyBatis代码生成器，[接入方式](http://confluence.ttpai.cn/pages/viewpage.action?pageId=9592104)
 
-## ttpai-mybatis-starter
 
 ### v1.0.0
 
 - 修改MyBatis默认配置,参考 [MyBatis全局配置](http://confluence.ttpai.cn/pages/viewpage.action?pageId=9591766)
 - 自定义 @MapperScan 行为， Mapper 上必须增加 @Mapper 注解
+
+
 
 ### v1.0.1 2021-03-08
 
@@ -24,6 +24,8 @@ MyBatis代码生成器，[接入方式](http://confluence.ttpai.cn/pages/viewpag
     - 支持 rose-jade 命名规范
     - 当跨库事务时，Service 的事务管理器 和 Mapper 的 DataSource 不匹配时，事务失效，而不是使用当前事务的 DataSource，即采用 rose-jade 和 jdbcTemplate 的方式
 
+
+
 ### v1.0.2 2021-03-25
 
 - `ttpai-mybatis-starter` 默认依赖 `ttpai-mybatis-autoconfigure-datasource`
@@ -31,3 +33,11 @@ MyBatis代码生成器，[接入方式](http://confluence.ttpai.cn/pages/viewpag
 - 单数据源时，使 `ttpai-mybatis-autoconfigure-datasource` 功能失效，默认 使用 mybatis 官方的 starter
 
 - 多数据源时，无需配置 `spring.datasource.initialize=false` 来解决报错问题，会把该属性自动设置为 false 
+
+
+
+### v1.0.3 2021-05-27
+
+- 【fix】解决 `v1.0.2` 在 Spring Boot 1 &  2 的兼容性问题
+- 去掉对 Spring 的传递依赖，屏蔽掉 Spring 版本
+- Maven 坐标 `com.ttpai` 改为 `cn.ttpai` 便于发布中央仓库

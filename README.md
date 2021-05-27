@@ -16,34 +16,64 @@
 
 ## 默认行为
 
-- 自定义 @MapperScan 行为， Mapper 上必须增加 @Mapper 注解
+- 自定义 `@MapperScan` 行为， Mapper 上必须增加 `@Mapper` 注解
 
 
 
 ## 多数据源支持
 
-- 支持 rose-jade 命名规范
+- 支持 rose-jade 命名规范： `jade.dataSource.PackageName` 作为 DataSource Bean 的名称时，自动把 PackageName 和 DataSource 进行关联
 - 多数据源时，无需配置 `spring.datasource.initialize=false` 来解决报错问题，会把该属性自动设置为 `false`
 
 
 
-## 命名规范
+### DataSource 的 Bean 名称规范
 
 
 
-## 方式 1 符合
+#### 方式 1 符合 jade.dataSource.* 、mybatis.dataSource.* 、ttpai.mybatis.dataSource.* 
 
-1. 无论是通过**spring xml文件** 还是 通过 **java config (@Bean)**配置 DataSource Bean ，只要 bean的命名符合 **jade.dataSource.包名** 、**mybatis.dataSource.包名、** **ttpai.mybatis.dataSource.包名。**就会扫描**包名**下的 mapper 和这个 DataSource Bean关联。
-2. 或者配置DataSource Bean 的别名，只要别名符合上述规范，也会做扫描。
+1. 无论是通过 **Spring xml 文件**，还是 通过 **Java Config (@Bean)** 配置 DataSource Bean ，只要  Bean 的命名符合 **jade.dataSource.包名** 、**mybatis.dataSource.包名、** **ttpai.mybatis.dataSource.包名。**就会扫描**包名**下的 mapper 和这个 DataSource Bean关联。
+2. 或者配置 DataSource Bean 的别名，只要别名符合上述规范，也会做扫描。
 
 
 
-## 方式 2
+#### 方式 2  在配置文件中配置 DataSource名称 和 package 的映射关系 
 
-1. 
-   1. 无论是通过**spring xml文件** 还是 通过 **java config (@Bean)**配置 DataSource Bean ，只要 bean的命名符合 **jade.dataSource.包名** 、**mybatis.dataSource.包名、** **ttpai.mybatis.dataSource.包名。**就会扫描**包名**下的 mapper 和这个 DataSource Bean关联。
-   2. 或者配置DataSource Bean 的别名，只要别名符合上述规范，也会做扫描。
-2. 
-3. 在配置文件中配置DataSource名称和package的映射关系 
-   1. 在配置文件中配置 **ttpai.mybatis.datasource.mapping.DataSourceBean名称 = 包名 ，**会扫描**包名**下的 mapper，和DataSource Bean关联
-   2. 配置文件要加载到Spring的Environment中才会生效 (SpringBoot的application.properties配置默认会加载到spring 的 Environment 中)
+1. 在配置文件中配置 **ttpai.mybatis.datasource.mapping.DataSourceBean名称 = 包名 ，**会扫描**包名**下的 mapper，和DataSource Bean关联
+2. 配置文件要加载到 Spring 的 Environment 中才会生效 ( SpringBoot 的 application.properties 配置默认会加载到 Spring 的 Environment 中)
+
+
+
+## 使用示例
+
+### 添加 Maven 依赖
+
+```xml
+<dependency>
+  <groupId>com.ttpai.framework</groupId>
+  <artifactId>ttpai-mybatis-starter</artifactId>
+	<version>${ttpai.mybatis.version}<version>
+</dependency>
+```
+
+### 多数据源 Bean
+
+> - 但数据源无需配置，默认使用 dataSource 和 main 方法 所在的 package
+
+```java
+@Bean(name = "mybatis.dataSource.com.ttpai.framework.mybatis.test.biz.user.dao")
+public DataSource userDataSource() {
+  DruidDataSource druidDataSource = new DruidDataSource();
+  // xxx
+  return druidDataSource;
+}
+
+@Bean(name = "mybatis.dataSource.com.ttpai.framework.mybatis.test.biz.student.dao")
+public DataSource studentDataSource() {
+  DruidDataSource druidDataSource = new DruidDataSource();
+  // xxx
+  return druidDataSource;
+}
+```
+

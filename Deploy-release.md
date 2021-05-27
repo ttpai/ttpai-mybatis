@@ -5,5 +5,5 @@
 mvn versions:set
 
 # 发布私服
-mvn clean deploy -Pttpai
+mvn clean deploy -Possrh
 ```
