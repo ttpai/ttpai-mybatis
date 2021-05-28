@@ -19,7 +19,6 @@
 - 自定义 `@MapperScan` 行为， Mapper 上必须增加 `@Mapper` 注解
 
 
-
 ## 多数据源支持
 
 - 支持 rose-jade 命名规范： `jade.dataSource.PackageName` 作为 DataSource Bean 的名称时，自动把 PackageName 和 DataSource 进行关联
