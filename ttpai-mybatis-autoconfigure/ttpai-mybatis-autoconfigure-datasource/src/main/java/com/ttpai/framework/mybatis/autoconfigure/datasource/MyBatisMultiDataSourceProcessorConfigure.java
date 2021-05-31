@@ -21,7 +21,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Import;
 import org.springframework.util.StringUtils;
-import z.ZAutoConfiguration;
 
 import javax.sql.DataSource;
 import java.util.*;
@@ -29,8 +28,8 @@ import java.util.*;
 /**
  * @see MapperScannerConfigurer#postProcessBeanDefinitionRegistry
  */
-
-@AutoConfigureAfter(value = {DataSourceAutoConfiguration.class, ZAutoConfiguration.class})
+//@AutoConfigureBefore(name = "com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration")
+@AutoConfigureAfter(value = {DataSourceAutoConfiguration.class})
 @ConditionalOnBeanCount(type = {DataSource.class}, count = ConditionalOnBeanCount.Count.MULTI)
 @Import({MyBatisSqlSessionFactoryInit.class, MyBatisSqlSessionFactoryInitEventListener.class})
 public class MyBatisMultiDataSourceProcessorConfigure
@@ -39,7 +38,7 @@ public class MyBatisMultiDataSourceProcessorConfigure
     /**
      * DataSource Bean Name 符合以下前缀规范，支持自定义配置
      */
-    public static final String[] AUTO_PREFIX = new String[] {
+    public static final String[] AUTO_PREFIX = new String[]{
             "jade.dataSource.",  // 兼容 Rose
             "mybatis.dataSource.",  // 自定义前缀
             "ttpai.mybatis.dataSource." // 自定义前缀
@@ -240,7 +239,7 @@ public class MyBatisMultiDataSourceProcessorConfigure
 
     /**
      * 这里扩充其他自定义扫描规则
-     * 
+     *
      * @param packages package 名
      */
     protected void scan(String packages) {
