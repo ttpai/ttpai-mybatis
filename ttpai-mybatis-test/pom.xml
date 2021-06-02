@@ -5,7 +5,7 @@
     <parent>
         <groupId>cn.ttpai.framework</groupId>
         <artifactId>ttpai_mybatis</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -49,6 +49,12 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>ttpai-mybatis-starter</artifactId>
             <version>${project.version}</version>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <artifactId>ttpai-mybatis-autoconfigure-datasource</artifactId>-->
+<!--                    <groupId>cn.ttpai.framework</groupId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
         </dependency>
 
         <dependency>
@@ -65,14 +71,8 @@
 
         <dependency>
             <groupId>cn.ttpai.framework</groupId>
-            <artifactId>ttpai-mybatis-autoconfigure-datasource</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ttpai.framework</groupId>
             <artifactId>ttpai-rose-spring-boot-starter</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2-SNAPSHOT</version>
         </dependency>
 
         <dependency>

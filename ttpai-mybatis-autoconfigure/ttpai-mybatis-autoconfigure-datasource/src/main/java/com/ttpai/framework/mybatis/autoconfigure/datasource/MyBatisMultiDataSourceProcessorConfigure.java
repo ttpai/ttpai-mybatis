@@ -6,6 +6,7 @@ import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSe
 import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInitEventListener;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.mybatis.spring.mapper.ClassPathMapperScanner;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.BeansException;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -28,7 +30,6 @@ import java.util.*;
 /**
  * @see MapperScannerConfigurer#postProcessBeanDefinitionRegistry
  */
-//@AutoConfigureBefore(name = "com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration")
 @AutoConfigureAfter(value = {DataSourceAutoConfiguration.class})
 @ConditionalOnBeanCount(type = {DataSource.class}, count = ConditionalOnBeanCount.Count.MULTI)
 @Import({MyBatisSqlSessionFactoryInit.class, MyBatisSqlSessionFactoryInitEventListener.class})
@@ -38,7 +39,7 @@ public class MyBatisMultiDataSourceProcessorConfigure
     /**
      * DataSource Bean Name 符合以下前缀规范，支持自定义配置
      */
-    public static final String[] AUTO_PREFIX = new String[]{
+    public static final String[] AUTO_PREFIX = new String[] {
             "jade.dataSource.",  // 兼容 Rose
             "mybatis.dataSource.",  // 自定义前缀
             "ttpai.mybatis.dataSource." // 自定义前缀
