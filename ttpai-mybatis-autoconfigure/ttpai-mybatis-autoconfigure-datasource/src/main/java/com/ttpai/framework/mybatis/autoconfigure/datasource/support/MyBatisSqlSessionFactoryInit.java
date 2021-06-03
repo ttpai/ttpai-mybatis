@@ -10,15 +10,12 @@ import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
-import org.springframework.boot.web.servlet.ServletContextInitializerBeans;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.PriorityOrdered;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ResourceLoader;
 
 import javax.annotation.Resource;
@@ -60,9 +57,24 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
     @Resource
     private ObjectProvider<List<ConfigurationCustomizer>> configurationCustomizersProvider;
 
+    /**
+     * 早期 SqlSessionFactory 的名称，用于在 ConfigurationClassParser.parse 过程中，提前获取 Bean 的定义
+     * <p>
+     * 在真正初始化过程中会被移除
+     */
+    private static final String EARLY_SQL_SESSION_FACTORY = "SqlSessionFactory.EARLY";
+
+    @Bean(name = EARLY_SQL_SESSION_FACTORY)
+    public SqlSessionFactory sqlSessionFactory() {
+        return null;
+    }
+
     @Override
     @SuppressWarnings("all")
     public void afterPropertiesSet() throws Exception {
+        // 删除早期 Bean
+        beanFactory.removeBeanDefinition(EARLY_SQL_SESSION_FACTORY);
+
         Map<String, String> mappings = beanFactory.getBean(MAPPING_BEAN_NAME, Map.class);
 
         MybatisAutoConfiguration delegation;
@@ -99,7 +111,7 @@ public class MyBatisSqlSessionFactoryInit implements InitializingBean, ServletCo
 
     /**
      * 为了把 Bean 的初始化提前到 AbstractApplicationContext#onRefresh() 的阶段
-     *
+     * <p>
      * see AbstractApplicationContext#onRefresh()
      * see EmbeddedWebApplicationContext#createEmbeddedServletContainer()
      * see EmbeddedWebApplicationContext#getSelfInitializer()

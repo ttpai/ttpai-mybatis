@@ -7,7 +7,7 @@
     <parent>
         <groupId>cn.ttpai.framework</groupId>
         <artifactId>ttpai_mybatis</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
     </parent>
 
     <artifactId>ttpai-mybatis-starter</artifactId>
@@ -22,6 +22,12 @@
         <dependency>
             <groupId>cn.ttpai.framework</groupId>
             <artifactId>ttpai-mybatis-autoconfigure-datasource</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.ttpai.framework</groupId>
+            <artifactId>ttpai-mybatis-plugin-pagehelper</artifactId>
             <version>${project.version}</version>
         </dependency>
 

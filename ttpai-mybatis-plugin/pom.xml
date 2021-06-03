@@ -8,7 +8,7 @@
     <parent>
         <artifactId>ttpai_mybatis</artifactId>
         <groupId>cn.ttpai.framework</groupId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
     </parent>
 
     <artifactId>ttpai-mybatis-plugin</artifactId>
@@ -17,6 +17,8 @@
     <modules>
         <!-- 【Debug】临时插件进行调试 -->
         <module>ttpai-mybatis-plugin-test</module>
+        <!-- 分页插件支持 -->
+        <module>ttpai-mybatis-plugin-pagehelper</module>
     </modules>
 
 </project>

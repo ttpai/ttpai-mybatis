@@ -5,17 +5,28 @@
     <parent>
         <groupId>cn.ttpai.framework</groupId>
         <artifactId>ttpai_mybatis</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ttpai-mybatis-test</artifactId>
+
+    <properties>
+        <maven.install.skip>true</maven.install.skip>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
 
     <dependencies>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.3.0</version>
         </dependency>
 
         <dependency>
@@ -59,14 +70,8 @@
 
         <dependency>
             <groupId>cn.ttpai.framework</groupId>
-            <artifactId>ttpai-mybatis-autoconfigure-datasource</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ttpai.framework</groupId>
             <artifactId>ttpai-rose-spring-boot-starter</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
 
         <dependency>

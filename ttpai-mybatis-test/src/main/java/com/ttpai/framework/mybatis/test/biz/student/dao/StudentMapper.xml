@@ -56,7 +56,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM STUDENT
-        <trim prefix="WHERE" prefixOverrides="AND"><include refid="Base_Where"/></trim> ;
+        <trim prefix="WHERE" prefixOverrides="AND"><include refid="Base_Where"/></trim>
     </select>
 
 

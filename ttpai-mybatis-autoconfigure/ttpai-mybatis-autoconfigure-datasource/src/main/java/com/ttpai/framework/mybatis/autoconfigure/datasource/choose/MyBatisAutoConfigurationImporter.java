@@ -5,7 +5,6 @@ import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Import;
-import z.ZAutoConfiguration;
 
 import javax.sql.DataSource;
 
@@ -15,7 +14,7 @@ import javax.sql.DataSource;
  * @author kail
  * @see MyBatisAutoConfigurationExclude 排除 MybatisAutoConfiguration
  */
-@AutoConfigureAfter(value = {DataSourceAutoConfiguration.class, ZAutoConfiguration.class})
+@AutoConfigureAfter(DataSourceAutoConfiguration.class)
 @ConditionalOnBeanCount(type = DataSource.class, count = ConditionalOnBeanCount.Count.SINGLE)
 @Import(MybatisAutoConfiguration.class)
 public class MyBatisAutoConfigurationImporter {

@@ -1,11 +1,24 @@
 ## CHANGE LOG
 
+### v1.0.4 2021-06-03
+
+- AutoConfig 顺序优化
+- PageHelper 兼容
 
 
-### v1.0.0
 
-- 修改MyBatis默认配置
-- 自定义 @MapperScan 行为， Mapper 上必须增加 @Mapper 注解
+### v1.0.3 2021-05-27
+
+- 【fix】解决 `v1.0.2` 在 Spring Boot 1 &  2 的兼容性问题
+- 去掉对 Spring 的传递依赖，屏蔽掉 Spring 版本
+- Maven 坐标 `com.ttpai` 改为 `cn.ttpai` 便于发布中央仓库
+
+
+### v1.0.2 2021-03-25
+
+- `ttpai-mybatis-starter` 默认依赖 `ttpai-mybatis-autoconfigure-datasource`
+- 单数据源时，使 `ttpai-mybatis-autoconfigure-datasource` 功能失效，默认 使用 mybatis 官方的 starter
+- 多数据源时，无需配置 `spring.datasource.initialize=false` 来解决报错问题，会把该属性自动设置为 false
 
 
 
@@ -26,18 +39,12 @@
 
 
 
-### v1.0.2 2021-03-25
 
-- `ttpai-mybatis-starter` 默认依赖 `ttpai-mybatis-autoconfigure-datasource`
+### v1.0.0
 
-- 单数据源时，使 `ttpai-mybatis-autoconfigure-datasource` 功能失效，默认 使用 mybatis 官方的 starter
-
-- 多数据源时，无需配置 `spring.datasource.initialize=false` 来解决报错问题，会把该属性自动设置为 false 
+- 修改MyBatis默认配置
+- 自定义 @MapperScan 行为， Mapper 上必须增加 @Mapper 注解
 
 
 
-### v1.0.3 2021-05-27
 
-- 【fix】解决 `v1.0.2` 在 Spring Boot 1 &  2 的兼容性问题
-- 去掉对 Spring 的传递依赖，屏蔽掉 Spring 版本
-- Maven 坐标 `com.ttpai` 改为 `cn.ttpai` 便于发布中央仓库

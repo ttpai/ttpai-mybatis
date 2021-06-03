@@ -6,6 +6,7 @@ import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSe
 import com.ttpai.framework.mybatis.autoconfigure.datasource.support.MyBatisSqlSessionFactoryInitEventListener;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.mybatis.spring.mapper.ClassPathMapperScanner;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.BeansException;
@@ -16,12 +17,12 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Import;
 import org.springframework.util.StringUtils;
-import z.ZAutoConfiguration;
 
 import javax.sql.DataSource;
 import java.util.*;
@@ -29,8 +30,7 @@ import java.util.*;
 /**
  * @see MapperScannerConfigurer#postProcessBeanDefinitionRegistry
  */
-
-@AutoConfigureAfter(value = {DataSourceAutoConfiguration.class, ZAutoConfiguration.class})
+@AutoConfigureAfter(value = {DataSourceAutoConfiguration.class})
 @ConditionalOnBeanCount(type = {DataSource.class}, count = ConditionalOnBeanCount.Count.MULTI)
 @Import({MyBatisSqlSessionFactoryInit.class, MyBatisSqlSessionFactoryInitEventListener.class})
 public class MyBatisMultiDataSourceProcessorConfigure
@@ -240,7 +240,7 @@ public class MyBatisMultiDataSourceProcessorConfigure
 
     /**
      * 这里扩充其他自定义扫描规则
-     * 
+     *
      * @param packages package 名
      */
     protected void scan(String packages) {

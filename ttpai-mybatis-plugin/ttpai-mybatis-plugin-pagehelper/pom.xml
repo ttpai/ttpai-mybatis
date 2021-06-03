@@ -10,18 +10,6 @@
         <version>1.0.4</version>
     </parent>
 
-    <artifactId>ttpai-mybatis-plugin-test</artifactId>
-
-    <properties>
-        <maven.install.skip>true</maven.install.skip>
-        <maven.deploy.skip>true</maven.deploy.skip>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-        </dependency>
-    </dependencies>
+    <artifactId>ttpai-mybatis-plugin-pagehelper</artifactId>
 
 </project>
