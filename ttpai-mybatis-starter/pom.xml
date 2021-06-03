@@ -25,6 +25,12 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.ttpai.framework</groupId>
+            <artifactId>ttpai-mybatis-plugin-pagehelper</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- endregion -->
 
         <dependency>

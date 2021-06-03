@@ -11,6 +11,11 @@
 
     <artifactId>ttpai-mybatis-test</artifactId>
 
+    <properties>
+        <maven.install.skip>true</maven.install.skip>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -49,12 +54,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>ttpai-mybatis-starter</artifactId>
             <version>${project.version}</version>
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <artifactId>ttpai-mybatis-autoconfigure-datasource</artifactId>-->
-<!--                    <groupId>cn.ttpai.framework</groupId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
         </dependency>
 
         <dependency>
