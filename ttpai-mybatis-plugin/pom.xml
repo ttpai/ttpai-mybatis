@@ -8,7 +8,7 @@
     <parent>
         <artifactId>ttpai_mybatis</artifactId>
         <groupId>cn.ttpai.framework</groupId>
-        <version>1.0.4-SNAPSHOT</version>
+        <version>1.0.4</version>
     </parent>
 
     <artifactId>ttpai-mybatis-plugin</artifactId>
