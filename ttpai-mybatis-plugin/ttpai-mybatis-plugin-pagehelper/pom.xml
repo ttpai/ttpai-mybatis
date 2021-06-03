@@ -4,21 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
-        <artifactId>ttpai_mybatis</artifactId>
         <groupId>cn.ttpai.framework</groupId>
+        <artifactId>ttpai-mybatis-plugin</artifactId>
         <version>1.0.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>ttpai-mybatis-plugin</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <!-- 【Debug】临时插件进行调试 -->
-        <module>ttpai-mybatis-plugin-test</module>
-        <!-- 分页插件支持 -->
-        <module>ttpai-mybatis-plugin-pagehelper</module>
-    </modules>
+    <artifactId>ttpai-mybatis-plugin-pagehelper</artifactId>
 
 </project>
