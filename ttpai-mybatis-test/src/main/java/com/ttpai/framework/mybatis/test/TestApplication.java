@@ -15,12 +15,6 @@ import java.util.Enumeration;
 public class TestApplication {
 
     public static void main(String[] args) throws IOException {
-        final Enumeration<URL> systemResources = ClassLoader
-                .getSystemResources("META-INF/spring-autoconfigure-metadata.properties");
-        for (; systemResources.hasMoreElements();) {
-            System.out.println(systemResources.nextElement());
-        }
-
         SpringApplication.run(TestApplication.class, args);
     }
 
